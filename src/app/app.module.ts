@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { AppSessionService } from './services/appSession.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UtentiComponent } from './components/utenti/utenti.component';
+import { AziendeComponent } from './components/aziende/aziende.component';
+import { ViniComponent } from './components/vini/vini.component';
+import { EventiComponent } from './components/eventi/eventi.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { UtentiComponent } from './components/utenti/utenti.component';
     LoginComponent,
     HomeComponent,
     UtentiComponent,
+    AziendeComponent,
+    ViniComponent,
+    EventiComponent,
   ],
   imports: [
     BrowserModule,
