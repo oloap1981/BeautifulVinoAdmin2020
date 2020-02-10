@@ -23,6 +23,12 @@ import { UtentiComponent } from './components/utenti/utenti.component';
 import { JwPaginationComponent } from 'jw-angular-pagination';
 import { PipesModule } from './pipes/pipes.module';
 import { DataTablesModule } from 'angular-datatables';
+import { AziendeComponent } from './components/aziende/aziende.component';
+import { ViniComponent } from './components/vini/vini.component';
+import { EventiComponent } from './components/eventi/eventi.component';
+import { FeedComponent } from './components/feed/feed.component';
+import { BadgeComponent } from './components/badge/badge.component';
+import { NotificheComponent } from './components/notifiche/notifiche.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,13 @@ import { DataTablesModule } from 'angular-datatables';
     LoginComponent,
     HomeComponent,
     UtentiComponent,
-    JwPaginationComponent
+    JwPaginationComponent,
+    AziendeComponent,
+    ViniComponent,
+    EventiComponent,
+    FeedComponent,
+    BadgeComponent,
+    NotificheComponent,
   ],
   imports: [
     BrowserModule,
