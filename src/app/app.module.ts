@@ -5,12 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { BvinoLibModule, SessionService, BVAuthorizationService, ConstantsService, UtentiService } from 'bvino-lib';
+import {
+  BvinoLibModule,
+  SessionService,
+  BVAuthorizationService,
+  ConstantsService,
+  UtentiService,
+  AlertService,
+  BVHttpService,
+  RichiesteService
+} from 'bvino-lib';
 
 import { FormsModule } from '@angular/forms';
 import { AppSessionService } from './services/appSession.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UtentiComponent } from './components/utenti/utenti.component';
+import { JwPaginationComponent } from 'jw-angular-pagination';
+import { PipesModule } from './pipes/pipes.module';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -18,12 +30,15 @@ import { UtentiComponent } from './components/utenti/utenti.component';
     LoginComponent,
     HomeComponent,
     UtentiComponent,
+    JwPaginationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BvinoLibModule.forRoot(),
-    FormsModule
+    FormsModule,
+    PipesModule,
+    DataTablesModule
   ],
   providers: [
     SessionService,
@@ -31,7 +46,10 @@ import { UtentiComponent } from './components/utenti/utenti.component';
     UtentiService,
     BVAuthorizationService,
     CookieService,
-    AppSessionService
+    AppSessionService,
+    AlertService,
+    BVHttpService,
+    RichiesteService
   ],
   bootstrap: [AppComponent]
 })
