@@ -29,6 +29,7 @@ import { EventiComponent } from './components/eventi/eventi.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { BadgeComponent } from './components/badge/badge.component';
 import { NotificheComponent } from './components/notifiche/notifiche.component';
+import { ProfiloComponent } from './components/profilo/profilo.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { NotificheComponent } from './components/notifiche/notifiche.component';
     FeedComponent,
     BadgeComponent,
     NotificheComponent,
+    ProfiloComponent,
   ],
   imports: [
     BrowserModule,
