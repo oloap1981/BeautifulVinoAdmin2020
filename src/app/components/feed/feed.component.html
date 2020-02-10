@@ -89,13 +89,14 @@
             </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Gestione eventi</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Gestione aziende</h1>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Nuova azienda</a>
                 </div>
                 <div class="row">
                     <div class="col-xl-6 col-md-6 mb-6">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Lista eventi</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Lista aziende</h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -104,20 +105,23 @@
                                         <thead>
                                             <tr>
                                                 <th>Nome</th>
-                                                <th>Citt&agrave;</th>
+                                                <th>Azienda</th>
+                                                <th>Anno</th>
                                                 <th>&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th>Nome</th>
-                                                <th>Citt&agrave;</th>
+                                                <th>Azienda</th>
+                                                <th>Anno</th>
                                                 <th>&nbsp;</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
                                             <tr>
                                                 <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
                                                 <td>System Architect</td>
                                                 <td class="text-center"><a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i></a></td>
                                             </tr>
@@ -130,21 +134,42 @@
                     <div class="col-xl-6 col-md-6 mb-6">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica evento</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica feed</h6>
                             </div>
                             <div class="card-body">
                                 <form class="">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="id evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="titolo evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox ">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                                            <label class="custom-control-label" for="customCheck">acquistabile</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                tipo feed
+                                            </div>
                                         </div>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <input type="radio" name="feedtype" checked>
+                                                <label class="form-check-label">1</label>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <input type="radio" name="feedtype">
+                                                <label class="form-check-label">2</label>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <input type="radio" name="feedtype">
+                                                <label class="form-check-label">3</label>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <input type="radio" name="feedtype">
+                                                <label class="form-check-label">4</label>
+                                            </div>
+                                            <div class="input-group-text">
+                                                <input type="radio" name="feedtype">
+                                                <label class="form-check-label">5</label>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="id feed">
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox ">
@@ -153,150 +178,45 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="citt&agrave; evento">
+                                        <select class="form-control form-control-user custom-select">
+                                            <option default>tipo entita header</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control form-control-user" placeholder="tema evento"></textarea>
-                                        <div class="custom-control custom-checkbox ">
-                                            <input type="checkbox" class="custom-control-input" id="pippo">
-                                            <label class="custom-control-label" for="pippo">html</label>
-                                        </div>
+                                        <input type="text" class="form-control form-control-user" placeholder="titolo">
                                     </div>
+                                    
                                     <div class="form-group">
-                                        <textarea class="form-control form-control-user" placeholder="testo evento"></textarea>
+                                        <textarea class="form-control form-control-user" placeholder="testo"></textarea>
                                         <div class="custom-control custom-checkbox ">
                                             <input type="checkbox" class="custom-control-input" id="pluto">
                                             <label class="custom-control-label" for="pluto">html</label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control form-control-user custom-select">
-                                            <option default>provincia evento</option>
-                                            <option>nome azienda</option>
-                                            <option>nome azienda</option>
-                                            <option>nome azienda</option>
-                                            <option>nome azienda</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="">
-                                        <input type="text" class="form-control form-control-user" placeholder="">
-                                    </div>
-                                    <hr>
-                                    <div class="form-group">
-                                        <a href="#" class="d-none d-sm-inline-block btn  btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Apri editor province</a>
-                                    </div>
-                                    <div>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control form-control-user" placeholder="o">
-                                            <input type="text" class="form-control form-control-user" placeholder="">
+                                        <textarea class="form-control form-control-user" placeholder="testo label"></textarea>
+                                        <div class="custom-control custom-checkbox ">
+                                            <input type="checkbox" class="custom-control-input" id="pluto">
+                                            <label class="custom-control-label" for="pluto">html</label>
                                         </div>
-                                        <div class="input-group">
-                                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i>aggiungi provincia</a>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="indirizzo evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="telefono evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="evento Facebook">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" placeholder="email evento">
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="">data evento</span>
-                                        </div>
-                                        <input type="date" class="form-control form-control-user" placeholder="data evento">
                                     </div>
                                     
-                                    <div class="form-group">
-                                        <select class="form-control form-control-user custom-select">
-                                            <option default>azienda ospitante</option>
-                                            <option>nome azienda</option>
-                                            <option>nome azienda</option>
-                                            <option>nome azienda</option>
-                                            <option>nome azienda</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="input-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary shadow-sm" type="button"><i class="fas fa-trash fa-sm text-white-50"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="prezzo evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="numero massimo partecipanti evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="numero posti disponibili al momento">
-                                    </div>
-
-
-
-                                    
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <label class="custom-file-label" for="inputGroupFile04">immagine evento</label>
-                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
-                                        </div>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">carica</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="url foto">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="latitudine evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="longitudine evento">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="crediti">
-                                    </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" placeholder="punti esperienza">
                                     </div>
                                     <hr>
-                                    <h5>Badge evento</h5>
+
+                                    <!-- feed 1 - -->
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="nome badge">
+                                        <input type="text" class="form-control form-control-user" placeholder="data entita header">
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="info badge">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="id badge">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="url logo badge">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="">
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <label class="custom-file-label" for="inputGroupFile04">immagine badge</label>
-                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
-                                        </div>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">carica</button>
-                                        </div>
-                                    </div>
-                                    <hr>
                                     <div class="form-group">
                                         <select class="form-control form-control-user custom-select">
-                                            <option default>vini da associare all'evento</option>
+                                            <option default>scegli o cerca un vino nella lista</option>
                                             <option>nome azienda</option>
                                             <option>nome azienda</option>
                                             <option>nome azienda</option>
@@ -304,46 +224,118 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="nome vino">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="azienda vino">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" placeholder="anno vino">
+                                        <input type="text" class="form-control form-control-user" placeholder="url foto">
                                     </div>
                                     <div class="input-group">
-                                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i>aggiungi vino</a>
+                                        <div class="custom-file">
+                                            <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">carica</button>
+                                        </div>
                                     </div>
-                                    <div class="table-responsive">
-                                    
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nome vino</th>
-                                                    <th>Azienda </th>
-                                                    <th>Anno vno</th>
-                                                    <th>&nbsp;</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Nome vino</th>
-                                                    <th>Azienda </th>
-                                                    <th>Anno vno</th>
-                                                    <th>&nbsp;</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>2012</td>
-                                                    <td class="text-center"><a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i></a></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+
+                                    <!-- feed 2 -->
+                                    <hr>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="data entita header">
                                     </div>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-user custom-select">
+                                            <option default>scegli o cerca un'azienda nella lista</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="url foto">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">carica</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="url video">
+                                    </div>
+
+                                    <!-- feed 3 -->
+                                    <hr>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-user custom-select">
+                                            <option default>scegli o cerca un vino nella lista</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="url foto">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">carica</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- feed 4 -->
+                                    <hr>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="data entita header">
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-user custom-select">
+                                            <option default>scegli o cerca un evento nella lista</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                            <option>nome azienda</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="url foto">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">carica</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- feed 5 -->
+                                    <hr>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="url foto">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
+                                            <input type="file" class="custom-file-input" id="inputGroupFile04">
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">carica</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" placeholder="url video">
+                                    </div>
+
                                     <hr>
                                     <a href="index.html" class="btn btn-primary btn-user">
                                         Salva

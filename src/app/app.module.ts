@@ -14,6 +14,9 @@ import { UtentiComponent } from './components/utenti/utenti.component';
 import { AziendeComponent } from './components/aziende/aziende.component';
 import { ViniComponent } from './components/vini/vini.component';
 import { EventiComponent } from './components/eventi/eventi.component';
+import { FeedComponent } from './components/feed/feed.component';
+import { BadgeComponent } from './components/badge/badge.component';
+import { NotificheComponent } from './components/notifiche/notifiche.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { EventiComponent } from './components/eventi/eventi.component';
     AziendeComponent,
     ViniComponent,
     EventiComponent,
+    FeedComponent,
+    BadgeComponent,
+    NotificheComponent,
   ],
   imports: [
     BrowserModule,

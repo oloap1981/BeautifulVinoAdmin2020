@@ -1,3 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 // Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
 @import "assets/scss/sb-admin-2.scss";
+
+
+.input-group {
+    margin-bottom: 1em;
+}
