@@ -31,6 +31,7 @@ $cyan: #36b9cc !default;
 $brand-google: #ea4335;
 $brand-facebook: #3b5998;
 
+
 // Set Contrast Threshold
 $yiq-contrasted-threshold: 195 !default;
 
@@ -74,3 +75,11 @@ $transition-collapse: height .15s ease !default;
 // Dropdowns
 $dropdown-font-size: 0.85rem;
 $dropdown-border-color: $border-color;
+
+
+
+
+// Beautiful vino customizzazioni
+$brand-default: #D42462;
+
+$primary:   $brand-default;
