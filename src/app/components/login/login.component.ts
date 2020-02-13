@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+    firstColor = '#f9da2c';
+    secondColor = '#e51d70';
+
   public username: string;
   public password: string;
 
