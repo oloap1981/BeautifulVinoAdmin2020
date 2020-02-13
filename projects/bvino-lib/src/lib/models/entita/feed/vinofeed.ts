@@ -1,4 +1,4 @@
-import { AziendaVino } from './aziendavino';
+import { AziendaVinoFeed } from './aziendavino';
 
 export class VinoFeed {
   public idVino: string;
@@ -6,5 +6,5 @@ export class VinoFeed {
   public infoVino: string;
   public urlImmagineVino: string;
   public urlLogoVino: string;
-  public aziendaVino: AziendaVino;
+  public aziendaVino: AziendaVinoFeed;
 }

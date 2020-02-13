@@ -13,7 +13,12 @@ import {
   UtentiService,
   AlertService,
   BVHttpService,
-  RichiesteService
+  RichiesteService,
+  AziendeService,
+  ViniService,
+  FeedsService,
+  EventiService,
+  BadgesService
 } from 'bvino-lib';
 
 import { FormsModule } from '@angular/forms';
@@ -61,7 +66,12 @@ import { NotificheComponent } from './components/notifiche/notifiche.component';
     AppSessionService,
     AlertService,
     BVHttpService,
-    RichiesteService
+    RichiesteService,
+    AziendeService,
+    ViniService,
+    EventiService,
+    FeedsService,
+    BadgesService
   ],
   bootstrap: [AppComponent]
 })

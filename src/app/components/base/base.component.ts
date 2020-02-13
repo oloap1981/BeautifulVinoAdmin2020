@@ -18,7 +18,6 @@ export class BaseComponent implements OnInit {
   constructor(
     public sessionService: SessionService,
     public router: Router,
-    public utentiService: UtentiService,
     public richiesteService: RichiesteService,
     public constants: ConstantsService,
     public alertService: AlertService) {

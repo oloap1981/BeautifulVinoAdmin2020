@@ -19,25 +19,16 @@ export class UtentiComponent extends BaseComponent implements OnInit {
 
   @ViewChild('dataTable', { static: true }) table;
 
-  dtUsers = [
-    { 'id': 101, 'usernameUtente': 'Anil', 'emailUtente': 'Singh' },
-    { 'id': 102, 'usernameUtente': 'Reena', 'emailUtente': 'Singh' },
-    { 'id': 103, 'usernameUtente': 'Aradhay', 'emailUtente': 'Simgh' },
-    { 'id': 104, 'usernameUtente': 'Dilip', 'emailUtente': 'Singh' }
-  ];
-
-
   constructor(public sessionService: SessionService,
     public router: Router,
     public utentiService: UtentiService,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService) {
-    super(sessionService, router, utentiService, richiesteService, constantsService, alertService);
+    super(sessionService, router, richiesteService, constantsService, alertService);
   }
 
   ngOnInit() {
-    this.items = this.dtUsers;
     this.utentiService.getUtenti(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.utenti);

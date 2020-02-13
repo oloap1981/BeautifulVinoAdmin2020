@@ -19,5 +19,6 @@ export class RichiestaGetGenerica {
   public latitudineUtente: string;
   public longitudineUtente: string;
   public elencoCompleto: string;
+  public idProfiloAzienda: string;
   public functionName: string;
 }

@@ -7,10 +7,12 @@ import { Provincia } from '../../../entita/provincia/provincia';
 import { Token } from '../../../entita/token/token';
 import { Utente } from '../../../entita/utente/utente';
 import { Esito } from '../../../entita/esito/esito';
+import { ProfiloAzienda } from '../../../entita/profiloAzienda/profiloAzienda';
 
 export class RispostaGetGenerica {
   public stato: string;
   public azienda: Azienda;
+  public profiloAzienda: ProfiloAzienda;
   public eventiAzienda: Array<Evento>;
   public viniAzienda: Array<Vino>;
   public aziende: Array<Azienda>;

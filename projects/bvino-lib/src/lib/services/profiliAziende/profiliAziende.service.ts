@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { ConstantsService } from '../common/constants.service';
 
 @Injectable()
-export class EventiService {
+export class ProfiliAziendeService {
 
   constructor(
     private httpService: BVHttpService,
@@ -17,8 +17,8 @@ export class EventiService {
      * Chiamata per ottenere l'elenco degli utenti completo.
      *
      */
-  public getEventi(request: RichiestaGetGenerica): Observable<RispostaGetGenerica> {
-    request.functionName = this.constantsService.getEventiFunctionName;
+  public getProfiloAziendaAziende(request: RichiestaGetGenerica): Observable<RispostaGetGenerica> {
+    request.functionName = this.constantsService.getProfiloAziendaFunctionName;
     return this.httpService.post(this.constantsService.getServiceName, request);
   }
 }

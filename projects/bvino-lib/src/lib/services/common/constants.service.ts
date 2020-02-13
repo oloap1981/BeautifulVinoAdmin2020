@@ -9,8 +9,27 @@ export class ConstantsService {
 
   public readonly getServiceName: string = 'BeautifulVinoGet';
 
-  // nomi funzioni
+  // nomi funzioni GET
+  public readonly getAziendeFunctionName: string = 'getAziendeGen';
+  public readonly getAziendaFunctionName: string = 'getAziendaGen';
+  public readonly getProfiloAziendaFunctionName: string = 'getProfiloAziendaGen';
+  public readonly getBadgeFunctionName: string = 'getBadgeGen';
+  public readonly getBadgesFunctionName: string = 'getBadgesGen';
+  public readonly getEventiFunctionName: string = 'getEventiGen';
+  public readonly getEventiUtenteFunctionName: string = 'getEventiUtenteGen';
+  public readonly getEventoFunctionName: string = 'getEventoGen';
+  public readonly getFeedFunctionName: string = 'getFeedGen';
+  public readonly getProvinceFunctionName: string = 'getProvinceGen';
+  public readonly getTokenFunctionName: string = 'getTokenGen';
   public readonly getUtentiFunctionName: string = 'getUtentiGen';
+  public readonly getUtenteFunctionName: string = 'getUtenteGen';
+  public readonly getViniFunctionName: string = 'getViniGen';
+  public readonly getVinoFunctionName: string = 'getVinoGen';
+  public readonly getViniEventoFunctionName: string = 'getViniEventoGen';
+  public readonly getPresenzeUtenteFunctionName: string = 'getPresenzeUtenteGen';
+
+  // nomi funzioni PUT
+  public readonly putImmaginiFunctionName: string = 'putImageGen';
 
   // codici esito
   public readonly ESITO_OK_CODICE: number = 100;
