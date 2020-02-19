@@ -34,6 +34,9 @@ export class RichiesteService {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.constants.getEventiFunctionName;
 
+    richiesta.idUtente = '';
+    richiesta.elencoCompleto = 'S';
+
     return richiesta;
   }
 
@@ -46,6 +49,14 @@ export class RichiesteService {
 
   public getRichiestaGetVini() {
     const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.constants.getViniFunctionName;
+
+    return richiesta;
+  }
+
+  public getRichiestaGetViniAzienda(idAzienda: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.idAzienda = idAzienda;
     richiesta.functionName = this.constants.getViniFunctionName;
 
     return richiesta;

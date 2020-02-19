@@ -47,17 +47,17 @@ export class BaseComponent implements OnInit {
   //     this.logErroriService.postErrore(message);
   // }
 
-  // public presentAlert(message: string): void {
-  //     this.alertService.presentAlert(message);
-  // }
+  public presentAlert(message: string): void {
+    this.alertService.presentAlert(message);
+  }
 
-  // public presentErrorAlert(message: string): void {
-  //     this.alertService.presentErrorAlert(message);
-  // }
-
+  public presentErrorAlert(message: string): void {
+    this.alertService.presentErrorAlert(message);
+  }
   public manageError(response: RispostaGetGenerica) {
     this.alertService.presentErrorAlert(response.esito.message);
   }
+
 
 
   // public manageHttpError(error: any) {

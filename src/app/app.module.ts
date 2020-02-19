@@ -18,7 +18,8 @@ import {
   ViniService,
   FeedsService,
   EventiService,
-  BadgesService
+  BadgesService,
+  ViniAziendaService
 } from 'bvino-lib';
 
 import { FormsModule } from '@angular/forms';
@@ -71,6 +72,7 @@ import { ProfiloComponent } from './components/profilo/profilo.component';
     RichiesteService,
     AziendeService,
     ViniService,
+    ViniAziendaService,
     EventiService,
     FeedsService,
     BadgesService

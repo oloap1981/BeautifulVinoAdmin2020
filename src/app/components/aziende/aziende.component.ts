@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AziendeService } from 'bvino-lib';
 import { BaseComponent } from '../base/base.component';
-import { SessionService, UtentiService, RichiesteService, ConstantsService, AlertService, Azienda } from 'bvino-lib';
+import { SessionService, UtentiService, RichiesteService, ConstantsService, AlertService, Azienda, AziendeService } from 'bvino-lib';
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';

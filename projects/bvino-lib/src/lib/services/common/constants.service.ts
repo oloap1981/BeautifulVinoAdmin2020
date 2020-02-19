@@ -27,6 +27,7 @@ export class ConstantsService {
   public readonly getVinoFunctionName: string = 'getVinoGen';
   public readonly getViniEventoFunctionName: string = 'getViniEventoGen';
   public readonly getPresenzeUtenteFunctionName: string = 'getPresenzeUtenteGen';
+  public readonly getViniAziendaFunctionName: string = 'getViniAziendaGen';
 
   // nomi funzioni PUT
   public readonly putImmaginiFunctionName: string = 'putImageGen';

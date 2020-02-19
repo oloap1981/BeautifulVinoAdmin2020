@@ -11,9 +11,11 @@ export * from './lib/services/auth/BVAuthorizationService';
 export * from './lib/services/utenti/utenti.service';
 export * from './lib/services/aziende/aziende.service';
 export * from './lib/services/vini/vini.service';
+export * from './lib/services/vini/viniAzienda.service';
 export * from './lib/services/feeds/feeds.service';
 export * from './lib/services/badges/badges.service';
 export * from './lib/services/eventi/eventi.service';
+export * from './lib/services/profiliAziende/profiliAziende.service';
 // -- COMUNI
 export * from './lib/services/common/session.service';
 export * from './lib/services/common/bvhttp.service';
@@ -63,3 +65,5 @@ export * from './lib/models/entita/badge/badge';
 // - comunicazioni
 export * from './lib/models/comunicazioni/richieste/get/richiestagetgenerica';
 export * from './lib/models/comunicazioni/richieste/get/rispostagetgenerica';
+// - profilo azienda
+export * from './lib/models/entita/profiloAzienda/profiloAzienda';
