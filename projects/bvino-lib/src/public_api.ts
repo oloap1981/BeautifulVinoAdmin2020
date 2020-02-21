@@ -65,5 +65,7 @@ export * from './lib/models/entita/badge/badge';
 // - comunicazioni
 export * from './lib/models/comunicazioni/richieste/get/richiestagetgenerica';
 export * from './lib/models/comunicazioni/richieste/get/rispostagetgenerica';
+// - provincie
+export * from './lib/models/entita/provincia/provincia';
 // - profilo azienda
 export * from './lib/models/entita/profiloAzienda/profiloAzienda';

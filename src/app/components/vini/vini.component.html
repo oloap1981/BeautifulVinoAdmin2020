@@ -1,8 +1,8 @@
 <div class="container-fluid">
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Gestione vini</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-        class="fas fa-plus fa-sm text-white-50"></i> Nuovo vino</a>
+    <button (click)="nuovoVino()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+        class="fas fa-plus fa-sm text-white-50"></i> Nuovo vino</button>
   </div>
   <div class="row">
     <div class="col-xl-6 col-md-6 mb-6">
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="col-xl-6 col-md-6 mb-6">
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4" *ngIf="vinoSelezionato.idVino !== ''">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica vino</h6>
         </div>
@@ -73,18 +73,40 @@
               </div>
             </div> -->
             <div class="form-group">
-              <textarea class="form-control form-control-user" placeholder="descrizione Vino"></textarea>
+              <textarea class="form-control form-control-user" placeholder="descrizione Vino"
+                [(ngModel)]="vinoSelezionato.descrizioneVino" name="temaEvento" *ngIf="!descrizioneHtml"></textarea>
+              <p-editor [(ngModel)]="vinoSelezionato.descrizioneVino" [style]="{'height':'250px'}"
+                *ngIf="descrizioneHtml" name="descrizioneVinoH">
+              </p-editor>
               <div class="custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="pluto"
-                  [(ngModel)]="vinoSelezionato.descrizioneVino" name="descrizioneVino">
+                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="descrizioneHtml"
+                  name="descrizioneHtml">
                 <label class="custom-control-label" for="pluto">html</label>
               </div>
             </div>
+            <!-- IMMAGINE LOGO VINO -->
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="url foto"
-                [(ngModel)]="vinoSelezionato.urlImmagineVino" name="urlImmagineVino">
+              <input type="text" class="form-control form-control-user" placeholder="url logo"
+                [(ngModel)]="vinoSelezionato.urlLogoVino" name="urlImmagineVino" disabled>
             </div>
-            <div class="input-group">
+            <div class="form-group" *ngIf="vinoSelezionato.urlLogoVino && vinoSelezionato.urlLogoVino !== ''">
+              <img [src]="vinoSelezionato.urlLogoVino">
+            </div>
+            <app-fileupload labelText="Carica Logo Vino" (uploaded)="fileUploadedLogo($event)" maxFileSize="200"
+              folder="logovino">
+            </app-fileupload>
+            <!-- IMMAGINE VINO -->
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="url immagine"
+                [(ngModel)]="vinoSelezionato.urlImmagineVino" name="urlImmagineVino" disabled>
+            </div>
+            <div class="form-group" *ngIf="vinoSelezionato.urlImmagineVino && vinoSelezionato.urlImmagineVino !== ''">
+              <img [src]="vinoSelezionato.urlImmagineVino">
+            </div>
+            <app-fileupload labelText="Carica Immagine Vino" (uploaded)="fileUploadedImmagine($event)" maxFileSize="600"
+              folder="immaginevino">
+            </app-fileupload>
+            <!-- <div class="input-group">
               <div class="custom-file">
                 <label class="custom-file-label" for="inputGroupFile04">carica immagine vino</label>
                 <input type="file" class="custom-file-input" id="inputGroupFile04">
@@ -92,7 +114,7 @@
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button">carica</button>
               </div>
-            </div>
+            </div> -->
             <hr>
             <a href="index.html" class="btn btn-primary btn-user">
               Salva

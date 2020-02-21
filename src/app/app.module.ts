@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
+import { EditorModule } from 'primeng/editor';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -36,6 +37,10 @@ import { FeedComponent } from './components/feed/feed.component';
 import { BadgeComponent } from './components/badge/badge.component';
 import { NotificheComponent } from './components/notifiche/notifiche.component';
 import { ProfiloComponent } from './components/profilo/profilo.component';
+import { FileuploadComponent } from './components/fileupload/fileupload.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BvdatepickerComponent } from './components/bvdatepicker/bvdatepicker.component';
+import { IgxDatePickerModule, IgxIconModule, IgxSuffixModule, IgxInputGroupModule, IgxSnackbarModule } from 'igniteui-angular';
 
 @NgModule({
   declarations: [
@@ -51,6 +56,8 @@ import { ProfiloComponent } from './components/profilo/profilo.component';
     BadgeComponent,
     NotificheComponent,
     ProfiloComponent,
+    FileuploadComponent,
+    BvdatepickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +65,10 @@ import { ProfiloComponent } from './components/profilo/profilo.component';
     BvinoLibModule.forRoot(),
     FormsModule,
     PipesModule,
-    DataTablesModule
+    DataTablesModule,
+    BrowserAnimationsModule,
+    EditorModule,
+    IgxDatePickerModule, IgxIconModule, IgxSuffixModule, IgxInputGroupModule, IgxSnackbarModule
   ],
   providers: [
     SessionService,
@@ -79,4 +89,5 @@ import { ProfiloComponent } from './components/profilo/profilo.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

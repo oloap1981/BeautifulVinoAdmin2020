@@ -23,6 +23,8 @@ export class ViniComponent extends BaseComponent implements OnInit {
   public cardImageBase64: string;
   public imageError: string;
 
+  public descrizioneHtml = false;
+
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
@@ -36,6 +38,7 @@ export class ViniComponent extends BaseComponent implements OnInit {
 
     super(sessionService, router, richiesteService, constantsService, alertService);
     this.vinoSelezionato = new Vino();
+    this.vinoSelezionato.idVino = '';
     this.isImageSaved = false;
     this.cardImageBase64 = '';
     this.imageError = '';
@@ -96,4 +99,19 @@ export class ViniComponent extends BaseComponent implements OnInit {
     return toReturn;
   }
 
+  public fileUploadedImmagine(event: any) {
+    console.log('vini-component, file caricato: ' + event);
+    this.vinoSelezionato.urlImmagineVino = event;
+  }
+
+  public fileUploadedLogo(event: any) {
+    console.log('vini-component, file caricato: ' + event);
+    this.vinoSelezionato.urlLogoVino = event;
+  }
+
+  public nuovoVino(): void {
+    if (confirm('Creando un nuovo vino le informazioni non salvate di quello attuale saranno perse. Procedere?')) {
+      this.vinoSelezionato = new Vino();
+    }
+  }
 }

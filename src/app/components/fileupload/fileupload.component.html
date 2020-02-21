@@ -1,0 +1,9 @@
+<div class="input-group">
+  <div class="custom-file">
+    <label class="custom-file-label">{{fileName == '' ? labelText: fileName}}</label>
+    <input type="file" class="custom-file-input" (change)="selectFile($event)" accept="image/*">
+  </div>
+  <div class="input-group-append">
+    <button class="btn btn-primary" type="button" (click)="upload()" [disabled]="!selectedFiles">carica</button>
+  </div>
+</div>

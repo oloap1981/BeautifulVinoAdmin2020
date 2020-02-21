@@ -1,262 +1,144 @@
 <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Gestione aziende</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Nuova azienda</a>
-    </div>
-    <div class="row">
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Lista aziende</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Azienda</th>
-                                    <th>Anno</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Azienda</th>
-                                    <th>Anno</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>System Architect</td>
-                                    <td class="text-center"><a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Gestione aziende</h1>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+        class="fas fa-plus fa-sm text-white-50"></i> Nuova azienda</a>
+  </div>
+  <div class="row">
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Lista aziende</h6>
         </div>
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica feed</h6>
-                </div>
-                <div class="card-body">
-                    <form class="">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    tipo feed
-                                </div>
-                            </div>
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <input type="radio" name="feedtype" checked>
-                                    <label class="form-check-label">1</label>
-                                </div>
-                                <div class="input-group-text">
-                                    <input type="radio" name="feedtype">
-                                    <label class="form-check-label">2</label>
-                                </div>
-                                <div class="input-group-text">
-                                    <input type="radio" name="feedtype">
-                                    <label class="form-check-label">3</label>
-                                </div>
-                                <div class="input-group-text">
-                                    <input type="radio" name="feedtype">
-                                    <label class="form-check-label">4</label>
-                                </div>
-                                <div class="input-group-text">
-                                    <input type="radio" name="feedtype">
-                                    <label class="form-check-label">5</label>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="id feed">
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                <label class="custom-control-label" for="customCheck">pubblicato</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control form-control-user custom-select">
-                                <option default>tipo entita header</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="titolo">
-                        </div>
-
-                        <div class="form-group">
-                            <textarea class="form-control form-control-user" placeholder="testo"></textarea>
-                            <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="pluto">
-                                <label class="custom-control-label" for="pluto">html</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control form-control-user" placeholder="testo label"></textarea>
-                            <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="pluto">
-                                <label class="custom-control-label" for="pluto">html</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="punti esperienza">
-                        </div>
-                        <hr>
-
-                        <!-- feed 1 - -->
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="data entita header">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control form-control-user custom-select">
-                                <option default>scegli o cerca un vino nella lista</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url foto">
-                        </div>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
-                        </div>
-
-                        <!-- feed 2 -->
-                        <hr>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="data entita header">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control form-control-user custom-select">
-                                <option default>scegli o cerca un'azienda nella lista</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url foto">
-                        </div>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url video">
-                        </div>
-
-                        <!-- feed 3 -->
-                        <hr>
-                        <div class="form-group">
-                            <select class="form-control form-control-user custom-select">
-                                <option default>scegli o cerca un vino nella lista</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url foto">
-                        </div>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
-                        </div>
-
-                        <!-- feed 4 -->
-                        <hr>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="data entita header">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control form-control-user custom-select">
-                                <option default>scegli o cerca un evento nella lista</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url foto">
-                        </div>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
-                        </div>
-
-                        <!-- feed 5 -->
-                        <hr>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url foto">
-                        </div>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine </label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url video">
-                        </div>
-
-                        <hr>
-                        <a href="index.html" class="btn btn-primary btn-user">
-                            Salva
-                        </a>
-                        <a href="index.html" class="btn btn-danger btn-user float-right">
-                            Duplica
-                        </a>
-                    </form>
-                </div>
-            </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4" *ngIf="feedSelezionato.idFeed !== ''">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica feed</h6>
+        </div>
+        <div class="card-body">
+          <form class="">
+            <!-- <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  tipo feed
+                </div>
+              </div>
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <input type="radio" name="feedtype" checked>
+                  <label class="form-check-label">1</label>
+                </div>
+                <div class="input-group-text">
+                  <input type="radio" name="feedtype">
+                  <label class="form-check-label">2</label>
+                </div>
+                <div class="input-group-text">
+                  <input type="radio" name="feedtype">
+                  <label class="form-check-label">3</label>
+                </div>
+                <div class="input-group-text">
+                  <input type="radio" name="feedtype">
+                  <label class="form-check-label">4</label>
+                </div>
+                <div class="input-group-text">
+                  <input type="radio" name="feedtype">
+                  <label class="form-check-label">5</label>
+                </div>
+
+              </div>
+            </div> -->
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="id feed"
+                [(ngModel)]="feedSelezionato.idFeed" name="idFeed">
+            </div>
+            <div class="form-group">
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="customCheck"
+                  [(ngModel)]="feedSelezionato.pubblicato" name="pubblicato">
+                <label class="custom-control-label" for="customCheck">pubblicato</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <select class="form-control form-control-user custom-select">
+                <option default>tipo entita header</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="titolo"
+                [(ngModel)]="feedSelezionato.titoloFeed" name="titolo">
+            </div>
+
+            <div class="form-group">
+              <textarea class="form-control form-control-user" placeholder="testo"
+                [(ngModel)]="feedSelezionato.testoFeed" name="testo" *ngIf="!testoHtml"></textarea>
+              <p-editor [(ngModel)]="feedSelezionato.testoFeed" [style]="{'height':'250px'}" *ngIf="testoHtml"
+                name="testoFeedH">
+              </p-editor>
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="testoHtml" name="testoHtml">
+                <label class="custom-control-label" for="pluto">html</label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="punti esperienza"
+                [(ngModel)]="feedSelezionato.puntiEsperienza" name="puntiEsperienza">
+            </div>
+            <hr>
+
+            <!-- feed 1 - -->
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="data entita header"
+                [(ngModel)]="feedSelezionato.dataEntitaHeaderFeed" name="puntiEsperienza">
+            </div>
+            <!-- <div class="form-group">
+              <select class="form-control form-control-user custom-select">
+                <option default>scegli o cerca un vino nella lista</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+              </select>
+            </div> -->
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="url immagine"
+                [(ngModel)]="feedSelezionato.urlImmagineFeed" name="urlImmagineFeed" disabled>
+            </div>
+            <div class="form-group" *ngIf="feedSelezionato.urlImmagineFeed && feedSelezionato.urlImmagineFeed !== ''">
+              <img [src]="feedSelezionato.urlImmagineFeed">
+            </div>
+            <app-fileupload labelText="Carica Immagine Feed" (uploaded)="fileUploadedImmagineFeed($event)"
+              maxFileSize="600" folder="immaginefeed">
+            </app-fileupload>
+
+
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="url video"
+                [(ngModel)]="feedSelezionato.urlVideoFeed" name="urlVideoFeed">
+            </div>
+
+            <hr>
+            <a href="index.html" class="btn btn-primary btn-user">
+              Salva
+            </a>
+            <a href="index.html" class="btn btn-danger btn-user float-right">
+              Duplica
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

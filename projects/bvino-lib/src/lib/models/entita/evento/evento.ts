@@ -24,9 +24,14 @@ export class Evento {
   public longitudineEvento: number;
   public indirizzoEvento: string;
   public telefonoEvento: string;
+  public facebookEvento: string;
   public emailEvento: string;
   public numMaxPartecipantiEvento: number;
   public numPostiDisponibiliEvento: number;
+  public acquistabileEvento: number;
+  public creditiEvento: number;
+  public puntiEsperienza: number;
+  public pubblicatoEvento: boolean;
   public badgeEvento: Badge;
   public provinciaEvento: Provincia;
   public aziendaOspitanteEvento: Azienda;

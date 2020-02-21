@@ -1,106 +1,115 @@
 <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Gestione utenti</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Nuovo utente</a>
-    </div>
-    <div class="row">
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Lista utenti</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Gestione utenti</h1>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+        class="fas fa-plus fa-sm text-white-50"></i> Nuovo utente</a>
+  </div>
+  <div class="row">
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Lista utenti</h6>
         </div>
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica utente</h6>
-                </div>
-                <div class="card-body">
-                    <form class="">
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="id">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="name">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="nome">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="cognome">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control form-control-user" placeholder="email">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control form-control-user" placeholder="crediti">
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control form-control-user" placeholder="esperienza">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="livello">
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control form-control-user"></textarea>
-                            <div class="custom-control custom-checkbox small">
-                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                <label class="custom-control-label" for="customCheck">html</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url foto">
-                        </div>
-        
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine azienda</label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <a href="index.html" class="btn btn-primary btn-user">
-                            Salva
-                        </a>
-                        <a href="index.html" class="btn btn-danger btn-user float-right">
-                            Duplica
-                        </a>
-                    </form>
-                    <hr>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Id Evento</th>
-                                    <th>evento</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Id Evento</th>
-                                    <th>evento</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4" *ngIf="utenteSelezionato.idUtente !== ''">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica utente</h6>
+        </div>
+        <div class="card-body">
+          <form class="">
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="id"
+                [(ngModel)]="utenteSelezionato.idUtente" name="id">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="username"
+                [(ngModel)]="utenteSelezionato.usernameUtente" name="username">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="nome"
+                [(ngModel)]="utenteSelezionato.nomeUtente" name="nome">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="cognome"
+                [(ngModel)]="utenteSelezionato.cognomeUtente" name="cognome">
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control form-control-user" placeholder="email"
+                [(ngModel)]="utenteSelezionato.emailUtente" name="email">
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control form-control-user" placeholder="crediti"
+                [(ngModel)]="utenteSelezionato.creditiUtente" name="crediti">
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control form-control-user" placeholder="esperienza"
+                [(ngModel)]="utenteSelezionato.esperienzaUtente" name="esperienza">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="livello"
+                [(ngModel)]="utenteSelezionato.livelloUtente" name="livello">
+            </div>
+            <div class="form-group">
+              <textarea class="form-control form-control-user"></textarea>
+              <div class="custom-control custom-checkbox small">
+                <input type="checkbox" class="custom-control-input" id="customCheck">
+                <label class="custom-control-label" for="customCheck">html</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="url foto">
+            </div>
+
+            <div class="input-group">
+              <div class="custom-file">
+                <label class="custom-file-label" for="inputGroupFile04">carica immagine azienda</label>
+                <input type="file" class="custom-file-input" id="inputGroupFile04">
+              </div>
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">carica</button>
+              </div>
+            </div>
+            <hr>
+            <a href="index.html" class="btn btn-primary btn-user">
+              Salva
+            </a>
+            <a href="index.html" class="btn btn-danger btn-user float-right">
+              Duplica
+            </a>
+          </form>
+          <hr>
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Id Evento</th>
+                  <th>evento</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Id Evento</th>
+                  <th>evento</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

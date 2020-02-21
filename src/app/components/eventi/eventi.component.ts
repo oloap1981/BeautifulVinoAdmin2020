@@ -1,6 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
-import { SessionService, UtentiService, RichiesteService, ConstantsService, AlertService, EventiService, Evento } from 'bvino-lib';
+import {
+  SessionService,
+  UtentiService,
+  RichiesteService,
+  ConstantsService,
+  AlertService,
+  EventiService,
+  Evento,
+  Provincia,
+  ProvinciaEvento,
+  ViniAziendaService,
+  Vino,
+  VinoEvento
+} from 'bvino-lib';
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
@@ -23,10 +36,22 @@ export class EventiComponent extends BaseComponent implements OnInit {
   public cardImageBase64: string;
   public imageError: string;
 
+  public listaProvincie: Array<Provincia>;
+  public mostraEditorProvincie = false;
+  public provinciaSelezionata: Provincia;
+  public provinciaAdd: Provincia;
+
+  public listaVini: Array<Vino>;
+  public vinoAdd: Vino;
+
+  public temaHtml = false;
+  public testoHtml = false;
+
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
     public eventiService: EventiService,
+    public vinoService: ViniAziendaService,
     public sessionService: SessionService,
     public router: Router,
     public utentiService: UtentiService,
@@ -35,10 +60,25 @@ export class EventiComponent extends BaseComponent implements OnInit {
     public alertService: AlertService) {
 
     super(sessionService, router, richiesteService, constantsService, alertService);
+
+    // INIZIALIZZAZIONE DELL'EVENTO VUOTO
     this.eventoSelezionato = new Evento();
+    this.eventoSelezionato.idEvento = '';
+
+    const provinciaEvento = new ProvinciaEvento();
+    provinciaEvento.idProvincia = '';
+    provinciaEvento.nomeProvincia = '';
+    provinciaEvento.siglaProvincia = '';
+    this.eventoSelezionato.provinciaEventoInt = provinciaEvento;
+
+    this.listaVini = new Array<Vino>();
+    this.vinoAdd = new Vino();
+
     this.isImageSaved = false;
     this.cardImageBase64 = '';
     this.imageError = '';
+    this.provinciaSelezionata = new Provincia();
+    this.provinciaAdd = new Provincia();
   }
 
   ngOnInit() {
@@ -75,12 +115,14 @@ export class EventiComponent extends BaseComponent implements OnInit {
       this.dataTable = $(this.table.nativeElement);
       this.dataTable.DataTable(this.dtOptions);
     });
+    this.caricaProvince();
+    this.caricaVini();
   }
 
-
-  private selectEvento(data: any): void {
+  public selectEvento(data: any): void {
     console.log('Evento cliccato: ' + data.titoloEvento);
     this.eventoSelezionato = data;
+    this.provinciaSelezionata = this.eventoSelezionato.provinciaEvento;
   }
 
   private normalizeList(lista: Array<Evento>): Array<Evento> {
@@ -96,4 +138,126 @@ export class EventiComponent extends BaseComponent implements OnInit {
     return toReturn;
   }
 
+  public aggiornaDataEvento(event: any): void {
+    this.eventoSelezionato.dataEvento = event;
+    console.log(JSON.stringify(this.eventoSelezionato));
+  }
+
+  public caricaProvince() {
+
+    this.eventiService.getProvincie(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
+      if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
+        this.listaProvincie = r.province;
+      } else {
+        this.manageError(r);
+      }
+    }, err => {
+      this.presentErrorAlert(err.statusText);
+    });
+  }
+
+  public caricaVini() {
+    this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
+      if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
+        this.listaVini = r.vini;
+      } else {
+        this.manageError(r);
+      }
+    }, err => {
+      this.presentErrorAlert(err.statusText);
+    });
+  }
+
+  public selezionaProvincia(val: any) {
+    if (val.selectedOptions[0].value === '0' || val.selectedOptions[0].value === '') {
+      this.alertService.presentAlert('Scegliere un valore dal menu a tendina delle provincie');
+    } else {
+      console.log('Provincia Selezionata: ' + val.selectedOptions[0].value);
+      const split = val.selectedOptions[0].text.split(' ');
+      const sigla = split[0];
+      const nome = split[1].slice(1, -1);
+      const id = val.selectedOptions[0].value;
+      const provinciaEvento = new ProvinciaEvento();
+      provinciaEvento.idProvincia = id;
+      provinciaEvento.nomeProvincia = nome;
+      provinciaEvento.siglaProvincia = sigla;
+      this.eventoSelezionato.provinciaEvento = provinciaEvento;
+    }
+  }
+
+  public aggiungiProvincia() {
+    const provincia: Provincia = new Provincia();
+    provincia.nomeProvincia = this.provinciaAdd.nomeProvincia;
+    provincia.siglaProvincia = this.provinciaAdd.siglaProvincia;
+    this.eventiService.putProvincia(this.richiesteService.getRichiestaPutProvincia(), provincia).subscribe(r => {
+      if (r.idProvincia && r.idProvincia === '') {
+        this.alertService.presentErrorAlert('Si è verificato un problema nel salvataggio della provincia');
+      } else {
+        this.alertService.presentAlert('Provincia salvata correttamente');
+        this.caricaProvince();
+        this.provinciaAdd.nomeProvincia = '';
+        this.provinciaAdd.siglaProvincia = '';
+      }
+    }, err => {
+      this.presentErrorAlert(err.statusText);
+    });
+  }
+
+  public aggiungiVinoALista() {
+    const vinoEvento = new VinoEvento();
+    vinoEvento.annoVino = this.vinoAdd.annoVino;
+    vinoEvento.nomeVino = this.vinoAdd.nomeVino;
+    // vinoEvento.nomeAziendaVino = this.vinoAdd.aziendaVinoInt.nomeAzienda;
+    vinoEvento.idVino = this.vinoAdd.idVino;
+    this.aggiungiVinoAEventoSelezionato(vinoEvento);
+  }
+
+  private aggiungiVinoAEventoSelezionato(vinoEvento: VinoEvento) {
+    let trovato = false;
+    for (const vino of this.eventoSelezionato.viniEventoInt) {
+      if (vino.idVino === vinoEvento.idVino) {
+        trovato = true;
+        break;
+      }
+    }
+    if (!trovato) {
+      this.eventoSelezionato.viniEventoInt.push(vinoEvento);
+    }
+  }
+
+  public togliVinoDaLista(vinoEvento: VinoEvento) {
+    const index = this.eventoSelezionato.viniEventoInt.indexOf(vinoEvento, 0);
+    if (index > -1) {
+      this.eventoSelezionato.viniEventoInt.splice(index, 1);
+    }
+  }
+
+  public selezionaVino(val: any) {
+    if (val.selectedOptions[0].value === '0' || val.selectedOptions[0].value === '') {
+      this.alertService.presentAlert('Scegliere un valore dal menu a tendina dei vini');
+    } else {
+      console.log('Vino Selezionata: ' + val.selectedOptions[0].value);
+      const id = val.selectedOptions[0].value;
+      const vino = this.getVinoFromList(id);
+
+      this.vinoAdd.idVino = vino.idVino;
+      this.vinoAdd.annoVino = vino.annoVino;
+      this.vinoAdd.nomeVino = vino.nomeVino;
+
+    }
+  }
+
+  private getVinoFromList(id: string): Vino {
+    for (const vino of this.listaVini) {
+      if (vino.idVino === id) {
+        return vino;
+      }
+    }
+    return new Vino();
+  }
+
+  public fileUploadedLogo(event: any) {
+    console.log('vini-component, file caricato: ' + event);
+    this.eventoSelezionato.urlFotoEvento = event;
+  }
 }

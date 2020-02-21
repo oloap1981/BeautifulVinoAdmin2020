@@ -3,6 +3,7 @@ import { Evento } from '../evento/evento';
 import { VinoFeed } from './vinofeed';
 import { EventoFeed } from './eventofeed';
 import { AziendaFeed } from './aziendafeed';
+import { bool } from 'aws-sdk/clients/signer';
 
 export class Feed {
   public idFeed: string;
@@ -21,10 +22,18 @@ export class Feed {
   public sottoHeaderFeed: string;
   public testoFeed: string;
   public visualizzaButtonFeed: string;
+  public puntiEsperienza: number;
+  public pubblicato: boolean;
   public vinoFeed: Vino;
   public vinoFeedInt: VinoFeed;
   public eventoFeed: Evento;
   public eventoFeedInt: EventoFeed;
   public aziendaFeedInt: AziendaFeed;
+
+  /*
+
+	private int puntiEsperienza;
+  private boolean pubblicato;
+  */
 
 }

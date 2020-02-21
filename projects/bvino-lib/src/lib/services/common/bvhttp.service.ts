@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { ConstantsService } from './constants.service';
 import { RispostaGetGenerica } from '../../models/comunicazioni/richieste/get/rispostagetgenerica';
 import { RichiestaGetGenerica } from '../../models/comunicazioni/richieste/get/richiestagetgenerica';
+import { RispostaPutGenerica } from '../../models/comunicazioni/richieste/put/rispostaputgenerica';
+import { RichiestaPutGenerica } from '../../models/comunicazioni/richieste/put/richiestaputgenerica';
 
 
 @Injectable()
@@ -23,7 +25,14 @@ export class BVHttpService {
 
   public post(path: string, request: RichiestaGetGenerica): Observable<RispostaGetGenerica> {
     return this.http.post<RispostaGetGenerica>(
-      this.constantsService.baseAppUrl
+      this.constantsService.baseAppUrlGet
+      + this.constantsService.pathSeparator
+      + path, request);
+  }
+
+  public postPut(path: string, request: RichiestaPutGenerica): Observable<RispostaPutGenerica> {
+    return this.http.post<RispostaPutGenerica>(
+      this.constantsService.baseAppUrlPut
       + this.constantsService.pathSeparator
       + path, request);
   }

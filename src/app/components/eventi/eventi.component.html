@@ -17,94 +17,114 @@
       </div>
     </div>
     <div class="col-xl-6 col-md-6 mb-6">
-      <div class="card shadow mb-4">
+      <div class="card shadow mb-4" *ngIf="eventoSelezionato.idEvento !== ''">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica evento</h6>
         </div>
         <div class="card-body">
           <form class="">
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="id evento">
+              <input type="text" class="form-control form-control-user" placeholder="id evento"
+                [(ngModel)]="eventoSelezionato.idEvento" name="idEvento">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="titolo evento">
+              <input type="text" class="form-control form-control-user" placeholder="titolo evento"
+                [(ngModel)]="eventoSelezionato.titoloEvento" name="titoloEvento">
             </div>
             <div class="form-group">
               <div class="custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="customCheck">
+                <input type="checkbox" class="custom-control-input" id="customCheck"
+                  [(ngModel)]="eventoSelezionato.acquistabileEvento" name="acquistabileEvento">
                 <label class="custom-control-label" for="customCheck">acquistabile</label>
               </div>
             </div>
             <div class="form-group">
               <div class="custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="customCheck">
+                <input type="checkbox" class="custom-control-input" id="customCheck"
+                  [(ngModel)]="eventoSelezionato.pubblicatoEvento" name="acquistabileEvento">
                 <label class="custom-control-label" for="customCheck">pubblicato</label>
               </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="citt&agrave; evento">
+              <input type="text" class="form-control form-control-user" placeholder="citt&agrave; evento"
+                [(ngModel)]="eventoSelezionato.cittaEvento" name="cittaEvento">
             </div>
             <div class="form-group">
-              <textarea class="form-control form-control-user" placeholder="tema evento"></textarea>
+              <textarea class="form-control form-control-user" placeholder="tema evento"
+                [(ngModel)]="eventoSelezionato.temaEvento" name="temaEvento" *ngIf="!temaHtml"></textarea>
+              <p-editor [(ngModel)]="eventoSelezionato.temaEvento" [style]="{'height':'250px'}" *ngIf="temaHtml"
+                name="temaEventoH">
+              </p-editor>
               <div class="custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="pippo">
+                <input type="checkbox" class="custom-control-input" id="pippo" [(ngModel)]="temaHtml" name="temaHtml">
                 <label class="custom-control-label" for="pippo">html</label>
               </div>
             </div>
             <div class="form-group">
-              <textarea class="form-control form-control-user" placeholder="testo evento"></textarea>
+              <textarea class="form-control form-control-user" placeholder="testo evento"
+                [(ngModel)]="eventoSelezionato.testoEvento" name="testoEvento" *ngIf="!testoHtml"></textarea>
+              <p-editor [(ngModel)]="eventoSelezionato.testoEvento" [style]="{'height':'250px'}" *ngIf="testoHtml"
+                name="testoEventoH">
+              </p-editor>
               <div class="custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="pluto">
+                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="testoHtml" name="testoHtml">
                 <label class="custom-control-label" for="pluto">html</label>
               </div>
             </div>
             <div class="form-group">
-              <select class="form-control form-control-user custom-select">
-                <option default>provincia evento</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
+              <select class="form-control form-control-user custom-select" (change)="selezionaProvincia($event.target)">
+                <option *ngFor="let prov of listaProvincie" [ngValue]="prov.idProvincia" value="{{prov.idProvincia}}"
+                  [attr.selected]="prov.idProvincia+'' === eventoSelezionato.provinciaEventoInt.idProvincia+'' ? 'selected' : null">
+                  {{prov.siglaProvincia + ' (' + prov.nomeProvincia + ')'}}
+                </option>
               </select>
-            </div>
-            <div class="input-group">
-              <input type="text" class="form-control form-control-user" placeholder="">
-              <input type="text" class="form-control form-control-user" placeholder="">
             </div>
             <hr>
             <div class="form-group">
-              <a href="#" class="d-none d-sm-inline-block btn  btn-primary shadow-sm"><i
-                  class="fas fa-plus fa-sm text-white-50"></i> Apri editor province</a>
+              <button (click)="mostraEditorProvincie = !mostraEditorProvincie"
+                class="d-none d-sm-inline-block btn  btn-primary shadow-sm"><i
+                  class="fas fa-plus fa-sm text-white-50"></i>{{mostraEditorProvincie ? 'Chiudi editor province' : 'Apri editor province' }}</button>
             </div>
-            <div>
+            <div *ngIf="mostraEditorProvincie">
               <div class="input-group">
-                <input type="text" class="form-control form-control-user" placeholder="o">
-                <input type="text" class="form-control form-control-user" placeholder="">
+                <input type="text" class="form-control form-control-user" placeholder="sigla"
+                  [(ngModel)]="provinciaAdd.siglaProvincia" name="siglaProvincia">
+                <input type="text" class="form-control form-control-user" placeholder="nome"
+                  [(ngModel)]="provinciaAdd.nomeProvincia" name="nomeProvincia">
               </div>
               <div class="input-group">
-                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-plus fa-sm text-white-50"></i>aggiungi provincia</a>
+                <button (click)="aggiungiProvincia()"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-plus fa-sm text-white-50"></i>aggiungi provincia</button>
               </div>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="indirizzo evento">
+              <input type="text" class="form-control form-control-user" placeholder="indirizzo evento"
+                [(ngModel)]="eventoSelezionato.indirizzoEvento" name="indirizzoEvento">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="telefono evento">
+              <input type="text" class="form-control form-control-user" placeholder="telefono evento"
+                [(ngModel)]="eventoSelezionato.telefonoEvento" name="telefonoEvento">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="evento Facebook">
+              <input type="text" class="form-control form-control-user" placeholder="evento Facebook"
+                [(ngModel)]="eventoSelezionato.facebookEvento" name="facebookEvento">
             </div>
             <div class="form-group">
-              <input type="email" class="form-control form-control-user" placeholder="email evento">
+              <input type="email" class="form-control form-control-user" placeholder="email evento"
+                [(ngModel)]="eventoSelezionato.emailEvento" name="emailEvento">
             </div>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="">data evento</span>
               </div>
-              <input type="date" class="form-control form-control-user" placeholder="data evento">
+              <app-bvdatepicker (inputDate)="eventoSelezionato.dataEvento" (sendDate)="aggiornaDataEvento($event)">
+              </app-bvdatepicker>
+              <!-- <input type="date" class="form-control form-control-user" placeholder="data evento"> -->
             </div>
 
+
+            <!-- RENDERE FISSO VISTO CHE SI RAGIONA PER AZIENDA-->
             <div class="form-group">
               <select class="form-control form-control-user custom-select">
                 <option default>azienda ospitante</option>
@@ -115,100 +135,79 @@
               </select>
             </div>
 
-            <div class="input-group">
-              <input type="text" class="form-control form-control-user" placeholder="">
-              <div class="input-group-append">
-                <button class="btn btn-primary shadow-sm" type="button"><i
-                    class="fas fa-trash fa-sm text-white-50"></i></button>
-              </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="prezzo evento"
+                [(ngModel)]="eventoSelezionato.prezzoEvento" name="prezzoEvento">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="prezzo evento">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user"
-                placeholder="numero massimo partecipanti evento">
+              <input type="text" class="form-control form-control-user" placeholder="numero massimo partecipanti evento"
+                [(ngModel)]="eventoSelezionato.numMaxPartecipantiEvento" name="numMaxPartecipantiEvento">
             </div>
             <div class="form-group">
               <input type="text" class="form-control form-control-user"
-                placeholder="numero posti disponibili al momento">
+                placeholder="numero posti disponibili al momento"
+                [(ngModel)]="eventoSelezionato.numPostiDisponibiliEvento" name="numPostiDisponibiliEvento">
             </div>
 
-
-
-
-            <div class="input-group">
+            <!-- <div class="input-group">
               <div class="custom-file">
                 <label class="custom-file-label" for="inputGroupFile04">immagine evento</label>
-                <input type="file" class="custom-file-input" id="inputGroupFile04">
+                <input type="file" class="custom-file-input" id="inputGroupFile04"
+                  [(ngModel)]="eventoSelezionato.urlFotoEvento" name="urlFotoEvento" disabled>
               </div>
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button">carica</button>
               </div>
+            </div> -->
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="url logo"
+                [(ngModel)]="eventoSelezionato.urlFotoEvento" name="urlImmagineVino" disabled>
+            </div>
+            <div class="form-group" *ngIf="eventoSelezionato.urlFotoEvento && eventoSelezionato.urlFotoEvento !== ''">
+              <img [src]="eventoSelezionato.urlFotoEvento">
+            </div>
+            <app-fileupload labelText="Carica Immagine Evento Vino" (uploaded)="fileUploadedLogo($event)"
+              maxFileSize="600" folder="immagineevento">
+            </app-fileupload>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-user" placeholder="latitudine evento"
+                [(ngModel)]="eventoSelezionato.latitudineEvento" name="latitudineEvento">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="url foto">
+              <input type="text" class="form-control form-control-user" placeholder="longitudine evento"
+                [(ngModel)]="eventoSelezionato.longitudineEvento" name="longitudineEvento">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="latitudine evento">
+              <input type="text" class="form-control form-control-user" placeholder="crediti"
+                [(ngModel)]="eventoSelezionato.creditiEvento" name="creditiEvento">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="longitudine evento">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="crediti">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="punti esperienza">
+              <input type="text" class="form-control form-control-user" placeholder="punti esperienza"
+                [(ngModel)]="eventoSelezionato.puntiEsperienza" name="puntiEsperienza">
             </div>
             <hr>
-            <h5>Badge evento</h5>
+
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="nome badge">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="info badge">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="id badge">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="url logo badge">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="">
-            </div>
-            <div class="input-group">
-              <div class="custom-file">
-                <label class="custom-file-label" for="inputGroupFile04">immagine badge</label>
-                <input type="file" class="custom-file-input" id="inputGroupFile04">
-              </div>
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">carica</button>
-              </div>
-            </div>
-            <hr>
-            <div class="form-group">
-              <select class="form-control form-control-user custom-select">
-                <option default>vini da associare all'evento</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
+              <select class="form-control form-control-user custom-select" (change)="selezionaVino($event.target)">
+                <option *ngFor="let vino of listaVini" [ngValue]="vino.idVino" value="{{vino.idVino}}"
+                  [attr.selected]="vino.idVino+'' === vinoAdd.idVino+'' ? 'selected' : null">
+                  {{vino.nomeVino + '-' + vino.aziendaVinoInt.nomeAzienda + '-' + vino.annoVino}}
+                </option>
               </select>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="nome vino">
+              <input type="text" class="form-control form-control-user" placeholder="nome vino"
+                [(ngModel)]="vinoAdd.nomeVino" name="nomeVino">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="azienda vino">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="anno vino">
+              <input type="text" class="form-control form-control-user" placeholder="anno vino"
+                [(ngModel)]="vinoAdd.annoVino" name="anno">
             </div>
             <div class="input-group">
-              <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                  class="fas fa-plus fa-sm text-white-50"></i>aggiungi vino</a>
+              <button (click)="aggiungiVinoALista()"
+                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                  class="fas fa-plus fa-sm text-white-50"></i>aggiungi vino</button>
             </div>
             <div class="table-responsive">
 
@@ -221,22 +220,14 @@
                     <th>&nbsp;</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                    <th>Nome vino</th>
-                    <th>Azienda </th>
-                    <th>Anno vno</th>
-                    <th>&nbsp;</th>
-                  </tr>
-                </tfoot>
                 <tbody>
-                  <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>2012</td>
-                    <td class="text-center"><a href="#"
+                  <tr *ngFor="let vino of eventoSelezionato.viniEventoInt">
+                    <td>{{vino.nomeVino}}</td>
+                    <td>{{vino.nomeAziendaVino}}</td>
+                    <td>{{vino.annoVino}}</td>
+                    <td class="text-center"><button (click)="togliVinoDaLista(vino)"
                         class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                          class="fas fa-trash fa-sm text-white-50"></i></a></td>
+                          class="fas fa-trash fa-sm text-white-50"></i></button></td>
                   </tr>
                 </tbody>
               </table>

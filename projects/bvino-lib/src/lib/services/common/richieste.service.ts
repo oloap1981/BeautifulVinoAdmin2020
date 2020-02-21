@@ -40,6 +40,20 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaGetProvincie() {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.constants.getProvincieFunctionName;
+
+    return richiesta;
+  }
+
+  public getRichiestaPutProvincia() {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.constants.putProvinciaFunctionName;
+
+    return richiesta;
+  }
+
   public getRichiestaGetFeed() {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.constants.getFeedFunctionName;

@@ -19,6 +19,8 @@ export class UtentiComponent extends BaseComponent implements OnInit {
 
   @ViewChild('dataTable', { static: true }) table;
 
+  public utenteSelezionato: Utente;
+
   constructor(public sessionService: SessionService,
     public router: Router,
     public utentiService: UtentiService,
@@ -26,6 +28,8 @@ export class UtentiComponent extends BaseComponent implements OnInit {
     public constantsService: ConstantsService,
     public alertService: AlertService) {
     super(sessionService, router, richiesteService, constantsService, alertService);
+    this.utenteSelezionato = new Utente();
+    this.utenteSelezionato.idUtente = '';
   }
 
   ngOnInit() {
@@ -78,6 +82,7 @@ export class UtentiComponent extends BaseComponent implements OnInit {
 
   private selectUtente(data: any): void {
     console.log('utente cliccato' + data.usernameUtente);
+    this.utenteSelezionato = data;
   }
 
 }
