@@ -1,136 +1,136 @@
 <div class="container-fluid">
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Gestione aziende</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-        class="fas fa-plus fa-sm text-white-50"></i> Nuova azienda</a>
-  </div>
-  <div class="row">
-    <div class="col-xl-6 col-md-6 mb-6">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Lista aziende</h6>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
-            </table>
-          </div>
-        </div>
-      </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h4 class="h3 mb-0 text-gray-800">Gestione aziende</h4>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Nuova azienda</a>
     </div>
-    <div class="col-xl-6 col-md-6 mb-6">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica azienda</h6>
+    <div class="row">
+        <div class="col-xl-6 col-md-6 mb-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Lista aziende</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <form class="">
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="id"
-                [(ngModel)]="aziendaSelezionata.idAzienda" name="idAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="name"
-                [(ngModel)]="aziendaSelezionata.nomeAzienda" name="nomeAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="luogo"
-                [(ngModel)]="aziendaSelezionata.cittaAzienda" name="cittaAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="indirizzo"
-                [(ngModel)]="aziendaSelezionata.indirizzoAzienda" name="indirizzoAzienda">
-            </div>
-            <div class="form-group">
-              <textarea class="form-control form-control-user"></textarea>
-              <div class="custom-control custom-checkbox small">
-                <input type="checkbox" class="custom-control-input" id="customCheck"
-                  [(ngModel)]="aziendaSelezionata.infoAzienda" name="infoAzienda">
-                <label class="custom-control-label" for="customCheck">html</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="regione"
-                [(ngModel)]="aziendaSelezionata.regioneAzienda" name="regioneAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="latitudine"
-                [(ngModel)]="aziendaSelezionata.latitudineAzienda" name="latitudineAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="longitudine"
-                [(ngModel)]="aziendaSelezionata.longitudineAzienda" name="longitudineAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="sito web"
-                [(ngModel)]="aziendaSelezionata.sitoAzienda" name="sitoAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="email"
-                [(ngModel)]="aziendaSelezionata.emailAzienda" name="emailAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="email secondaria"
-                [(ngModel)]="aziendaSelezionata.emailSecondariaAzienda" name="emailSecondariaAzienda">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="telefono"
-                [(ngModel)]="aziendaSelezionata.telefonoAzienda" name="telefonoAzienda">
-            </div>
+        <div class="col-xl-6 col-md-6 mb-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica azienda</h6>
+                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Elimina</a>
+                </div>
+                <div class="card-body">
+                    <form class="">
+                        <div class="form-group">
+                            <label>Id azienda</label>
+                            <input type="text" class="form-control form-control-user" placeholder="id" [(ngModel)]="aziendaSelezionata.idAzienda" name="idAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Nome azienda</label>
+                            <input type="text" class="form-control form-control-user" placeholder="nome azienda" [(ngModel)]="aziendaSelezionata.nomeAzienda" name="nomeAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Citt&agrave; </label>
+                            <input type="text" class="form-control form-control-user" placeholder="citt&agrave;" [(ngModel)]="aziendaSelezionata.cittaAzienda" name="cittaAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Indirizzo</label>
+                            <input type="text" class="form-control form-control-user" placeholder="indirizzo" [(ngModel)]="aziendaSelezionata.indirizzoAzienda" name="indirizzoAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Informazioni</label>
+                            <textarea class="form-control form-control-user"></textarea>
+                            <div class="custom-control custom-checkbox small">
+                                <input type="checkbox" class="custom-control-input" id="customCheck" [(ngModel)]="aziendaSelezionata.infoAzienda" name="infoAzienda">
+                                <label class="custom-control-label" for="customCheck">html</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>regione</label>
+                            <input type="text" class="form-control form-control-user" placeholder="regione" [(ngModel)]="aziendaSelezionata.regioneAzienda" name="regioneAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Latitudine azienda</label>
+                            <input type="text" class="form-control form-control-user" placeholder="latitudine" [(ngModel)]="aziendaSelezionata.latitudineAzienda" name="latitudineAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Longitudine azienda</label>
+                            <input type="text" class="form-control form-control-user" placeholder="longitudine" [(ngModel)]="aziendaSelezionata.longitudineAzienda" name="longitudineAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Sito web</label>
+                            <input type="text" class="form-control form-control-user" placeholder="http://..." [(ngModel)]="aziendaSelezionata.sitoAzienda" name="sitoAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control form-control-user" placeholder="email" [(ngModel)]="aziendaSelezionata.emailAzienda" name="emailAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Email alternativa</label>
+                            <input type="text" class="form-control form-control-user" placeholder="email secondaria" [(ngModel)]="aziendaSelezionata.emailSecondariaAzienda" name="emailSecondariaAzienda">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefono</label>
+                            <input type="text" class="form-control form-control-user" placeholder="telefono" [(ngModel)]="aziendaSelezionata.telefonoAzienda" name="telefonoAzienda">
+                        </div>
 
-            <div class="form-group">
-              <input type="text" class="form-control form-control-user" placeholder="url immagine azienda"
-                [(ngModel)]="aziendaSelezionata.urlImmagineAzienda" name="urlImmagineAzienda">
-            </div>
-            <label>Upload Immagine Azienda</label>
-            {{imageError}}
-            <div class="custom-file fileInputProfileWrap">
-              <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
-              <div class="img-space">
+                        <div class="form-group">
+                            <label>Link esterno immagine azienda</label>
+                            <input type="text" class="form-control form-control-user" placeholder="url immagine azienda" [(ngModel)]="aziendaSelezionata.urlImmagineAzienda" name="urlImmagineAzienda">
+                        </div>
+                        <label>Upload Immagine Azienda</label>
+                        {{imageError}}
+                        <div class="custom-file fileInputProfileWrap">
+                            <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile">
+                            <div class="img-space">
 
-                <ng-container *ngIf="isImageSaved; else elseTemplate">
-                  <img [src]="cardImageBase64" />
-                </ng-container>
-                <ng-template #elseTemplate>
-                  <img src="./../../assets/placeholder.png" class="img-responsive">
-                </ng-template>
-              </div>
+                                <ng-container *ngIf="isImageSaved; else elseTemplate">
+                                    <img [src]="cardImageBase64" />
+                                </ng-container>
+                                <ng-template #elseTemplate>
+                                    <img src="./../../assets/placeholder.png" class="img-responsive">
+                                </ng-template>
+                            </div>
 
+                        </div>
+                        <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
+                        <hr>
+                        <a href="index.html" class="btn btn-primary btn-user">
+                            Salva
+                        </a>
+                        <a href="index.html" class="btn btn-danger btn-user float-right">
+                            Duplica
+                        </a>
+                    </form>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Id Evento</th>
+                                    <th>evento</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Id Evento</th>
+                                    <th>evento</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
-            <hr>
-            <a href="index.html" class="btn btn-primary btn-user">
-              Salva
-            </a>
-            <a href="index.html" class="btn btn-danger btn-user float-right">
-              Duplica
-            </a>
-          </form>
-          <hr>
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Id Evento</th>
-                  <th>evento</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Id Evento</th>
-                  <th>evento</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
