@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService, RichiestaGetGenerica, UtentiService } from 'bvino-lib';
+import { SessionService, RichiestaGetGenerica, BVCommonService, RichiesteService } from 'bvino-lib';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 
@@ -14,7 +14,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private appSessionService: AppSessionService,
     private sessionService: SessionService,
-    private utentiService: UtentiService
+    private commonService: BVCommonService,
+    private richiesteService: RichiesteService
   ) { }
 
   ngOnInit() {
@@ -23,8 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   private getUtentiList(): void {
-    const richiesta = new RichiestaGetGenerica();
-    this.utentiService.getUtenti(richiesta).subscribe(risposta => {
+    this.commonService.get(this.richiesteService.getRichiestaGetUtenti()).subscribe(risposta => {
       if (risposta.esito.codice === 100) {
         const lista = risposta.utenti;
         console.log('numero utenti trovati ' + lista.length);

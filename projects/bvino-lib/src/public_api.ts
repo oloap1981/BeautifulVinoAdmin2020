@@ -8,20 +8,21 @@ export * from './lib/bvino-lib.module';
 // -- AUTH
 export * from './lib/services/auth/BVAuthorizationService';
 // -- CHIAMATE REMOTE
-export * from './lib/services/utenti/utenti.service';
-export * from './lib/services/aziende/aziende.service';
-export * from './lib/services/vini/vini.service';
-export * from './lib/services/vini/viniAzienda.service';
-export * from './lib/services/feeds/feeds.service';
-export * from './lib/services/badges/badges.service';
-export * from './lib/services/eventi/eventi.service';
-export * from './lib/services/profiliAziende/profiliAziende.service';
+// export * from './lib/services/utenti/utenti.service';
+// export * from './lib/services/aziende/aziende.service';
+// export * from './lib/services/vini/vini.service';
+// export * from './lib/services/vini/viniAzienda.service';
+// export * from './lib/services/feeds/feeds.service';
+// export * from './lib/services/badges/badges.service';
+// export * from './lib/services/eventi/eventi.service';
+// export * from './lib/services/profiliAziende/profiliAziende.service';
 // -- COMUNI
 export * from './lib/services/common/session.service';
 export * from './lib/services/common/bvhttp.service';
 export * from './lib/services/common/constants.service';
 export * from './lib/services/common/richieste.service';
 export * from './lib/services/common/alert.service';
+export * from './lib/services/common/common.service';
 
 // models
 // - token

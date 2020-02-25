@@ -30,9 +30,7 @@ export class EventiService {
     return this.httpService.post(this.constantsService.getServiceName, request);
   }
 
-  public putProvincia(request: RichiestaPutGenerica, provincia: Provincia): Observable<RispostaPutGenerica> {
-    request.functionName = this.constantsService.putProvinciaFunctionName;
-    request.provincia = provincia;
+  public putProvincia(request: RichiestaPutGenerica): Observable<RispostaPutGenerica> {
     return this.httpService.postPut(this.constantsService.putServiceName, request);
   }
 }

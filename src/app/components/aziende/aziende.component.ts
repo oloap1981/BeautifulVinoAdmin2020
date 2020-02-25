@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
-import { SessionService, UtentiService, RichiesteService, ConstantsService, AlertService, Azienda, AziendeService } from 'bvino-lib';
+import { SessionService, RichiesteService, ConstantsService, AlertService, Azienda, BVCommonService } from 'bvino-lib';
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
+import { IgxColumnMovingService } from 'igniteui-angular';
 
 declare var $;
 @Component({
@@ -26,10 +27,9 @@ export class AziendeComponent extends BaseComponent implements OnInit {
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
-    public aziendeService: AziendeService,
+    public commonService: BVCommonService,
     public sessionService: SessionService,
     public router: Router,
-    public utentiService: UtentiService,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService) {
@@ -42,8 +42,7 @@ export class AziendeComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.aziendeService.getAziende(this.richiesteService.getRichiestaGetAziende()).subscribe(r => {
+    this.commonService.get(this.richiesteService.getRichiestaGetAziende()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.aziende);
         this.dtOptions = {

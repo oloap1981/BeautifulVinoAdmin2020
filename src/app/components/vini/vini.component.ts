@@ -1,6 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
-import { SessionService, UtentiService, RichiesteService, ConstantsService, AlertService, Vino, ViniAziendaService } from 'bvino-lib';
+import {
+  SessionService,
+  RichiesteService,
+  ConstantsService,
+  AlertService,
+  Vino,
+  BVCommonService
+} from 'bvino-lib';
+
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
@@ -28,10 +36,9 @@ export class ViniComponent extends BaseComponent implements OnInit {
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
-    public vinoService: ViniAziendaService,
+    public commonService: BVCommonService,
     public sessionService: SessionService,
     public router: Router,
-    public utentiService: UtentiService,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService) {
@@ -46,7 +53,8 @@ export class ViniComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     // l'id dell'azienda deve essere recuperato dalla sessione se l'utente loggato è un
-    this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
+    this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
+      // this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.vini);
         this.dtOptions = {

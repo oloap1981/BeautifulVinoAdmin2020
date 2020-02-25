@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import {
-  ViniAziendaService,
   SessionService,
-  UtentiService,
   RichiesteService,
   ConstantsService,
   AlertService,
-  FeedsService,
-  Feed
+  Feed,
+  BVCommonService
 } from 'bvino-lib';
 import { Router } from '@angular/router';
 
@@ -33,10 +31,9 @@ export class FeedComponent extends BaseComponent implements OnInit {
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
-    public feedService: FeedsService,
+    public commonService: BVCommonService,
     public sessionService: SessionService,
     public router: Router,
-    public utentiService: UtentiService,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService) {
@@ -48,7 +45,8 @@ export class FeedComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     const self = this;
-    this.feedService.getFeeds(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
+    this.commonService.get(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
+      // this.feedService.getFeeds(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.feed);
         this.dtOptions = {

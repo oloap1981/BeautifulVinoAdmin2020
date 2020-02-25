@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { Router } from '@angular/router';
-import { SessionService, UtentiService, RichiesteService, ConstantsService, AlertService, Utente } from 'bvino-lib';
+import { SessionService, RichiesteService, ConstantsService, AlertService, Utente, BVCommonService } from 'bvino-lib';
 
 declare var $;
 @Component({
@@ -23,7 +23,7 @@ export class UtentiComponent extends BaseComponent implements OnInit {
 
   constructor(public sessionService: SessionService,
     public router: Router,
-    public utentiService: UtentiService,
+    public commonService: BVCommonService,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService) {
@@ -33,7 +33,8 @@ export class UtentiComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.utentiService.getUtenti(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
+    this.commonService.get(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
+      // this.utentiService.getUtenti(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.utenti);
         this.dtOptions = {

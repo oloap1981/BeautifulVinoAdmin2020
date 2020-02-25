@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import { SessionService, Utente, UtentiService, RichiesteService, ConstantsService, RispostaGetGenerica, AlertService } from 'bvino-lib';
+import { SessionService, Utente, RichiesteService, ConstantsService, RispostaGetGenerica, AlertService } from 'bvino-lib';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 

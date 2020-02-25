@@ -35,6 +35,14 @@ export class ConstantsService {
   // nomi funzioni PUT
   public readonly putImmaginiFunctionName: string = 'putImageGen';
   public readonly putProvinciaFunctionName: string = 'putProvinciaGen';
+  public readonly putAziendaFunctionName: string = 'putAziendaGen';
+  public readonly putEventoFunctionName: string = 'putEventoGen';
+  public readonly putFeedFunctionName: string = 'putFeedGen';
+  public readonly putUtenteFunctionName: string = 'putUtenteGen';
+  public readonly putVinoFunctionName: string = 'putVinoGen';
+  public readonly putUserProfileImageFunctionName: string = 'putUserProfileImageGen';
+  public readonly putUserProfileImageWithUserFunctionName: string = 'putUserProfileImageWithUserGen';
+  public readonly putPuntiEsperienzaFunctionName: string = 'putPuntiEsperienza';
 
   // codici esito
   public readonly ESITO_OK_CODICE: number = 100;

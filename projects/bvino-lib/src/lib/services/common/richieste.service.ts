@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 import { RichiestaGetGenerica } from '../../models/comunicazioni/richieste/get/richiestagetgenerica';
 import { ConstantsService } from './constants.service';
 import { RichiestaPutGenerica } from '../../models/comunicazioni/richieste/put/richiestaputgenerica';
+import { Utente } from '../../models/entita/utente/utente';
+import { Evento } from '../../models/entita/evento/evento';
+import { Feed } from '../../models/entita/feed/feed';
+import { Vino } from '../../models/entita/vino/vino';
+import { Provincia } from '../../models/entita/provincia/provincia';
 
 @Injectable()
 export class RichiesteService {
   constructor(private constants: ConstantsService) {
 
   }
+
+  // -------- GET --------
 
   public getRichiestaGetUtenti() {
     const richiesta = new RichiestaGetGenerica();
@@ -47,13 +54,6 @@ export class RichiesteService {
     return richiesta;
   }
 
-  public getRichiestaPutProvincia() {
-    const richiesta = new RichiestaPutGenerica();
-    richiesta.functionName = this.constants.putProvinciaFunctionName;
-
-    return richiesta;
-  }
-
   public getRichiestaGetFeed() {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.constants.getFeedFunctionName;
@@ -76,6 +76,8 @@ export class RichiesteService {
     return richiesta;
   }
 
+  // -------- PUT --------
+
   public getRichiestaPutImmagine(file: any, filename: string, tipoEntita: string) {
     const richiesta = new RichiestaPutGenerica();
 
@@ -88,4 +90,39 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaPutProvincia(provincia: Provincia) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.constants.putProvinciaFunctionName;
+    richiesta.provincia = provincia;
+    return richiesta;
+  }
+
+  public getRichiestaPutUtente(utente: Utente) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.constants.putUtenteFunctionName;
+    richiesta.utente = utente;
+    return richiesta;
+  }
+
+  public getRichiestaPutEvento(evento: Evento) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.constants.putEventoFunctionName;
+    richiesta.evento = evento;
+    return richiesta;
+  }
+
+  public getRichiestaPutFeed(feed: Feed) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.constants.putFeedFunctionName;
+    richiesta.feed = feed;
+    return richiesta;
+  }
+
+
+  public getRichiestaPutVino(vino: Vino) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.constants.putVinoFunctionName;
+    richiesta.vino = vino;
+    return richiesta;
+  }
 }

@@ -2,17 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import {
   SessionService,
-  UtentiService,
   RichiesteService,
   ConstantsService,
   AlertService,
-  EventiService,
   Evento,
   Provincia,
   ProvinciaEvento,
-  ViniAziendaService,
   Vino,
-  VinoEvento
+  VinoEvento,
+  BVCommonService
 } from 'bvino-lib';
 import { Router } from '@angular/router';
 
@@ -50,11 +48,9 @@ export class EventiComponent extends BaseComponent implements OnInit {
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
-    public eventiService: EventiService,
-    public vinoService: ViniAziendaService,
+    public commonService: BVCommonService,
     public sessionService: SessionService,
     public router: Router,
-    public utentiService: UtentiService,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService) {
@@ -82,7 +78,8 @@ export class EventiComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
+    this.commonService.get(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
+      // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.eventi);
         this.dtOptions = {
@@ -145,7 +142,8 @@ export class EventiComponent extends BaseComponent implements OnInit {
 
   public caricaProvince() {
 
-    this.eventiService.getProvincie(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
+    this.commonService.get(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
+      // this.eventiService.getProvincie(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.listaProvincie = r.province;
       } else {
@@ -157,7 +155,8 @@ export class EventiComponent extends BaseComponent implements OnInit {
   }
 
   public caricaVini() {
-    this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
+    this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
+      // this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
         this.listaVini = r.vini;
       } else {
@@ -189,7 +188,8 @@ export class EventiComponent extends BaseComponent implements OnInit {
     const provincia: Provincia = new Provincia();
     provincia.nomeProvincia = this.provinciaAdd.nomeProvincia;
     provincia.siglaProvincia = this.provinciaAdd.siglaProvincia;
-    this.eventiService.putProvincia(this.richiesteService.getRichiestaPutProvincia(), provincia).subscribe(r => {
+    this.commonService.put(this.richiesteService.getRichiestaPutProvincia(provincia)).subscribe(r => {
+      // this.eventiService.putProvincia(this.richiesteService.getRichiestaPutProvincia(provincia), provincia).subscribe(r => {
       if (r.idProvincia && r.idProvincia === '') {
         this.alertService.presentErrorAlert('Si è verificato un problema nel salvataggio della provincia');
       } else {

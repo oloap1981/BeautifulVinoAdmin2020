@@ -11,16 +11,10 @@ import {
   SessionService,
   BVAuthorizationService,
   ConstantsService,
-  UtentiService,
   AlertService,
   BVHttpService,
   RichiesteService,
-  AziendeService,
-  ViniService,
-  FeedsService,
-  EventiService,
-  BadgesService,
-  ViniAziendaService
+  BVCommonService
 } from 'bvino-lib';
 
 import { FormsModule } from '@angular/forms';
@@ -73,19 +67,13 @@ import { IgxDatePickerModule, IgxIconModule, IgxSuffixModule, IgxInputGroupModul
   providers: [
     SessionService,
     ConstantsService,
-    UtentiService,
     BVAuthorizationService,
     CookieService,
     AppSessionService,
     AlertService,
     BVHttpService,
     RichiesteService,
-    AziendeService,
-    ViniService,
-    ViniAziendaService,
-    EventiService,
-    FeedsService,
-    BadgesService
+    BVCommonService
   ],
   bootstrap: [AppComponent]
 })
