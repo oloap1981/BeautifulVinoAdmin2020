@@ -1,30 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { UtentiComponent } from './components/utenti/utenti.component';
-import { AziendeComponent } from './components/aziende/aziende.component';
-import { ViniComponent } from './components/vini/vini.component';
-import { EventiComponent } from './components/eventi/eventi.component';
-import { FeedComponent } from './components/feed/feed.component';
-import { BadgeComponent } from './components/badge/badge.component';
-import { NotificheComponent } from './components/notifiche/notifiche.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'utenti', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'utenti', component: UtentiComponent },
-    { path: 'aziende', component: AziendeComponent },
-    { path: 'vini', component: ViniComponent },
-    { path: 'eventi', component: EventiComponent },
-    { path: 'feed', component: FeedComponent },
-    { path: 'badge', component: BadgeComponent },
-    { path: 'notifiche', component: NotificheComponent },
+  { path: '', redirectTo: 'utenti', pathMatch: 'prefix' },
+  { path: 'home', loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule) },
+  { path: 'login', loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule) },
+  { path: 'utenti', loadChildren: () => import('./components/utenti/utenti.module').then(m => m.UtentiModule) },
+  { path: 'vini', loadChildren: () => import('./components/vini/vini.module').then(m => m.ViniModule) },
+  { path: 'eventi', loadChildren: () => import('./components/eventi/eventi.module').then(m => m.EventiModule) },
+  { path: 'feed', loadChildren: () => import('./components/feed/feed.module').then(m => m.FeedModule) },
+  { path: 'notifiche', loadChildren: () => import('./components/notifiche/notifiche.module').then(m => m.NotificheModule) },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

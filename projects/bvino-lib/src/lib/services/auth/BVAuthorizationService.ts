@@ -5,7 +5,7 @@ import { SessionService } from '../common/session.service';
 
 const poolData = {
   UserPoolId: 'eu-central-1_KzlMv3BwL',
-  ClientId: '7oghv1vbub9th7j7d5bgvdr0ha'
+  ClientId: '25i6sfibl4qqqk2g8vgsmtsth7'
 };
 
 const userPool = new CognitoUserPool(poolData);

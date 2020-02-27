@@ -11,6 +11,7 @@ import {
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
+import { AppSessionService } from 'src/app/services/appSession.service';
 
 declare var $;
 @Component({
@@ -28,6 +29,8 @@ export class FeedComponent extends BaseComponent implements OnInit {
 
   public testoHtml = false;
 
+  public nuovo = false;
+
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
@@ -36,14 +39,16 @@ export class FeedComponent extends BaseComponent implements OnInit {
     public router: Router,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
-    public alertService: AlertService) {
+    public alertService: AlertService,
+    public appSessionService: AppSessionService) {
 
-    super(sessionService, router, richiesteService, constantsService, alertService);
+    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService);
     this.feedSelezionato = new Feed();
     this.feedSelezionato.idFeed = '';
   }
 
   ngOnInit() {
+    this.checkAuthenticated();
     const self = this;
     this.commonService.get(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
       // this.feedService.getFeeds(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
@@ -121,4 +126,28 @@ export class FeedComponent extends BaseComponent implements OnInit {
   public fileUploadedImmagineHeaderFeed(event: any) {
     this.feedSelezionato.urlImmagineHeaderFeed = event;
   }
+
+  public nuovoFeed(): void {
+    if (confirm('Creando un nuovo feed le informazioni non salvate di quello attuale saranno perse. Procedere?')) {
+      this.feedSelezionato = new Feed();
+    }
+  }
+
+  public salvaFeed(): void {
+    this.nuovo = false;
+  }
+
+  public duplicaFeed(): void {
+    if (confirm('Sicuri di voler duplicare questo feed?')) {
+      this.feedSelezionato.idFeed = '';
+      this.nuovo = false;
+    }
+  }
+
+  public eliminaFeed(): void {
+    if (confirm('Sicuri di voler eliminare questo feed?')) {
+      this.nuovo = false;
+    }
+  }
+
 }

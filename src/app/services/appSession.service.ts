@@ -5,8 +5,6 @@ import { CookieService } from 'ngx-cookie-service';
 /**
  *Wrapper per la sessione in libreria che aggiunge la gestione dei cookies
  *
- * @export
- * @class AppSessionService
  */
 @Injectable()
 export class AppSessionService {
@@ -29,17 +27,17 @@ export class AppSessionService {
         // non ho trovato niente ne' in sessione, ne' tra i cookies
         return '';
       } else {
-        return window.btoa(objectInCookiesEncoded);
+        return window.atob(objectInCookiesEncoded);
       }
     } else {
-      this.cookieService.set(key, window.atob(objectInSession));
+      this.cookieService.set(key, window.btoa(objectInSession));
       return objectInSession;
     }
   }
 
   public set(key: string, value: string): void {
     this.sessionService.set(key, value);
-    const encodedValue = window.atob(value);
+    const encodedValue = window.btoa(value);
     this.cookieService.set(key, encodedValue, null, '/');
   }
 

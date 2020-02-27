@@ -1,149 +1,175 @@
 <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h4 class="h3 mb-0 text-gray-800">Gestione eventi</h4>
-    </div>
-    <div class="row">
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Lista eventi</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h4 class="h3 mb-0 text-gray-800">Gestione eventi</h4>
+    <button class="fas fa-trash fa-sm text-white-50" (click)="nuovoEvento()">NUOVO</button>
+  </div>
+  <div class="row">
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Lista eventi</h6>
         </div>
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4" *ngIf="eventoSelezionato.idEvento !== ''">
-                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica evento</h6>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Elimina</a>
-                </div>
-                <div class="card-body">
-                    <form class="">
-                        <div class="form-group">
-                            <label>Id evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="id evento" [(ngModel)]="eventoSelezionato.idEvento" name="idEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Titolo evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="titolo evento" [(ngModel)]="eventoSelezionato.titoloEvento" name="titoloEvento">
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="customCheck" [(ngModel)]="eventoSelezionato.acquistabileEvento" name="acquistabileEvento">
-                                <label class="custom-control-label" for="customCheck">acquistabile</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="customCheck" [(ngModel)]="eventoSelezionato.pubblicatoEvento" name="acquistabileEvento">
-                                <label class="custom-control-label" for="customCheck">pubblicato</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Citt&agrave; evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="citt&agrave; evento" [(ngModel)]="eventoSelezionato.cittaEvento" name="cittaEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Tema evento</label>
-                            <textarea class="form-control form-control-user" placeholder="tema evento" [(ngModel)]="eventoSelezionato.temaEvento" name="temaEvento" *ngIf="!temaHtml"></textarea>
-                            <p-editor [(ngModel)]="eventoSelezionato.temaEvento" [style]="{'height':'250px'}" *ngIf="temaHtml" name="temaEventoH">
-                            </p-editor>
-                            <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="pippo" [(ngModel)]="temaHtml" name="temaHtml">
-                                <label class="custom-control-label" for="pippo">html</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Testo evento</label>
-                            <textarea class="form-control form-control-user" placeholder="testo evento" [(ngModel)]="eventoSelezionato.testoEvento" name="testoEvento" *ngIf="!testoHtml"></textarea>
-                            <p-editor [(ngModel)]="eventoSelezionato.testoEvento" [style]="{'height':'250px'}" *ngIf="testoHtml" name="testoEventoH">
-                            </p-editor>
-                            <div class="custom-control custom-checkbox ">
-                                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="testoHtml" name="testoHtml">
-                                <label class="custom-control-label" for="pluto">html</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Provincia</label>
-                            <select class="form-control form-control-user custom-select" (change)="selezionaProvincia($event.target)">
-                                <option *ngFor="let prov of listaProvincie" [ngValue]="prov.idProvincia" value="{{prov.idProvincia}}" [attr.selected]="prov.idProvincia+'' === eventoSelezionato.provinciaEventoInt.idProvincia+'' ? 'selected' : null">
-                                    {{prov.siglaProvincia + ' (' + prov.nomeProvincia + ')'}}
-                                </option>
-                            </select>
-                        </div>
-                        <hr>
-                        <div class="form-group">
-                            <button (click)="mostraEditorProvincie = !mostraEditorProvincie" class="d-none d-sm-inline-block btn  btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i>{{mostraEditorProvincie ? 'Chiudi editor province' : 'Apri editor province' }}</button>
-                        </div>
-                        <div *ngIf="mostraEditorProvincie">
-                            <label>Sigla - Provincia</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control form-control-user" placeholder="sigla" [(ngModel)]="provinciaAdd.siglaProvincia" name="siglaProvincia">
-                                <input type="text" class="form-control form-control-user" placeholder="provincia" [(ngModel)]="provinciaAdd.nomeProvincia" name="nomeProvincia">
-                            </div>
-                            <div class="input-group">
-                                <button (click)="aggiungiProvincia()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i>aggiungi provincia</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Indirizzo evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="indirizzo evento" [(ngModel)]="eventoSelezionato.indirizzoEvento" name="indirizzoEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Telefono evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="telefono evento" [(ngModel)]="eventoSelezionato.telefonoEvento" name="telefonoEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Pagina Facebook</label>
-                            <input type="text" class="form-control form-control-user" placeholder="evento Facebook" [(ngModel)]="eventoSelezionato.facebookEvento" name="facebookEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Email evento</label>
-                            <input type="email" class="form-control form-control-user" placeholder="email evento" [(ngModel)]="eventoSelezionato.emailEvento" name="emailEvento">
-                        </div>
-                        <label>Data evento</label>
-                        <div class="input-group">
-                            <app-bvdatepicker (inputDate)="eventoSelezionato.dataEvento" (sendDate)="aggiornaDataEvento($event)">
-                            </app-bvdatepicker>
-                            <!-- <input type="date" class="form-control form-control-user" placeholder="data evento"> -->
-                        </div>
-                        
-                        
-                        <!-- RENDERE FISSO VISTO CHE SI RAGIONA PER AZIENDA-->
-                        <div class="form-group">
-                            <label>Azienda ospitante</label>
-                            <select class="form-control form-control-user custom-select">
-                                <option default>azienda ospitante</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                                <option>nome azienda</option>
-                            </select>
-                        </div>
-                        
-                        
-                        <label>Prezzo evento</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupPrepend">&euro;</span>
-                            </div>
-                            <input type="text" class="form-control form-control-user" placeholder="prezzo evento" [(ngModel)]="eventoSelezionato.prezzoEvento" name="prezzoEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Numero massimo di partecipanti</label>
-                            <input type="text" class="form-control form-control-user" placeholder="numero massimo partecipanti evento" [(ngModel)]="eventoSelezionato.numMaxPartecipantiEvento" name="numMaxPartecipantiEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Posti disponibili al momento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="numero posti disponibili al momento" [(ngModel)]="eventoSelezionato.numPostiDisponibiliEvento" name="numPostiDisponibiliEvento">
-                        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4" *ngIf="eventoSelezionato.idEvento !== '' || nuovo">
+        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica evento</h6>
+          <button (click)="eliminaEvento()" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+              class="fas fa-trash fa-sm text-white-50"></i> Elimina</button>
+        </div>
+        <div class="card-body">
+          <form class="">
+            <div class="form-group">
+              <label>Id evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="id evento"
+                [(ngModel)]="eventoSelezionato.idEvento" name="idEvento">
+            </div>
+            <div class="form-group">
+              <label>Titolo evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="titolo evento"
+                [(ngModel)]="eventoSelezionato.titoloEvento" name="titoloEvento">
+            </div>
+            <div class="form-group">
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="customCheck"
+                  [(ngModel)]="eventoSelezionato.acquistabileEvento" name="acquistabileEvento">
+                <label class="custom-control-label" for="customCheck">acquistabile</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="customCheck"
+                  [(ngModel)]="eventoSelezionato.pubblicatoEvento" name="acquistabileEvento">
+                <label class="custom-control-label" for="customCheck">pubblicato</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Citt&agrave; evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="citt&agrave; evento"
+                [(ngModel)]="eventoSelezionato.cittaEvento" name="cittaEvento">
+            </div>
+            <div class="form-group">
+              <label>Tema evento</label>
+              <textarea class="form-control form-control-user" placeholder="tema evento"
+                [(ngModel)]="eventoSelezionato.temaEvento" name="temaEvento" *ngIf="!temaHtml"></textarea>
+              <p-editor [(ngModel)]="eventoSelezionato.temaEvento" [style]="{'height':'250px'}" *ngIf="temaHtml"
+                name="temaEventoH">
+              </p-editor>
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="pippo" [(ngModel)]="temaHtml" name="temaHtml">
+                <label class="custom-control-label" for="pippo">html</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Testo evento</label>
+              <textarea class="form-control form-control-user" placeholder="testo evento"
+                [(ngModel)]="eventoSelezionato.testoEvento" name="testoEvento" *ngIf="!testoHtml"></textarea>
+              <p-editor [(ngModel)]="eventoSelezionato.testoEvento" [style]="{'height':'250px'}" *ngIf="testoHtml"
+                name="testoEventoH">
+              </p-editor>
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="testoHtml" name="testoHtml">
+                <label class="custom-control-label" for="pluto">html</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Provincia</label>
+              <select class="form-control form-control-user custom-select" (change)="selezionaProvincia($event.target)">
+                <option *ngFor="let prov of listaProvincie" [ngValue]="prov.idProvincia" value="{{prov.idProvincia}}"
+                  [attr.selected]="prov.idProvincia+'' === eventoSelezionato.provinciaEventoInt.idProvincia+'' ? 'selected' : null">
+                  {{prov.siglaProvincia + ' (' + prov.nomeProvincia + ')'}}
+                </option>
+              </select>
+            </div>
+            <hr>
+            <div class="form-group">
+              <button (click)="mostraEditorProvincie = !mostraEditorProvincie"
+                class="d-none d-sm-inline-block btn  btn-primary shadow-sm"><i
+                  class="fas fa-plus fa-sm text-white-50"></i>{{mostraEditorProvincie ? 'Chiudi editor province' : 'Apri editor province' }}</button>
+            </div>
+            <div *ngIf="mostraEditorProvincie">
+              <label>Sigla - Provincia</label>
+              <div class="input-group">
+                <input type="text" class="form-control form-control-user" placeholder="sigla"
+                  [(ngModel)]="provinciaAdd.siglaProvincia" name="siglaProvincia">
+                <input type="text" class="form-control form-control-user" placeholder="provincia"
+                  [(ngModel)]="provinciaAdd.nomeProvincia" name="nomeProvincia">
+              </div>
+              <div class="input-group">
+                <button (click)="aggiungiProvincia()"
+                  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-plus fa-sm text-white-50"></i>aggiungi provincia</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Indirizzo evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="indirizzo evento"
+                [(ngModel)]="eventoSelezionato.indirizzoEvento" name="indirizzoEvento">
+            </div>
+            <div class="form-group">
+              <label>Telefono evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="telefono evento"
+                [(ngModel)]="eventoSelezionato.telefonoEvento" name="telefonoEvento">
+            </div>
+            <div class="form-group">
+              <label>Pagina Facebook</label>
+              <input type="text" class="form-control form-control-user" placeholder="evento Facebook"
+                [(ngModel)]="eventoSelezionato.facebookEvento" name="facebookEvento">
+            </div>
+            <div class="form-group">
+              <label>Email evento</label>
+              <input type="email" class="form-control form-control-user" placeholder="email evento"
+                [(ngModel)]="eventoSelezionato.emailEvento" name="emailEvento">
+            </div>
+            <label>Data evento</label>
+            <div class="input-group">
+              <app-bvdatepicker (inputDate)="eventoSelezionato.dataEvento" (sendDate)="aggiornaDataEvento($event)">
+              </app-bvdatepicker>
+              <!-- <input type="date" class="form-control form-control-user" placeholder="data evento"> -->
+            </div>
 
-                        <!-- <div class="input-group">
+
+            <!-- RENDERE FISSO VISTO CHE SI RAGIONA PER AZIENDA-->
+            <div class="form-group">
+              <label>Azienda ospitante</label>
+              <select class="form-control form-control-user custom-select">
+                <option default>azienda ospitante</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+                <option>nome azienda</option>
+              </select>
+            </div>
+
+
+            <label>Prezzo evento</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend">&euro;</span>
+              </div>
+              <input type="text" class="form-control form-control-user" placeholder="prezzo evento"
+                [(ngModel)]="eventoSelezionato.prezzoEvento" name="prezzoEvento">
+            </div>
+            <div class="form-group">
+              <label>Numero massimo di partecipanti</label>
+              <input type="text" class="form-control form-control-user" placeholder="numero massimo partecipanti evento"
+                [(ngModel)]="eventoSelezionato.numMaxPartecipantiEvento" name="numMaxPartecipantiEvento">
+            </div>
+            <div class="form-group">
+              <label>Posti disponibili al momento</label>
+              <input type="text" class="form-control form-control-user"
+                placeholder="numero posti disponibili al momento"
+                [(ngModel)]="eventoSelezionato.numPostiDisponibiliEvento" name="numPostiDisponibiliEvento">
+            </div>
+
+            <!-- <div class="input-group">
                             <div class="custom-file">
                                 <label class="custom-file-label" for="inputGroupFile04">immagine evento</label>
                                 <input type="file" class="custom-file-input" id="inputGroupFile04"
@@ -153,91 +179,104 @@
                                     <button class="btn btn-primary" type="button">carica</button>
                                 </div>
                             </div> -->
-                        <div class="form-group">
-                            <label>Link esterno immagine evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="url logo" [(ngModel)]="eventoSelezionato.urlFotoEvento" name="urlImmagineVino" disabled>
-                        </div>
-                        <div class="form-group" *ngIf="eventoSelezionato.urlFotoEvento && eventoSelezionato.urlFotoEvento !== ''">
-                            <label>Immagine evento</label>
-                            <img [src]="eventoSelezionato.urlFotoEvento">
-                        </div>
-                        <app-fileupload labelText="Carica Immagine Evento Vino" (uploaded)="fileUploadedLogo($event)" maxFileSize="600" folder="immagineevento">
-                        </app-fileupload>
-                        <div class="form-group">
-                            <label>Latitudine evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="latitudine evento" [(ngModel)]="eventoSelezionato.latitudineEvento" name="latitudineEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Longitudine evento</label>
-                            <input type="text" class="form-control form-control-user" placeholder="longitudine evento" [(ngModel)]="eventoSelezionato.longitudineEvento" name="longitudineEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Crediti</label>
-                            <input type="text" class="form-control form-control-user" placeholder="crediti" [(ngModel)]="eventoSelezionato.creditiEvento" name="creditiEvento">
-                        </div>
-                        <div class="form-group">
-                            <label>Punti esperienza</label>
-                            <input type="text" class="form-control form-control-user" placeholder="punti esperienza" [(ngModel)]="eventoSelezionato.puntiEsperienza" name="puntiEsperienza">
-                        </div>
-                        <hr>
-
-                        <div class="form-group">
-                            <label>Selezione vino</label>
-                            <select class="form-control form-control-user custom-select" (change)="selezionaVino($event.target)">
-                                <option *ngFor="let vino of listaVini" [ngValue]="vino.idVino" value="{{vino.idVino}}" [attr.selected]="vino.idVino+'' === vinoAdd.idVino+'' ? 'selected' : null">
-                                    {{vino.nomeVino + '-' + vino.aziendaVinoInt.nomeAzienda + '-' + vino.annoVino}}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Nome vino</label>
-                            <input type="text" class="form-control form-control-user" placeholder="nome vino" [(ngModel)]="vinoAdd.nomeVino" name="nomeVino">
-                        </div>
-                        <div class="form-group">
-                            <label>Anno vino</label>
-                            <input type="text" class="form-control form-control-user" placeholder="anno vino" [(ngModel)]="vinoAdd.annoVino" name="anno">
-                        </div>
-                        <div class="input-group">
-                            <button (click)="aggiungiVinoALista()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i>aggiungi vino</button>
-                        </div>
-                        <div class="table-responsive">
-
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Nome vino</th>
-                                        <th>Azienda </th>
-                                        <th>Anno vno</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let vino of eventoSelezionato.viniEventoInt">
-                                        <td>{{vino.nomeVino}}</td>
-                                        <td>{{vino.nomeAziendaVino}}</td>
-                                        <td>{{vino.annoVino}}</td>
-                                        <td class="text-center"><button (click)="togliVinoDaLista(vino)" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i></button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr>
-                        <a href="index.html" class="btn btn-primary btn-user">
-                            Salva
-                        </a>
-                        <a href="index.html" class="btn btn-danger btn-user float-right">
-                            Duplica
-                        </a>
-                    </form>
-                </div>
+            <div class="form-group">
+              <label>Link esterno immagine evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="url logo"
+                [(ngModel)]="eventoSelezionato.urlFotoEvento" name="urlImmagineVino" disabled>
             </div>
+            <div class="form-group" *ngIf="eventoSelezionato.urlFotoEvento && eventoSelezionato.urlFotoEvento !== ''">
+              <label>Immagine evento</label>
+              <img [src]="eventoSelezionato.urlFotoEvento">
+            </div>
+            <app-fileupload labelText="Carica Immagine Evento Vino" (uploaded)="fileUploadedLogo($event)"
+              maxFileSize="600" folder="immagineevento">
+            </app-fileupload>
+            <div class="form-group">
+              <label>Latitudine evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="latitudine evento"
+                [(ngModel)]="eventoSelezionato.latitudineEvento" name="latitudineEvento">
+            </div>
+            <div class="form-group">
+              <label>Longitudine evento</label>
+              <input type="text" class="form-control form-control-user" placeholder="longitudine evento"
+                [(ngModel)]="eventoSelezionato.longitudineEvento" name="longitudineEvento">
+            </div>
+            <div class="form-group">
+              <label>Crediti</label>
+              <input type="text" class="form-control form-control-user" placeholder="crediti"
+                [(ngModel)]="eventoSelezionato.creditiEvento" name="creditiEvento">
+            </div>
+            <div class="form-group">
+              <label>Punti esperienza</label>
+              <input type="text" class="form-control form-control-user" placeholder="punti esperienza"
+                [(ngModel)]="eventoSelezionato.puntiEsperienza" name="puntiEsperienza">
+            </div>
+            <hr>
+
+            <div class="form-group">
+              <label>Selezione vino</label>
+              <select class="form-control form-control-user custom-select" (change)="selezionaVino($event.target)">
+                <option *ngFor="let vino of listaVini" [ngValue]="vino.idVino" value="{{vino.idVino}}"
+                  [attr.selected]="vino.idVino+'' === vinoAdd.idVino+'' ? 'selected' : null">
+                  {{vino.nomeVino + '-' + vino.aziendaVinoInt.nomeAzienda + '-' + vino.annoVino}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Nome vino</label>
+              <input type="text" class="form-control form-control-user" placeholder="nome vino"
+                [(ngModel)]="vinoAdd.nomeVino" name="nomeVino">
+            </div>
+            <div class="form-group">
+              <label>Anno vino</label>
+              <input type="text" class="form-control form-control-user" placeholder="anno vino"
+                [(ngModel)]="vinoAdd.annoVino" name="anno">
+            </div>
+            <div class="input-group">
+              <button (click)="aggiungiVinoALista()"
+                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                  class="fas fa-plus fa-sm text-white-50"></i>aggiungi vino</button>
+            </div>
+            <div class="table-responsive">
+
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Nome vino</th>
+                    <th>Azienda </th>
+                    <th>Anno vno</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let vino of eventoSelezionato.viniEventoInt">
+                    <td>{{vino.nomeVino}}</td>
+                    <td>{{vino.nomeAziendaVino}}</td>
+                    <td>{{vino.annoVino}}</td>
+                    <td class="text-center"><button (click)="togliVinoDaLista(vino)"
+                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                          class="fas fa-trash fa-sm text-white-50"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr>
+            <button (click)="salvaEvento()" class="btn btn-primary btn-user">
+              Salva
+            </button>
+            <button (click)="duplicaEvento()" class="btn btn-danger btn-user float-right">
+              Duplica
+            </button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 <footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-        </div>
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Your Website 2019</span>
     </div>
+  </div>
 </footer>

@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-    firstColor = '#f9da2c';
-    secondColor = '#e51d70';
+  firstColor = '#f9da2c';
+  secondColor = '#e51d70';
 
   public username: string;
   public password: string;
@@ -33,10 +33,15 @@ export class LoginComponent implements OnInit {
         const accessToken = response.getAccessToken();
         const idToken = response.getIdToken();
 
-        this.appSessionService.set(this.sessionService.KEY_AUTH_TOKEN, accessToken.getJwtToken());
-        this.appSessionService.set(this.sessionService.KEY_USER, JSON.stringify(response));
+        const idAzienda = '1539014718497'; // rendere dinamico
+        const nomeAzienda = 'Badia di Morrona';
 
-        this.router.navigate(['/home']);
+        this.appSessionService.set(this.sessionService.KEY_AUTH_TOKEN, idToken.getJwtToken());
+        this.appSessionService.set(this.sessionService.KEY_USER, JSON.stringify(response));
+        this.appSessionService.set(this.sessionService.KEY_AZIENDA_ID, idAzienda);
+        this.appSessionService.set(this.sessionService.KEY_AZIENDA_NOME, nomeAzienda);
+
+        this.router.navigate(['/utenti']);
       },
       (err) => {
         console.log('ERRORE DI AUTENTICAZIONE: ' + err);

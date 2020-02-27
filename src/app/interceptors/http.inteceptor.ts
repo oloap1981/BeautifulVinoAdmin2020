@@ -19,21 +19,31 @@ export class BVHttpInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const tokenValue = this.appSessionService.get(this.sessionService.KEY_AUTH_TOKEN);
+    this.printInstant(request.url + ' __ START _____ ');
+    const tokenValue = this.appSessionService.get(this.sessionService.KEY_AUTH_TOKEN)
     request = request.clone({
       headers: new HttpHeaders({
-        Authorization: tokenValue,
+        'Authorization': tokenValue,
         'Content-Type': 'application/json'
       })
     });
     return next.handle(request).pipe(map((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
         console.log('event--->>>', event);
+        this.printInstant(request.url + ' __ END _____ ');
       }
       return event;
     }), catchError((x: HttpErrorResponse) => {
       return this.handleAuthError(x);
     }));
+  }
+
+  private printInstant(message: string) {
+    const date = new Date();
+    console.log(message + ': ' + date.getHours()
+      + ':' + date.getMinutes()
+      + ':' + date.getSeconds()
+      + '.' + date.getMilliseconds());
   }
 
   private handleAuthError(err: any): Observable<any> {

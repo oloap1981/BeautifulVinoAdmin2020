@@ -71,7 +71,7 @@ export class RichiesteService {
   public getRichiestaGetViniAzienda(idAzienda: string) {
     const richiesta = new RichiestaGetGenerica();
     richiesta.idAzienda = idAzienda;
-    richiesta.functionName = this.constants.getViniFunctionName;
+    richiesta.functionName = this.constants.getViniAziendaFunctionName;
 
     return richiesta;
   }

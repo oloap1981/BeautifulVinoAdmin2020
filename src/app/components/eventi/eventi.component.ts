@@ -15,6 +15,7 @@ import {
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
+import { AppSessionService } from 'src/app/services/appSession.service';
 
 declare var $;
 @Component({
@@ -45,6 +46,8 @@ export class EventiComponent extends BaseComponent implements OnInit {
   public temaHtml = false;
   public testoHtml = false;
 
+  public nuovo = false;
+
   @ViewChild('dataTable', { static: true }) table;
 
   constructor(
@@ -53,9 +56,10 @@ export class EventiComponent extends BaseComponent implements OnInit {
     public router: Router,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
-    public alertService: AlertService) {
+    public alertService: AlertService,
+    public appSessionService: AppSessionService) {
 
-    super(sessionService, router, richiesteService, constantsService, alertService);
+    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService);
 
     // INIZIALIZZAZIONE DELL'EVENTO VUOTO
     this.eventoSelezionato = new Evento();
@@ -78,6 +82,7 @@ export class EventiComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkAuthenticated();
     this.commonService.get(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
       // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
@@ -260,4 +265,28 @@ export class EventiComponent extends BaseComponent implements OnInit {
     console.log('vini-component, file caricato: ' + event);
     this.eventoSelezionato.urlFotoEvento = event;
   }
+
+  public nuovoEvento(): void {
+    if (confirm('Creando un nuovo evento le informazioni non salvate di quello attuale saranno perse. Procedere?')) {
+      this.eventoSelezionato = new Evento();
+    }
+  }
+
+  public salvaEvento(): void {
+    this.nuovo = false;
+  }
+
+  public duplicaEvento(): void {
+    if (confirm('Sicuri di voler duplicare questo evento?')) {
+      this.eventoSelezionato.idEvento = '';
+      this.nuovo = false;
+    }
+  }
+
+  public eliminaEvento(): void {
+    if (confirm('Sicuri di voler eliminare questo evento?')) {
+      this.nuovo = false;
+    }
+  }
+
 }

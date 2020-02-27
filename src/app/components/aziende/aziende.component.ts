@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
 import { IgxColumnMovingService } from 'igniteui-angular';
+import { AppSessionService } from 'src/app/services/appSession.service';
 
 declare var $;
 @Component({
@@ -32,9 +33,10 @@ export class AziendeComponent extends BaseComponent implements OnInit {
     public router: Router,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
-    public alertService: AlertService) {
+    public alertService: AlertService,
+    public appSessionService: AppSessionService) {
 
-    super(sessionService, router, richiesteService, constantsService, alertService);
+    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService);
     this.aziendaSelezionata = new Azienda();
     this.isImageSaved = false;
     this.cardImageBase64 = '';

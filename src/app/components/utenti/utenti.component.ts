@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { Router } from '@angular/router';
 import { SessionService, RichiesteService, ConstantsService, AlertService, Utente, BVCommonService } from 'bvino-lib';
+import { AppSessionService } from 'src/app/services/appSession.service';
 
 declare var $;
 @Component({
@@ -26,13 +27,15 @@ export class UtentiComponent extends BaseComponent implements OnInit {
     public commonService: BVCommonService,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
-    public alertService: AlertService) {
-    super(sessionService, router, richiesteService, constantsService, alertService);
+    public alertService: AlertService,
+    public appSessionService: AppSessionService) {
+    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService);
     this.utenteSelezionato = new Utente();
     this.utenteSelezionato.idUtente = '';
   }
 
   ngOnInit() {
+    this.checkAuthenticated();
     this.commonService.get(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
       // this.utentiService.getUtenti(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
