@@ -23,6 +23,14 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaGetUtente(idUtente: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.constants.getUtenteFunctionName;
+    richiesta.idUtente = idUtente;
+
+    return richiesta;
+  }
+
   public getRichiestaGetAziende() {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.constants.getAziendeFunctionName;
@@ -72,6 +80,14 @@ export class RichiesteService {
     const richiesta = new RichiestaGetGenerica();
     richiesta.idAzienda = idAzienda;
     richiesta.functionName = this.constants.getViniAziendaFunctionName;
+
+    return richiesta;
+  }
+
+  public getRichiestaGetProfiloAzienda(idProfiloAzienda: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.idProfiloAzienda = idProfiloAzienda;
+    richiesta.functionName = this.constants.getProfiloAziendaFunctionName;
 
     return richiesta;
   }

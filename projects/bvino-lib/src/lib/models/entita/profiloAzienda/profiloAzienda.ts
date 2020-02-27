@@ -7,4 +7,5 @@ export class ProfiloAzienda {
   public splaqshScreen: string;
   public paypalCode: string;
   public idAzienda: string;
+  public nomeAzienda: string;
 }

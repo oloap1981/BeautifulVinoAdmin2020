@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService, RichiestaGetGenerica, BVCommonService, RichiesteService } from 'bvino-lib';
+import { SessionService, BVCommonService, RichiesteService, ConstantsService } from 'bvino-lib';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 
@@ -14,12 +14,13 @@ export class HomeComponent implements OnInit {
 
   constructor(private appSessionService: AppSessionService,
     private sessionService: SessionService,
+    private constants: ConstantsService,
     private commonService: BVCommonService,
     private richiesteService: RichiesteService
   ) { }
 
   ngOnInit() {
-    this.user = JSON.parse(this.appSessionService.get(this.sessionService.KEY_USER)) as CognitoUserSession;
+    this.user = JSON.parse(this.appSessionService.get(this.constants.KEY_USER)) as CognitoUserSession;
     this.getUtentiList();
   }
 

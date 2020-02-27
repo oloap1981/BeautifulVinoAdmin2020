@@ -15,14 +15,6 @@ export class SessionService {
   */
   private sessionMap: Map<string, string>;
 
-  public KEY_AUTH_TOKEN = 'beautifulvino_authtoken';
-  public KEY_USER = 'beautifulvino_user';
-  public KEY_AZIENDA_ID = 'beautifulvino_azienda_id';
-  public KEY_AZIENDA_NOME = 'beautifulvino_azienda_nome';
-  // public KEY_ = '';
-  // public KEY_ = '';
-  // public KEY_ = '';
-
   constructor() {
     this.sessionMap = new Map<string, string>();
   }

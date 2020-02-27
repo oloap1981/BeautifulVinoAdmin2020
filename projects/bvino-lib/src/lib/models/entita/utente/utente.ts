@@ -27,6 +27,8 @@ export class Utente {
   public condivisioneEventi: string;
   public condivisioneVini: string;
   public statoUtente: string;
+  public ruoloUtente: string;
+  public idProfiloAziendaUtente: string;
   public eventiUtente: Array<Evento>;
   public aziendeUtente: Array<Azienda>;
   public badgeUtente: Array<Badge>;

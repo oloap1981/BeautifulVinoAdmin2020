@@ -31,7 +31,7 @@ export class BaseComponent implements OnInit {
   }
 
   public checkAuthenticated(): void {
-    const tokenValue = this.appSessionService.get(this.sessionService.KEY_AUTH_TOKEN);
+    const tokenValue = this.appSessionService.get(this.constants.KEY_AUTH_TOKEN);
     const authenticated = (tokenValue && tokenValue !== '');
     if (!authenticated) {
       this.goToPage('login');

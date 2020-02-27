@@ -55,4 +55,15 @@ export class ConstantsService {
   public readonly ESITO_KO_CODICE_ERRORE_INPUT_NULL: number = 400;
   public readonly ESITO_KO_CODICE_ERRORE_GET: number = 500;
 
+  // chiavi sessione
+  public KEY_AUTH_TOKEN = 'beautifulvino_authtoken';
+  public KEY_USER = 'beautifulvino_user';
+  public KEY_AZIENDA_ID = 'beautifulvino_azienda_id';
+  public KEY_AZIENDA_NOME = 'beautifulvino_azienda_nome';
+  public KEY_AZIENDA_COLORE_PRIMARIO = 'beautifulvino_azienda_colore_primario';
+  public KEY_AZIENDA_COLORE_SECONDARIO = 'beautifulvino_azienda_colore_secondario';
+  public KEY_AZIENDA_LOGO = 'beautifulvino_azienda_logo';
+  public KEY_AZIENDA_SPLASHSCREEN = 'beautifulvino_azienda_splashscreen';
+  public KEY_AZIENDA_PAYPAL_CODE = 'beautifulvino_azienda_paypal_code';
+
 }

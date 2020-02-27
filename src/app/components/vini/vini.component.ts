@@ -65,14 +65,14 @@ export class ViniComponent extends BaseComponent implements OnInit {
     this.checkAuthenticated();
     // necessario controllo se si è loggati, altrimenti goto login
 
-    this.azienda.idAzienda = this.appSessionService.get(this.sessionService.KEY_AZIENDA_ID);
-    this.azienda.nomeAzienda = this.appSessionService.get(this.sessionService.KEY_AZIENDA_NOME);
+    this.azienda.idAzienda = this.appSessionService.get(this.constants.KEY_AZIENDA_ID);
+    this.azienda.nomeAzienda = this.appSessionService.get(this.constants.KEY_AZIENDA_NOME);
 
     this.caricaListaVini();
   }
 
   private caricaListaVini(): void {
-    this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda(this.appSessionService.get(this.sessionService.KEY_AZIENDA_ID)))
+    this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda(this.appSessionService.get(this.constants.KEY_AZIENDA_ID)))
       .subscribe(r => {
         // this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
         if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
