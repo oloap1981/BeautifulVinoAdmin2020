@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
 import { AppSessionService } from 'src/app/services/appSession.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var $;
 @Component({
@@ -48,9 +49,10 @@ export class ViniComponent extends BaseComponent implements OnInit {
     public router: Router,
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
-    public alertService: AlertService) {
+    public alertService: AlertService,
+    public sanitizer: DomSanitizer) {
 
-    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService);
+    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
     this.vinoSelezionato = new Vino();
     this.vinoSelezionato.idVino = '';
     this.isImageSaved = false;

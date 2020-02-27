@@ -119,8 +119,8 @@
           "options": {
             "region": "eu-west-1",
             "bucket": "beautifulvino-marte5-administration-panel",
-            "secretAccessKey": "RpE1D0BRD8qrCf5pcOoYs3hUvJdNvEJ18si+Gi9F",
-            "accessKeyId": "AKIAQTIOAAFZE7F2ZAKG",
+            "secretAccessKey": "XXXX",
+            "accessKeyId": "YYYY",
             "subFolder": ""
           }
         }

@@ -3,6 +3,7 @@ import { BaseComponent } from '../base/base.component';
 import { Router } from '@angular/router';
 import { SessionService, RichiesteService, ConstantsService, AlertService, Utente, BVCommonService } from 'bvino-lib';
 import { AppSessionService } from 'src/app/services/appSession.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var $;
 @Component({
@@ -28,8 +29,9 @@ export class UtentiComponent extends BaseComponent implements OnInit {
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService,
-    public appSessionService: AppSessionService) {
-    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService);
+    public appSessionService: AppSessionService,
+    public sanitizer: DomSanitizer) {
+    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
     this.utenteSelezionato = new Utente();
     this.utenteSelezionato.idUtente = '';
   }
