@@ -1,114 +1,118 @@
 <div class="container-fluid">
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h4 class="h3 mb-0 text-gray-800">Gestione utenti</h4>
-    </div>
-    <div class="row">
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Lista utenti</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
-                        </table>
-                    </div>
-                </div>
-            </div>
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h4 class="h3 mb-0 text-gray-800">Gestione utenti</h4>
+  </div>
+  <div class="row">
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Lista utenti</h6>
         </div>
-        <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4" *ngIf="utenteSelezionato.idUtente !== ''">
-                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica utente</h6>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Elimina</a>
-                </div>
-                <div class="card-body">
-                    <form class="">
-                        <div class="form-group">
-                            <label>Id</label>
-                            <input type="text" class="form-control form-control-user" placeholder="id" [(ngModel)]="utenteSelezionato.idUtente" name="id">
-                        </div>
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" class="form-control form-control-user" placeholder="username" [(ngModel)]="utenteSelezionato.usernameUtente" name="username">
-                        </div>
-                        <label>Nome Cognome</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-user" placeholder="nome" [(ngModel)]="utenteSelezionato.nomeUtente" name="nome">
-                            <input type="text" class="form-control form-control-user" placeholder="cognome" [(ngModel)]="utenteSelezionato.cognomeUtente" name="cognome">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control form-control-user" placeholder="email" [(ngModel)]="utenteSelezionato.emailUtente" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label>Crediti</label>
-                            <input type="number" class="form-control form-control-user" placeholder="crediti" [(ngModel)]="utenteSelezionato.creditiUtente" name="crediti">
-                        </div>
-                        <div class="form-group">
-                            <label>Esperienza</label>
-                            <input type="number" class="form-control form-control-user" placeholder="esperienza" [(ngModel)]="utenteSelezionato.esperienzaUtente" name="esperienza">
-                        </div>
-                        <div class="form-group">
-                            <label>Livello</label>
-                            <input type="text" class="form-control form-control-user" placeholder="livello" [(ngModel)]="utenteSelezionato.livelloUtente" name="livello">
-                        </div>
-                        <div class="form-group">
-                            <label>Biografia</label>
-                            <textarea class="form-control form-control-user"></textarea>
-                            <div class="custom-control custom-checkbox small">
-                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                <label class="custom-control-label" for="customCheck">html</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>URL Foto</label>
-                            <input type="text" class="form-control form-control-user" placeholder="url foto">
-                        </div>
-                        
-                        <label>Immagine azienda</label>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine azienda</label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <a href="index.html" class="btn btn-primary btn-user">
-                            Salva
-                        </a>
-                        <a href="index.html" class="btn btn-danger btn-user float-right">
-                            Duplica
-                        </a>
-                    </form>
-                    <hr>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Id Evento</th>
-                                    <th>evento</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Id Evento</th>
-                                    <th>evento</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table>
+          </div>
         </div>
+      </div>
     </div>
+    <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4" *ngIf="utenteSelezionato.idUtente !== ''">
+        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica utente</h6>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+              class="fas fa-trash fa-sm text-white-50"></i> Elimina</a>
+        </div>
+        <div class="card-body">
+          <form class="">
+            <div class="form-group">
+              <label>Id</label>
+              <input type="text" class="form-control form-control-user" placeholder="id"
+                [(ngModel)]="utenteSelezionato.idUtente" name="id">
+            </div>
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" class="form-control form-control-user" placeholder="username"
+                [(ngModel)]="utenteSelezionato.usernameUtente" name="username">
+            </div>
+            <label>Nome Cognome</label>
+            <div class="input-group">
+              <input type="text" class="form-control form-control-user" placeholder="nome"
+                [(ngModel)]="utenteSelezionato.nomeUtente" name="nome">
+              <input type="text" class="form-control form-control-user" placeholder="cognome"
+                [(ngModel)]="utenteSelezionato.cognomeUtente" name="cognome">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" class="form-control form-control-user" placeholder="email"
+                [(ngModel)]="utenteSelezionato.emailUtente" name="email">
+            </div>
+            <div class="form-group">
+              <label>Crediti</label>
+              <input type="number" class="form-control form-control-user" placeholder="crediti"
+                [(ngModel)]="utenteSelezionato.creditiUtente" name="crediti">
+            </div>
+            <div class="form-group">
+              <label>Esperienza</label>
+              <input type="number" class="form-control form-control-user" placeholder="esperienza"
+                [(ngModel)]="utenteSelezionato.esperienzaUtente" name="esperienza">
+            </div>
+            <div class="form-group">
+              <label>Livello</label>
+              <input type="text" class="form-control form-control-user" placeholder="livello"
+                [(ngModel)]="utenteSelezionato.livelloUtente" name="livello">
+            </div>
+            <div class="form-group">
+              <label>Biografia</label>
+              <textarea class="form-control form-control-user" placeholder="testo evento"
+                [(ngModel)]="utenteSelezionato.biografiaUtente" name="biografiaUtente" *ngIf="!testoHtml"></textarea>
+              <p-editor [(ngModel)]="utenteSelezionato.biografiaUtente" [style]="{'height':'250px'}" *ngIf="testoHtml"
+                name="testoEventoH">
+              </p-editor>
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="testoHtml" name="testoHtml">
+                <label class="custom-control-label" for="pluto">html</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Link esterno immagine utente</label>
+              <input type="text" class="form-control form-control-user" placeholder="http://..."
+                [(ngModel)]="utenteSelezionato.urlFotoUtente" name="urlFotoUtente" disabled>
+            </div>
+            <div class="form-group" *ngIf="utenteSelezionato.urlFotoUtente && utenteSelezionato.urlFotoUtente !== ''">
+              <label>Immagine utente</label>
+              <img [src]="utenteSelezionato.urlFotoUtente">
+            </div>
+            <app-fileupload labelText="Carica Immagine utente Vino" (uploaded)="fileUploadedImmagine($event)"
+              maxFileSize="400" folder="immagineutente">
+            </app-fileupload>
+            <hr>
+            <button (click)="salvaUtente()" class="btn btn-primary btn-user">
+              Salva
+            </button>
+            <!-- <button href="index.html" class="btn btn-danger btn-user float-right">
+              Duplica
+            </button> -->
+          </form>
+          <hr>
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Id Evento</th>
+                  <th>Stato Evento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let evento of utenteSelezionato.acquistatiEventiUtenteInt">
+                  <td>{{evento.idEvento}}</td>
+                  <td>{{evento.statoEvento}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

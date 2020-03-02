@@ -6,6 +6,7 @@ export class ConstantsService {
   // public readonly baseAppUrlGet: string = 'https://gmnh1plxq7.execute-api.eu-central-1.amazonaws.com';// senza autenticazione
   public readonly baseAppUrlGet: string = 'https://h8o3gup5lj.execute-api.eu-central-1.amazonaws.com'; // con authenticazione
   public readonly baseAppUrlPut: string = 'https://4aqjw0dwx0.execute-api.eu-central-1.amazonaws.com';
+  public readonly baseAppUrlNotifica: string = '';
 
   public readonly tokenHeaderKey: string = 'Authorization';
   public readonly pathSeparator: string = '/';
@@ -13,6 +14,10 @@ export class ConstantsService {
   // public readonly getServiceName: string = 'BeautifulVinoGet'; // senza authenticazione
   public readonly getServiceName: string = 'GET_SICURA'; // con authenticazione
   public readonly putServiceName: string = 'BeautifulVinoPut';
+  public readonly notificationServiceName: string = 'BeautifulVinoNotification';
+
+
+  sendNotification: 'https://d4rszjint3.execute-api.eu-central-1.amazonaws.com/BeautifulVinoNotification'
 
   // nomi funzioni GET
   public readonly getAziendeFunctionName: string = 'getAziendeGen';

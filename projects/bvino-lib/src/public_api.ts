@@ -7,15 +7,6 @@ export * from './lib/bvino-lib.module';
 // services
 // -- AUTH
 export * from './lib/services/auth/BVAuthorizationService';
-// -- CHIAMATE REMOTE
-// export * from './lib/services/utenti/utenti.service';
-// export * from './lib/services/aziende/aziende.service';
-// export * from './lib/services/vini/vini.service';
-// export * from './lib/services/vini/viniAzienda.service';
-// export * from './lib/services/feeds/feeds.service';
-// export * from './lib/services/badges/badges.service';
-// export * from './lib/services/eventi/eventi.service';
-// export * from './lib/services/profiliAziende/profiliAziende.service';
 // -- COMUNI
 export * from './lib/services/common/session.service';
 export * from './lib/services/common/bvhttp.service';
@@ -66,6 +57,10 @@ export * from './lib/models/entita/badge/badge';
 // - comunicazioni
 export * from './lib/models/comunicazioni/richieste/get/richiestagetgenerica';
 export * from './lib/models/comunicazioni/richieste/get/rispostagetgenerica';
+export * from './lib/models/comunicazioni/richieste/put/richiestaputgenerica';
+export * from './lib/models/comunicazioni/richieste/put/rispostaputgenerica';
+export * from './lib/models/comunicazioni/richieste/notifica/richiestanotificagenerica';
+export * from './lib/models/comunicazioni/richieste/notifica/rispostanotificagenerica';
 // - provincie
 export * from './lib/models/entita/provincia/provincia';
 // - profilo azienda

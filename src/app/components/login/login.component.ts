@@ -11,6 +11,7 @@ import {
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { Router } from '@angular/router';
+import { ThemeChangerService } from 'src/app/services/themeChanger/themechanger.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,8 @@ export class LoginComponent implements OnInit {
     private alertService: AlertService,
     private commonService: BVCommonService,
     private richiesteService: RichiesteService,
-    private router: Router) { }
+    private router: Router,
+    private themeChanger: ThemeChangerService) { }
 
   ngOnInit() {
   }
@@ -62,6 +64,7 @@ export class LoginComponent implements OnInit {
                   if (s.esito.codice === this.constants.ESITO_OK_CODICE) {
                     const profiloAzienda = s.profiloAzienda;
 
+                    this.themeChanger.loadStyle(profiloAzienda.idAzienda + '.css');
 
                     this.appSessionService.set(this.constants.KEY_AZIENDA_ID, profiloAzienda.idAzienda);
                     this.appSessionService.set(this.constants.KEY_AZIENDA_NOME, profiloAzienda.nomeAzienda);

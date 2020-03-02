@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import {
   SessionService,
@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
 
 declare var $;
 @Component({
@@ -21,6 +24,8 @@ declare var $;
   styleUrls: ['./feed.component.scss']
 })
 export class FeedComponent extends BaseComponent implements OnInit {
+
+  private unsubscribe$ = new Subject<void>();
 
   dataTable: any;
   dtOptions: any;
@@ -42,7 +47,9 @@ export class FeedComponent extends BaseComponent implements OnInit {
     public constantsService: ConstantsService,
     public alertService: AlertService,
     public appSessionService: AppSessionService,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer,
+    public logoutComm: LogoutCommunicationService,
+    public ngZone: NgZone) {
 
     super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
     this.feedSelezionato = new Feed();
@@ -50,6 +57,14 @@ export class FeedComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.logoutComm.logoutObservable.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(r => {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+      this.ngZone.run(() => this.router.navigate(['login'])).then();
+    });
+
     this.checkAuthenticated();
     const self = this;
     this.commonService.get(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {

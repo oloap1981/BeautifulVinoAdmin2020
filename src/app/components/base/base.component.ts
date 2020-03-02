@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { Subject, TimeoutError } from 'rxjs';
 import { SessionService, Utente, RichiesteService, ConstantsService, RispostaGetGenerica, AlertService } from 'bvino-lib';
 import { Router } from '@angular/router';
 import { Component, OnInit, HostBinding } from '@angular/core';
@@ -16,6 +16,7 @@ export class BaseComponent implements OnInit {
   // public wsTokenObservable = this.wsTokenSubject.asObservable();
 
   public utenti: Array<Utente>;
+
   public firstColor = '#e51d70'; /* default BV #e51d70 */
   public secondColor = '#f9da2c'; /* Default BV #f9da2c */
 
@@ -27,18 +28,21 @@ export class BaseComponent implements OnInit {
     public alertService: AlertService,
     public appSessionService: AppSessionService,
     public sanitizer: DomSanitizer) {
-    this.utenti = new Array<Utente>();
-  }
 
-  ngOnInit(): void {
+    this.utenti = new Array<Utente>();
+
     this.firstColor = this.appSessionService.get(this.constants.KEY_AZIENDA_COLORE_PRIMARIO);
     this.secondColor = this.appSessionService.get(this.constants.KEY_AZIENDA_COLORE_SECONDARIO);
   }
 
-  @HostBinding('attr.style')
-  public get valueAsStyle(): any {
-    return this.sanitizer.bypassSecurityTrustStyle(`--first-color: ${this.firstColor}; --second-color: ${this.secondColor};`);
+  ngOnInit(): void {
+
   }
+
+  // @HostBinding('attr.style')
+  // public get valueAsStyle(): any {
+  //   return this.sanitizer.bypassSecurityTrustStyle(`--first-color: ${this.firstColor}; --second-color: ${this.secondColor};`);
+  // }
 
   public checkAuthenticated(): void {
     const tokenValue = this.appSessionService.get(this.constants.KEY_AUTH_TOKEN);
@@ -82,7 +86,13 @@ export class BaseComponent implements OnInit {
     this.alertService.presentErrorAlert('Problemi durante il salvataggio dell entità di tipo ' + tipo);
   }
 
-
+  public manageHttpError(error: any) {
+    if (error instanceof TimeoutError) {
+      this.alertService.presentErrorAlert('Timeout scaduto');
+    } else {
+      this.alertService.presentErrorAlert('Si è verificato un errore nella richiesta: ' + error.statusText);
+    }
+  }
 
   // public manageHttpError(error: any) {
   //     console.log("Si è verificato un errore di comunicazione:");

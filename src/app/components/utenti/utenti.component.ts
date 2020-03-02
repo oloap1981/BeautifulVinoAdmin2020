@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { Router } from '@angular/router';
 import { SessionService, RichiesteService, ConstantsService, AlertService, Utente, BVCommonService } from 'bvino-lib';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
 
 declare var $;
 @Component({
@@ -12,6 +15,8 @@ declare var $;
   styleUrls: ['./utenti.component.scss']
 })
 export class UtentiComponent extends BaseComponent implements OnInit {
+
+  private unsubscribe$ = new Subject<void>();
 
   public items = [];
 
@@ -22,6 +27,7 @@ export class UtentiComponent extends BaseComponent implements OnInit {
   @ViewChild('dataTable', { static: true }) table;
 
   public utenteSelezionato: Utente;
+  public testoHtml = false;
 
   constructor(public sessionService: SessionService,
     public router: Router,
@@ -30,14 +36,66 @@ export class UtentiComponent extends BaseComponent implements OnInit {
     public constantsService: ConstantsService,
     public alertService: AlertService,
     public appSessionService: AppSessionService,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer,
+    public logoutComm: LogoutCommunicationService,
+    public ngZone: NgZone) {
     super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
     this.utenteSelezionato = new Utente();
     this.utenteSelezionato.idUtente = '';
   }
 
   ngOnInit() {
+
+    this.logoutComm.logoutObservable.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(r => {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+      this.ngZone.run(() => this.router.navigate(['login'])).then();
+    });
+
     this.checkAuthenticated();
+    this.caricaListaUtenti();
+  }
+
+  private normalizeList(lista: Array<Utente>): Array<Utente> {
+    const toReturn = new Array<Utente>();
+
+    for (const utente of lista) {
+      utente.usernameUtente = (utente.usernameUtente ? utente.usernameUtente : '');
+      utente.emailUtente = (utente.emailUtente ? utente.emailUtente : '');
+      utente.cittaUtente = (utente.cittaUtente ? utente.cittaUtente : '');
+
+      toReturn.push(utente);
+    }
+
+    return toReturn;
+  }
+
+  private selectUtente(data: any): void {
+    console.log('utente cliccato' + data.usernameUtente);
+    this.utenteSelezionato = data;
+  }
+
+  public salvaUtente(): void {
+    this.commonService.put(this.richiesteService.getRichiestaPutUtente(this.utenteSelezionato)).subscribe(r => {
+      if (r.idUtente) {
+        this.alertService.presentAlert('salvato correttamente utente con id: ' + r.idUtente);
+        this.caricaListaUtenti();
+      } else {
+        this.manageErrorPut('Utente');
+      }
+    }, err => {
+
+    });
+  }
+
+  public fileUploadedImmagine(event: any) {
+    console.log('vini-component, file caricato: ' + event);
+    this.utenteSelezionato.urlFotoUtente = event;
+  }
+
+  private caricaListaUtenti(): void {
     this.commonService.get(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
       // this.utentiService.getUtenti(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
       if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
@@ -66,29 +124,12 @@ export class UtentiComponent extends BaseComponent implements OnInit {
       } else {
         this.manageError(r);
       }
-    }, err => { }, () => {
+    }, err => {
+      this.manageHttpError(err);
+    }, () => {
       this.dataTable = $(this.table.nativeElement);
       this.dataTable.DataTable(this.dtOptions);
     });
-  }
-
-  private normalizeList(lista: Array<Utente>): Array<Utente> {
-    const toReturn = new Array<Utente>();
-
-    for (const utente of lista) {
-      utente.usernameUtente = (utente.usernameUtente ? utente.usernameUtente : '');
-      utente.emailUtente = (utente.emailUtente ? utente.emailUtente : '');
-      utente.cittaUtente = (utente.cittaUtente ? utente.cittaUtente : '');
-
-      toReturn.push(utente);
-    }
-
-    return toReturn;
-  }
-
-  private selectUtente(data: any): void {
-    console.log('utente cliccato' + data.usernameUtente);
-    this.utenteSelezionato = data;
   }
 
 }

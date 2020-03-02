@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { SessionService, BVCommonService, RichiesteService, ConstantsService } from 'bvino-lib';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,16 +14,29 @@ import { CognitoUserSession } from 'amazon-cognito-identity-js';
 })
 export class HomeComponent implements OnInit {
 
+  private unsubscribe$ = new Subject<void>();
+
   public user: CognitoUserSession;
 
   constructor(private appSessionService: AppSessionService,
-    private sessionService: SessionService,
     private constants: ConstantsService,
+    public router: Router,
     private commonService: BVCommonService,
-    private richiesteService: RichiesteService
+    private richiesteService: RichiesteService,
+    public logoutComm: LogoutCommunicationService,
+    public ngZone: NgZone
   ) { }
 
   ngOnInit() {
+    this.logoutComm.logoutObservable.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(r => {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+      this.ngZone.run(() => this.router.navigate(['login'])).then();
+    });
+
+
     this.user = JSON.parse(this.appSessionService.get(this.constants.KEY_USER)) as CognitoUserSession;
     this.getUtentiList();
   }

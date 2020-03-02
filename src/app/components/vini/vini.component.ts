@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import {
   SessionService,
@@ -15,6 +15,10 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
+import { ThemeChangerService } from 'src/app/services/themeChanger/themechanger.service';
 
 declare var $;
 @Component({
@@ -23,6 +27,8 @@ declare var $;
   styleUrls: ['./vini.component.scss']
 })
 export class ViniComponent extends BaseComponent implements OnInit {
+
+  private unsubscribe$ = new Subject<void>();
 
   dataTable: any;
   dtOptions: any;
@@ -50,7 +56,10 @@ export class ViniComponent extends BaseComponent implements OnInit {
     public richiesteService: RichiesteService,
     public constantsService: ConstantsService,
     public alertService: AlertService,
-    public sanitizer: DomSanitizer) {
+    public sanitizer: DomSanitizer,
+    public logoutComm: LogoutCommunicationService,
+    public ngZone: NgZone,
+    private themeChanger: ThemeChangerService) {
 
     super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
     this.vinoSelezionato = new Vino();
@@ -64,6 +73,14 @@ export class ViniComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
 
+    this.logoutComm.logoutObservable.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(r => {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
+      this.ngZone.run(() => this.router.navigate(['login'])).then();
+    });
+
     this.checkAuthenticated();
     // necessario controllo se si è loggati, altrimenti goto login
 
@@ -71,6 +88,7 @@ export class ViniComponent extends BaseComponent implements OnInit {
     this.azienda.nomeAzienda = this.appSessionService.get(this.constants.KEY_AZIENDA_NOME);
 
     this.caricaListaVini();
+    this.themeChanger.loadStyle('test.css');
   }
 
   private caricaListaVini(): void {
@@ -104,7 +122,7 @@ export class ViniComponent extends BaseComponent implements OnInit {
           this.manageError(r);
         }
       }, err => {
-        this.presentErrorAlert(err.statusText);
+        this.manageHttpError(err);
       }, () => {
         this.dataTable = $(this.table.nativeElement);
         this.dataTable.DataTable(this.dtOptions);
@@ -155,6 +173,8 @@ export class ViniComponent extends BaseComponent implements OnInit {
       } else {
         this.manageErrorPut('Vino');
       }
+    }, err => {
+      this.manageHttpError(err);
     });
     this.nuovo = false;
   }

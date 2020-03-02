@@ -7,6 +7,7 @@ import { Evento } from '../../models/entita/evento/evento';
 import { Feed } from '../../models/entita/feed/feed';
 import { Vino } from '../../models/entita/vino/vino';
 import { Provincia } from '../../models/entita/provincia/provincia';
+import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/richiestanotificagenerica';
 
 @Injectable()
 export class RichiesteService {
@@ -139,6 +140,13 @@ export class RichiesteService {
     const richiesta = new RichiestaPutGenerica();
     richiesta.functionName = this.constants.putVinoFunctionName;
     richiesta.vino = vino;
+    return richiesta;
+  }
+
+  // -------- NOTIFICATION --------
+  public getRichiestaNotifica(messaggio: string) {
+    const richiesta = new RichiestaNotificaGenerica();
+    richiesta.messaggio = messaggio;
     return richiesta;
   }
 }

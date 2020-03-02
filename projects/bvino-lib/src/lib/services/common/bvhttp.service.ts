@@ -9,6 +9,8 @@ import { RispostaGetGenerica } from '../../models/comunicazioni/richieste/get/ri
 import { RichiestaGetGenerica } from '../../models/comunicazioni/richieste/get/richiestagetgenerica';
 import { RispostaPutGenerica } from '../../models/comunicazioni/richieste/put/rispostaputgenerica';
 import { RichiestaPutGenerica } from '../../models/comunicazioni/richieste/put/richiestaputgenerica';
+import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/richiestanotificagenerica';
+import { RispostaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/rispostanotificagenerica';
 
 
 @Injectable()
@@ -33,6 +35,13 @@ export class BVHttpService {
   public postPut(path: string, request: RichiestaPutGenerica): Observable<RispostaPutGenerica> {
     return this.http.post<RispostaPutGenerica>(
       this.constantsService.baseAppUrlPut
+      + this.constantsService.pathSeparator
+      + path, request);
+  }
+
+  public postNotifica(path: string, request: RichiestaNotificaGenerica): Observable<RispostaNotificaGenerica> {
+    return this.http.post<RispostaNotificaGenerica>(
+      this.constantsService.baseAppUrlNotifica
       + this.constantsService.pathSeparator
       + path, request);
   }

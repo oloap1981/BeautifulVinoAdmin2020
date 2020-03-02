@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { UtentiComponent } from './utenti.component';
 import { UtentiRoutingModule } from './utenti-routing.module';
+import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
+import { EditorModule } from 'primeng/editor';
 
 
 @NgModule({
@@ -12,6 +14,8 @@ import { UtentiRoutingModule } from './utenti-routing.module';
     CommonModule,
     FormsModule,
     PipesModule,
+    EditorModule,
+    FileuploadModule,
     UtentiRoutingModule
   ],
   declarations: [UtentiComponent]

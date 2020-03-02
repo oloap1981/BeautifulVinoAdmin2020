@@ -34,6 +34,8 @@ import { EventiModule } from './components/eventi/eventi.module';
 import { FeedModule } from './components/feed/feed.module';
 import { ViniModule } from './components/vini/vini.module';
 import { BaseComponent } from './components/base/base.component';
+import { LogoutCommunicationService } from './services/logoutCommunication/logoutcommunication.service';
+import { ThemeChangerService } from './services/themeChanger/themechanger.service';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { BaseComponent } from './components/base/base.component';
     BVHttpService,
     RichiesteService,
     BVCommonService,
+    LogoutCommunicationService,
+    ThemeChangerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: BVHttpInterceptor,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FileuploadService } from 'src/app/services/fileupload.service';
+import { FileuploadService } from 'src/app/services/bvfileupload/fileupload.service';
 import { AlertService } from 'bvino-lib';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

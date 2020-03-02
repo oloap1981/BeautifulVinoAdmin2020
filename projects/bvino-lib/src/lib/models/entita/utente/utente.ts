@@ -34,6 +34,7 @@ export class Utente {
   public badgeUtente: Array<Badge>;
   public utentiUtente: Array<Utente>;
   public eventiUtenteInt: Array<EventoUtente>;
+  public acquistatiEventiUtenteInt: Array<EventoUtente>;
   public aziendeUtenteInt: Array<AziendaUtente>;
   public viniUtenteInt: Array<VinoUtente>;
   public badgeUtenteInt: Array<BadgeUtente>;

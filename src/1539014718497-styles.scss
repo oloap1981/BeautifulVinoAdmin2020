@@ -66,10 +66,10 @@ img {
 
 
 .bg-gradient-primary {
-  background-color: $firstColor;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, '#e51d70'), to(rgba(0,0,0,.25)));
+  background-color: #ff3333;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #ff3333), to(rgba(0,0,0,.25)));
   //background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, $firstColor), to($firstColor));
-  background-image: linear-gradient(180deg, '#e51d70' 10%, rgba(0,0,0,.25) 100%);
+  background-image: linear-gradient(180deg, #ff3333 10%, rgba(0,0,0,.25) 100%);
   //background-image: linear-gradient(180deg, $firstColor 10%, $firstColor 100%);
   background-size: cover;
 }

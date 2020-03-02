@@ -6,6 +6,8 @@ import { BVHttpService } from './bvhttp.service';
 import { RichiestaGetGenerica } from '../../models/comunicazioni/richieste/get/richiestagetgenerica';
 import { RispostaGetGenerica } from '../../models/comunicazioni/richieste/get/rispostagetgenerica';
 import { Injectable } from '@angular/core';
+import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/richiestanotificagenerica';
+import { RispostaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/rispostanotificagenerica';
 
 @Injectable()
 export class BVCommonService {
@@ -14,6 +16,10 @@ export class BVCommonService {
     private constantsService: ConstantsService,
     private httpService: BVHttpService
   ) { }
+
+  public putNotifica(request: RichiestaNotificaGenerica): Observable<RispostaNotificaGenerica> {
+    return this.httpService.postNotifica(this.constantsService.notificationServiceName, request);
+  }
 
   public put(request: RichiestaPutGenerica): Observable<RispostaPutGenerica> {
     return this.httpService.postPut(this.constantsService.putServiceName, request);
