@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
+import { ThemeChangerService } from 'src/app/services/themeChanger/themechanger.service';
 
 declare var $;
 @Component({
@@ -38,7 +39,8 @@ export class UtentiComponent extends BaseComponent implements OnInit {
     public appSessionService: AppSessionService,
     public sanitizer: DomSanitizer,
     public logoutComm: LogoutCommunicationService,
-    public ngZone: NgZone) {
+      public ngZone: NgZone,
+      private themeChanger: ThemeChangerService) {
     super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
     this.utenteSelezionato = new Utente();
     this.utenteSelezionato.idUtente = '';
@@ -56,6 +58,8 @@ export class UtentiComponent extends BaseComponent implements OnInit {
 
     this.checkAuthenticated();
     this.caricaListaUtenti();
+
+      this.themeChanger.loadStyle('1539014718497.css');
   }
 
   private normalizeList(lista: Array<Utente>): Array<Utente> {
