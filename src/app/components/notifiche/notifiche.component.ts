@@ -1,8 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { SessionService, RichiesteService, ConstantsService, AlertService, Utente, BVCommonService } from 'bvino-lib';
+import { SessionService, RichiesteService, AlertService, Utente, BVCommonService } from 'bvino-lib';
 import { Router } from '@angular/router';
 import { AppSessionService } from 'src/app/services/appSession.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
@@ -23,13 +22,11 @@ export class NotificheComponent extends BaseComponent implements OnInit {
     public router: Router,
     public commonService: BVCommonService,
     public richiesteService: RichiesteService,
-    public constantsService: ConstantsService,
     public alertService: AlertService,
     public appSessionService: AppSessionService,
-    public sanitizer: DomSanitizer,
     public logoutComm: LogoutCommunicationService,
     public ngZone: NgZone) {
-    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
+    super(sessionService, router, richiesteService, alertService, appSessionService);
   }
 
   ngOnInit() {

@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppSessionService } from '../services/appSession.service';
-import { SessionService, ConstantsService } from 'bvino-lib';
+import { SessionService } from 'bvino-lib';
+import { environment } from 'src/environments/environmentnokeys';
 
 @Injectable()
 export class BVHttpInterceptor implements HttpInterceptor {
@@ -15,13 +16,12 @@ export class BVHttpInterceptor implements HttpInterceptor {
   constructor(
     public appSessionService: AppSessionService,
     public sessionService: SessionService,
-    public constants: ConstantsService,
     public router: Router
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.printInstant(request.url + ' __ START _____ ');
-    const tokenValue = this.appSessionService.get(this.constants.KEY_AUTH_TOKEN);
+    const tokenValue = this.appSessionService.get(environment.KEY_AUTH_TOKEN);
     request = request.clone({
       headers: new HttpHeaders({
         'Authorization': tokenValue,

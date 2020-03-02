@@ -1,11 +1,12 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { SessionService, BVCommonService, RichiesteService, ConstantsService } from 'bvino-lib';
+import { BVCommonService, RichiesteService } from 'bvino-lib';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { CognitoUserSession } from 'amazon-cognito-identity-js';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environmentnokeys';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,6 @@ export class HomeComponent implements OnInit {
   public user: CognitoUserSession;
 
   constructor(private appSessionService: AppSessionService,
-    private constants: ConstantsService,
     public router: Router,
     private commonService: BVCommonService,
     private richiesteService: RichiesteService,
@@ -36,8 +36,7 @@ export class HomeComponent implements OnInit {
       this.ngZone.run(() => this.router.navigate(['login'])).then();
     });
 
-
-    this.user = JSON.parse(this.appSessionService.get(this.constants.KEY_USER)) as CognitoUserSession;
+    this.user = JSON.parse(this.appSessionService.get(environment.KEY_USER)) as CognitoUserSession;
     this.getUtentiList();
   }
 

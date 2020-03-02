@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BVAuthorizationService } from './services/auth/BVAuthorizationService';
 import { SessionService } from './services/common/session.service';
-import { UtentiService } from './services/utenti/utenti.service';
-import { ConstantsService } from './services/common/constants.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -21,8 +19,6 @@ import { RichiesteService } from './services/common/richieste.service';
   providers: [
     BVAuthorizationService,
     SessionService,
-    UtentiService,
-    ConstantsService,
     AlertService,
     BVHttpService,
     RichiesteService
@@ -30,10 +26,15 @@ import { RichiesteService } from './services/common/richieste.service';
   exports: []
 })
 export class BvinoLibModule {
-  static forRoot() {
+  static forRoot(environment: any) {
     return {
       ngModule: BvinoLibModule,
-      providers: [],
+      providers: [
+        {
+          provide: 'env', // you can also use InjectionToken
+          useValue: environment
+        }
+      ],
     };
   }
 }

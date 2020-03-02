@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
-import { SessionService, RichiesteService, ConstantsService, AlertService, Azienda, BVCommonService } from 'bvino-lib';
+import { SessionService, RichiesteService, AlertService, Azienda, BVCommonService } from 'bvino-lib';
 import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
-import { IgxColumnMovingService } from 'igniteui-angular';
 import { AppSessionService } from 'src/app/services/appSession.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'src/environments/environmentnokeys';
 
 declare var $;
 @Component({
@@ -33,12 +32,10 @@ export class AziendeComponent extends BaseComponent implements OnInit {
     public sessionService: SessionService,
     public router: Router,
     public richiesteService: RichiesteService,
-    public constantsService: ConstantsService,
     public alertService: AlertService,
-    public appSessionService: AppSessionService,
-    public sanitizer: DomSanitizer) {
+    public appSessionService: AppSessionService) {
 
-    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
+    super(sessionService, router, richiesteService, alertService, appSessionService);
     this.aziendaSelezionata = new Azienda();
     this.isImageSaved = false;
     this.cardImageBase64 = '';
@@ -47,7 +44,7 @@ export class AziendeComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.commonService.get(this.richiesteService.getRichiestaGetAziende()).subscribe(r => {
-      if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
+      if (r.esito.codice === environment.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.aziende);
         this.dtOptions = {
           data: this.tableData,

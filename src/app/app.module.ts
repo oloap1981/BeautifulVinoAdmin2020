@@ -7,7 +7,6 @@ import {
   BvinoLibModule,
   SessionService,
   BVAuthorizationService,
-  ConstantsService,
   AlertService,
   BVHttpService,
   RichiesteService,
@@ -37,6 +36,8 @@ import { BaseComponent } from './components/base/base.component';
 import { LogoutCommunicationService } from './services/logoutCommunication/logoutcommunication.service';
 import { ThemeChangerService } from './services/themeChanger/themechanger.service';
 
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +54,7 @@ import { ThemeChangerService } from './services/themeChanger/themechanger.servic
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    BvinoLibModule.forRoot(),
+    BvinoLibModule.forRoot(environment),
     FormsModule,
     PipesModule,
     DataTablesModule,
@@ -62,7 +63,6 @@ import { ThemeChangerService } from './services/themeChanger/themechanger.servic
   ],
   providers: [
     SessionService,
-    ConstantsService,
     BVAuthorizationService,
     CookieService,
     AppSessionService,

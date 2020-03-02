@@ -3,7 +3,6 @@ import { BaseComponent } from '../base/base.component';
 import {
   SessionService,
   RichiesteService,
-  ConstantsService,
   AlertService,
   Vino,
   BVCommonService,
@@ -14,11 +13,11 @@ import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
 import { AppSessionService } from 'src/app/services/appSession.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
 import { ThemeChangerService } from 'src/app/services/themeChanger/themechanger.service';
+import { environment } from 'src/environments/environmentnokeys';
 
 declare var $;
 @Component({
@@ -54,14 +53,12 @@ export class ViniComponent extends BaseComponent implements OnInit {
     public appSessionService: AppSessionService,
     public router: Router,
     public richiesteService: RichiesteService,
-    public constantsService: ConstantsService,
     public alertService: AlertService,
-    public sanitizer: DomSanitizer,
     public logoutComm: LogoutCommunicationService,
     public ngZone: NgZone,
     private themeChanger: ThemeChangerService) {
 
-    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
+    super(sessionService, router, richiesteService, alertService, appSessionService);
     this.vinoSelezionato = new Vino();
     this.vinoSelezionato.idVino = '';
     this.isImageSaved = false;
@@ -84,18 +81,18 @@ export class ViniComponent extends BaseComponent implements OnInit {
     this.checkAuthenticated();
     // necessario controllo se si è loggati, altrimenti goto login
 
-    this.azienda.idAzienda = this.appSessionService.get(this.constants.KEY_AZIENDA_ID);
-    this.azienda.nomeAzienda = this.appSessionService.get(this.constants.KEY_AZIENDA_NOME);
+    this.azienda.idAzienda = this.appSessionService.get(environment.KEY_AZIENDA_ID);
+    this.azienda.nomeAzienda = this.appSessionService.get(environment.KEY_AZIENDA_NOME);
 
     this.caricaListaVini();
     this.themeChanger.loadStyle('test.css');
   }
 
   private caricaListaVini(): void {
-    this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda(this.appSessionService.get(this.constants.KEY_AZIENDA_ID)))
+    this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
       .subscribe(r => {
         // this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
-        if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
           this.tableData = this.normalizeList(r.vini);
           this.dtOptions = {
             data: this.tableData,

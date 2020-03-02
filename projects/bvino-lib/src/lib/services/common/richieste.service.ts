@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { RichiestaGetGenerica } from '../../models/comunicazioni/richieste/get/richiestagetgenerica';
-import { ConstantsService } from './constants.service';
 import { RichiestaPutGenerica } from '../../models/comunicazioni/richieste/put/richiestaputgenerica';
 import { Utente } from '../../models/entita/utente/utente';
 import { Evento } from '../../models/entita/evento/evento';
@@ -11,7 +10,7 @@ import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/
 
 @Injectable()
 export class RichiesteService {
-  constructor(private constants: ConstantsService) {
+  constructor(@Inject('env') private env: any) {
 
   }
 
@@ -19,14 +18,14 @@ export class RichiesteService {
 
   public getRichiestaGetUtenti() {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getUtentiFunctionName;
+    richiesta.functionName = this.env.getUtentiFunctionName;
 
     return richiesta;
   }
 
   public getRichiestaGetUtente(idUtente: string) {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getUtenteFunctionName;
+    richiesta.functionName = this.env.getUtenteFunctionName;
     richiesta.idUtente = idUtente;
 
     return richiesta;
@@ -34,21 +33,21 @@ export class RichiesteService {
 
   public getRichiestaGetAziende() {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getAziendeFunctionName;
+    richiesta.functionName = this.env.getAziendeFunctionName;
 
     return richiesta;
   }
 
   public getRichiestaGetBadges() {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getBadgesFunctionName;
+    richiesta.functionName = this.env.getBadgesFunctionName;
 
     return richiesta;
   }
 
   public getRichiestaGetEventi() {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getEventiFunctionName;
+    richiesta.functionName = this.env.getEventiFunctionName;
 
     richiesta.idUtente = '';
     richiesta.elencoCompleto = 'S';
@@ -58,21 +57,21 @@ export class RichiesteService {
 
   public getRichiestaGetProvincie() {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getProvincieFunctionName;
+    richiesta.functionName = this.env.getProvincieFunctionName;
 
     return richiesta;
   }
 
   public getRichiestaGetFeed() {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getFeedFunctionName;
+    richiesta.functionName = this.env.getFeedFunctionName;
 
     return richiesta;
   }
 
   public getRichiestaGetVini() {
     const richiesta = new RichiestaGetGenerica();
-    richiesta.functionName = this.constants.getViniFunctionName;
+    richiesta.functionName = this.env.getViniFunctionName;
 
     return richiesta;
   }
@@ -80,7 +79,7 @@ export class RichiesteService {
   public getRichiestaGetViniAzienda(idAzienda: string) {
     const richiesta = new RichiestaGetGenerica();
     richiesta.idAzienda = idAzienda;
-    richiesta.functionName = this.constants.getViniAziendaFunctionName;
+    richiesta.functionName = this.env.getViniAziendaFunctionName;
 
     return richiesta;
   }
@@ -88,7 +87,7 @@ export class RichiesteService {
   public getRichiestaGetProfiloAzienda(idProfiloAzienda: string) {
     const richiesta = new RichiestaGetGenerica();
     richiesta.idProfiloAzienda = idProfiloAzienda;
-    richiesta.functionName = this.constants.getProfiloAziendaFunctionName;
+    richiesta.functionName = this.env.getProfiloAziendaFunctionName;
 
     return richiesta;
   }
@@ -102,35 +101,35 @@ export class RichiesteService {
     richiesta.filename = filename;
     richiesta.tipoEntita = tipoEntita;
 
-    richiesta.functionName = this.constants.putImmaginiFunctionName;
+    richiesta.functionName = this.env.putImmaginiFunctionName;
 
     return richiesta;
   }
 
   public getRichiestaPutProvincia(provincia: Provincia) {
     const richiesta = new RichiestaPutGenerica();
-    richiesta.functionName = this.constants.putProvinciaFunctionName;
+    richiesta.functionName = this.env.putProvinciaFunctionName;
     richiesta.provincia = provincia;
     return richiesta;
   }
 
   public getRichiestaPutUtente(utente: Utente) {
     const richiesta = new RichiestaPutGenerica();
-    richiesta.functionName = this.constants.putUtenteFunctionName;
+    richiesta.functionName = this.env.putUtenteFunctionName;
     richiesta.utente = utente;
     return richiesta;
   }
 
   public getRichiestaPutEvento(evento: Evento) {
     const richiesta = new RichiestaPutGenerica();
-    richiesta.functionName = this.constants.putEventoFunctionName;
+    richiesta.functionName = this.env.putEventoFunctionName;
     richiesta.evento = evento;
     return richiesta;
   }
 
   public getRichiestaPutFeed(feed: Feed) {
     const richiesta = new RichiestaPutGenerica();
-    richiesta.functionName = this.constants.putFeedFunctionName;
+    richiesta.functionName = this.env.putFeedFunctionName;
     richiesta.feed = feed;
     return richiesta;
   }
@@ -138,7 +137,7 @@ export class RichiesteService {
 
   public getRichiestaPutVino(vino: Vino) {
     const richiesta = new RichiestaPutGenerica();
-    richiesta.functionName = this.constants.putVinoFunctionName;
+    richiesta.functionName = this.env.putVinoFunctionName;
     richiesta.vino = vino;
     return richiesta;
   }

@@ -10,7 +10,6 @@ export * from './lib/services/auth/BVAuthorizationService';
 // -- COMUNI
 export * from './lib/services/common/session.service';
 export * from './lib/services/common/bvhttp.service';
-export * from './lib/services/common/constants.service';
 export * from './lib/services/common/richieste.service';
 export * from './lib/services/common/alert.service';
 export * from './lib/services/common/common.service';

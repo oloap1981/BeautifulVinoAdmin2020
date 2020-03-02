@@ -3,7 +3,6 @@ import { BaseComponent } from '../base/base.component';
 import {
   SessionService,
   RichiesteService,
-  ConstantsService,
   AlertService,
   Evento,
   Provincia,
@@ -16,11 +15,12 @@ import { Router } from '@angular/router';
 
 import * as _ from 'lodash';
 import { AppSessionService } from 'src/app/services/appSession.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+
+import { environment } from 'src/environments/environmentnokeys';
 
 declare var $;
 @Component({
@@ -62,14 +62,12 @@ export class EventiComponent extends BaseComponent implements OnInit {
     public sessionService: SessionService,
     public router: Router,
     public richiesteService: RichiesteService,
-    public constantsService: ConstantsService,
     public alertService: AlertService,
     public appSessionService: AppSessionService,
-    public sanitizer: DomSanitizer,
     public logoutComm: LogoutCommunicationService,
     public ngZone: NgZone) {
 
-    super(sessionService, router, richiesteService, constantsService, alertService, appSessionService, sanitizer);
+    super(sessionService, router, richiesteService, alertService, appSessionService);
 
     // INIZIALIZZAZIONE DELL'EVENTO VUOTO
     this.eventoSelezionato = new Evento();
@@ -104,7 +102,7 @@ export class EventiComponent extends BaseComponent implements OnInit {
     this.checkAuthenticated();
     this.commonService.get(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
       // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
-      if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
+      if (r.esito.codice === environment.ESITO_OK_CODICE) {
         this.tableData = this.normalizeList(r.eventi);
         this.dtOptions = {
           data: this.tableData,
@@ -168,7 +166,7 @@ export class EventiComponent extends BaseComponent implements OnInit {
 
     this.commonService.get(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
       // this.eventiService.getProvincie(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
-      if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
+      if (r.esito.codice === environment.ESITO_OK_CODICE) {
         this.listaProvincie = r.province;
       } else {
         this.manageError(r);
@@ -181,7 +179,7 @@ export class EventiComponent extends BaseComponent implements OnInit {
   public caricaVini() {
     this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
       // this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
-      if (r.esito.codice === this.constants.ESITO_OK_CODICE) {
+      if (r.esito.codice === environment.ESITO_OK_CODICE) {
         this.listaVini = r.vini;
       } else {
         this.manageError(r);
