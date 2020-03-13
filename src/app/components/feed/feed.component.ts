@@ -64,44 +64,45 @@ export class FeedComponent extends BaseComponent implements OnInit {
 
     this.checkAuthenticated();
     const self = this;
-    this.commonService.get(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
-      // this.feedService.getFeeds(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
-      if (r.esito.codice === environment.ESITO_OK_CODICE) {
-        this.tableData = this.normalizeList(r.feed);
-        this.dtOptions = {
-          data: this.tableData,
-          columns: [
-            {
-              title: 'Data', data: 'idFeed', render: function (data: any, type: any, full: any) {
-                return self.getStringDate(data);
-              }
-            },
-            // { title: 'Azienda', data: 'aziendaVinoInt.nomeAzienda' },
-            { title: 'Titolo', data: 'titoloFeed' }
-          ],
-          pagingType: 'full_numbers',
-          pageLength: 15,
-          processing: true,
-          rowCallback: (row: Node, data: any[] | Object, index: number) => {
-            const self = this;
-            // Unbind first in order to avoid any duplicate handler
-            // (see https://github.com/l-lin/angular-datatables/issues/87)
-            $('td', row).unbind('click');
-            $('td', row).bind('click', () => {
-              self.selectFeed(data);
-            });
-            return row;
-          }
-        };
-      } else {
-        this.manageError(r);
-      }
-    }, err => {
-      this.presentErrorAlert(err.statusText);
-    }, () => {
-      this.dataTable = $(this.table.nativeElement);
-      this.dataTable.DataTable(this.dtOptions);
-    });
+    this.commonService.get(this.richiesteService.getRichiestaGetFeedAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
+      .subscribe(r => {
+        // this.feedService.getFeeds(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.tableData = this.normalizeList(r.feed);
+          this.dtOptions = {
+            data: this.tableData,
+            columns: [
+              {
+                title: 'Data', data: 'idFeed', render: function (data: any, type: any, full: any) {
+                  return self.getStringDate(data);
+                }
+              },
+              // { title: 'Azienda', data: 'aziendaVinoInt.nomeAzienda' },
+              { title: 'Titolo', data: 'titoloFeed' }
+            ],
+            pagingType: 'full_numbers',
+            pageLength: 15,
+            processing: true,
+            rowCallback: (row: Node, data: any[] | Object, index: number) => {
+              const self = this;
+              // Unbind first in order to avoid any duplicate handler
+              // (see https://github.com/l-lin/angular-datatables/issues/87)
+              $('td', row).unbind('click');
+              $('td', row).bind('click', () => {
+                self.selectFeed(data);
+              });
+              return row;
+            }
+          };
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.presentErrorAlert(err.statusText);
+      }, () => {
+        this.dataTable = $(this.table.nativeElement);
+        this.dataTable.DataTable(this.dtOptions);
+      });
   }
 
   private selectFeed(data: any): void {

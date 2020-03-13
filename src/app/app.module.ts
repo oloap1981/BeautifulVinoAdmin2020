@@ -36,7 +36,7 @@ import { BaseComponent } from './components/base/base.component';
 import { LogoutCommunicationService } from './services/logoutCommunication/logoutcommunication.service';
 import { ThemeChangerService } from './services/themeChanger/themechanger.service';
 
-import { environment } from '../environments/environment';
+import { environment } from 'src/environments/environmentnokeys';
 
 @NgModule({
   declarations: [

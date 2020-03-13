@@ -98,40 +98,41 @@ export class UtentiComponent extends BaseComponent implements OnInit {
   }
 
   private caricaListaUtenti(): void {
-    this.commonService.get(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
-      // this.utentiService.getUtenti(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
-      if (r.esito.codice === environment.ESITO_OK_CODICE) {
-        this.tableData = this.normalizeList(r.utenti);
-        this.dtOptions = {
-          data: this.tableData,
-          columns: [
-            { title: 'Nome', data: 'usernameUtente' },
-            { title: 'Email', data: 'emailUtente' },
-            { title: 'Citta', data: 'cittaUtente' }
-          ],
-          pagingType: 'full_numbers',
-          pageLength: 15,
-          processing: true,
-          rowCallback: (row: Node, data: any[] | Object, index: number) => {
-            const self = this;
-            // Unbind first in order to avoid any duplicate handler
-            // (see https://github.com/l-lin/angular-datatables/issues/87)
-            $('td', row).unbind('click');
-            $('td', row).bind('click', () => {
-              self.selectUtente(data);
-            });
-            return row;
-          }
-        };
-      } else {
-        this.manageError(r);
-      }
-    }, err => {
-      this.manageHttpError(err);
-    }, () => {
-      this.dataTable = $(this.table.nativeElement);
-      this.dataTable.DataTable(this.dtOptions);
-    });
+    this.commonService.get(this.richiesteService.getRichiestaGetUtentiAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
+      .subscribe(r => {
+        // this.utentiService.getUtenti(this.richiesteService.getRichiestaGetUtenti()).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.tableData = this.normalizeList(r.utenti);
+          this.dtOptions = {
+            data: this.tableData,
+            columns: [
+              { title: 'Nome', data: 'usernameUtente' },
+              { title: 'Email', data: 'emailUtente' },
+              { title: 'Citta', data: 'cittaUtente' }
+            ],
+            pagingType: 'full_numbers',
+            pageLength: 15,
+            processing: true,
+            rowCallback: (row: Node, data: any[] | Object, index: number) => {
+              const self = this;
+              // Unbind first in order to avoid any duplicate handler
+              // (see https://github.com/l-lin/angular-datatables/issues/87)
+              $('td', row).unbind('click');
+              $('td', row).bind('click', () => {
+                self.selectUtente(data);
+              });
+              return row;
+            }
+          };
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.manageHttpError(err);
+      }, () => {
+        this.dataTable = $(this.table.nativeElement);
+        this.dataTable.DataTable(this.dtOptions);
+      });
   }
 
 }

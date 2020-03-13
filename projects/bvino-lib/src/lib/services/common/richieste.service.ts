@@ -7,6 +7,7 @@ import { Feed } from '../../models/entita/feed/feed';
 import { Vino } from '../../models/entita/vino/vino';
 import { Provincia } from '../../models/entita/provincia/provincia';
 import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/richiestanotificagenerica';
+import { RichiestaConnectGenerica } from '../../models/comunicazioni/richieste/connect/richiestaconnectgenerica';
 
 @Injectable()
 export class RichiesteService {
@@ -23,6 +24,14 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaGetUtentiAzienda(idAzienda: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getUtentiAziendaFunctionName;
+    richiesta.idAzienda = idAzienda;
+
+    return richiesta;
+  }
+
   public getRichiestaGetUtente(idUtente: string) {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.env.getUtenteFunctionName;
@@ -35,6 +44,13 @@ export class RichiesteService {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.env.getAziendeFunctionName;
 
+    return richiesta;
+  }
+
+  public getRichiestaGetAzienda(idAzienda: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getAziendaFunctionName;
+    richiesta.idAzienda = idAzienda;
     return richiesta;
   }
 
@@ -55,6 +71,38 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaGetEventiAzienda(idAzienda: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getEventiAziendaFunctionName;
+    richiesta.idAzienda = idAzienda;
+
+    richiesta.idUtente = '';
+    richiesta.elencoCompleto = 'S';
+
+    return richiesta;
+  }
+
+  public getRichiestaGetEventoUtente(idEvento: string, dataEvento: number, idUtente: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getEventoFunctionName;
+
+    richiesta.idEvento = idEvento;
+    richiesta.idUtente = idUtente;
+    richiesta.dataEvento = dataEvento;
+
+    return richiesta;
+  }
+
+  public getRichiestaGetEvento(idEvento: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getEventoFunctionName;
+
+    richiesta.idEvento = idEvento;
+
+    return richiesta;
+  }
+
+
   public getRichiestaGetProvincie() {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.env.getProvincieFunctionName;
@@ -69,9 +117,26 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaGetFeedAzienda(idAzienda: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getFeedAziendaFunctionName;
+    richiesta.idAzienda = idAzienda;
+
+    return richiesta;
+  }
+
   public getRichiestaGetVini() {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.env.getViniFunctionName;
+
+    return richiesta;
+  }
+
+  public getRichiestaGetVino(idVino: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getVinoFunctionName;
+
+    richiesta.idVino = idVino;
 
     return richiesta;
   }
@@ -146,6 +211,52 @@ export class RichiesteService {
   public getRichiestaNotifica(messaggio: string) {
     const richiesta = new RichiestaNotificaGenerica();
     richiesta.messaggio = messaggio;
+    return richiesta;
+  }
+
+  // -------- CONNECT --------
+  public getRichiestaAggiungiEventoAPreferiti(
+    idUtente: string, idEvento: string, dataEvento: number, statoPreferitoEvento: number, statoAcquistatoEvento: number) {
+    const richiesta = new RichiestaConnectGenerica();
+
+    richiesta.idUtente = idUtente;
+    richiesta.idEvento = idEvento;
+    richiesta.dataEvento = dataEvento;
+    richiesta.statoEvento = 'P';
+    richiesta.statoPreferitoEvento = statoPreferitoEvento;
+    richiesta.statoAcquistatoEvento = statoAcquistatoEvento;
+    richiesta.functionName = this.env.connectEventoAUtenteFunctionName;
+
+    return richiesta;
+  }
+
+  public getRichiestaAcquistaEvento(
+    idUtente: string, idEvento: string, dataEvento: number, statoPreferitoEvento: number, statoAcquistatoEvento: number) {
+    const richiesta = new RichiestaConnectGenerica();
+
+    richiesta.idUtente = idUtente;
+    richiesta.idEvento = idEvento;
+    richiesta.dataEvento = dataEvento;
+    richiesta.statoEvento = 'A';
+    richiesta.statoPreferitoEvento = statoPreferitoEvento;
+    richiesta.statoAcquistatoEvento = statoAcquistatoEvento;
+    richiesta.functionName = this.env.connectEventoAUtenteFunctionName;
+
+    return richiesta;
+  }
+
+  public getRichiestaRimuoviEventoDaPreferiti(
+    idUtente: string, idEvento: string, dataEvento: number, statoPreferitoEvento: number, statoAcquistatoEvento: number) {
+    const richiesta = new RichiestaConnectGenerica();
+
+    richiesta.idUtente = idUtente;
+    richiesta.idEvento = idEvento;
+    richiesta.dataEvento = dataEvento;
+    richiesta.statoEvento = 'D';
+    richiesta.statoPreferitoEvento = statoPreferitoEvento;
+    richiesta.statoAcquistatoEvento = statoAcquistatoEvento;
+    richiesta.functionName = this.env.connectEventoAUtenteFunctionName;
+
     return richiesta;
   }
 }

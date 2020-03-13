@@ -19,6 +19,7 @@ export class Evento {
   public prezzoEvento: number;
   public urlFotoEvento: string;
   public statoEvento: string;
+  public statoPreferitoEvento: string;
   public testoEvento: string;
   public latitudineEvento: number;
   public longitudineEvento: number;

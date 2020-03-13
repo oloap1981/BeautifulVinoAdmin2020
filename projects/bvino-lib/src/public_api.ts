@@ -60,6 +60,8 @@ export * from './lib/models/comunicazioni/richieste/put/richiestaputgenerica';
 export * from './lib/models/comunicazioni/richieste/put/rispostaputgenerica';
 export * from './lib/models/comunicazioni/richieste/notifica/richiestanotificagenerica';
 export * from './lib/models/comunicazioni/richieste/notifica/rispostanotificagenerica';
+export * from './lib/models/comunicazioni/richieste/connect/richiestaconnectgenerica';
+export * from './lib/models/comunicazioni/richieste/connect/rispostaconnectgenerica';
 // - provincie
 export * from './lib/models/entita/provincia/provincia';
 // - profilo azienda

@@ -1,4 +1,8 @@
+import { Esito } from '../../../entita/esito/esito';
+
 export class RispostaPutGenerica {
+  public esito: Esito;
+
   public idAzienda: string;
   public idBadge: string;
   public idEvento: string;

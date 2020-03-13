@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ClientFilterPipe } from './namefilter.pipe';
+import { BVDatePipe } from './date.pipe';
 
 @NgModule({
   imports: [],
-  declarations: [ClientFilterPipe],
+  declarations: [ClientFilterPipe, BVDatePipe],
   exports: [ClientFilterPipe],
 })
 

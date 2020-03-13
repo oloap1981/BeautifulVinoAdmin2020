@@ -100,40 +100,41 @@ export class EventiComponent extends BaseComponent implements OnInit {
     });
 
     this.checkAuthenticated();
-    this.commonService.get(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
-      // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
-      if (r.esito.codice === environment.ESITO_OK_CODICE) {
-        this.tableData = this.normalizeList(r.eventi);
-        this.dtOptions = {
-          data: this.tableData,
-          columns: [
-            { title: 'Nome', data: 'titoloEvento' },
-            // { title: 'Azienda', data: 'aziendaVinoInt.nomeAzienda' },
-            { title: 'Citta', data: 'cittaEvento' }
-          ],
-          pagingType: 'full_numbers',
-          pageLength: 15,
-          processing: true,
-          rowCallback: (row: Node, data: any[] | Object, index: number) => {
-            const self = this;
-            // Unbind first in order to avoid any duplicate handler
-            // (see https://github.com/l-lin/angular-datatables/issues/87)
-            $('td', row).unbind('click');
-            $('td', row).bind('click', () => {
-              self.selectEvento(data);
-            });
-            return row;
-          }
-        };
-      } else {
-        this.manageError(r);
-      }
-    }, err => {
-      this.presentErrorAlert(err.statusText);
-    }, () => {
-      this.dataTable = $(this.table.nativeElement);
-      this.dataTable.DataTable(this.dtOptions);
-    });
+    this.commonService.get(this.richiesteService.getRichiestaGetEventiAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
+      .subscribe(r => {
+        // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.tableData = this.normalizeList(r.eventi);
+          this.dtOptions = {
+            data: this.tableData,
+            columns: [
+              { title: 'Nome', data: 'titoloEvento' },
+              // { title: 'Azienda', data: 'aziendaVinoInt.nomeAzienda' },
+              { title: 'Citta', data: 'cittaEvento' }
+            ],
+            pagingType: 'full_numbers',
+            pageLength: 15,
+            processing: true,
+            rowCallback: (row: Node, data: any[] | Object, index: number) => {
+              const self = this;
+              // Unbind first in order to avoid any duplicate handler
+              // (see https://github.com/l-lin/angular-datatables/issues/87)
+              $('td', row).unbind('click');
+              $('td', row).bind('click', () => {
+                self.selectEvento(data);
+              });
+              return row;
+            }
+          };
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.presentErrorAlert(err.statusText);
+      }, () => {
+        this.dataTable = $(this.table.nativeElement);
+        this.dataTable.DataTable(this.dtOptions);
+      });
     this.caricaProvince();
     this.caricaVini();
   }

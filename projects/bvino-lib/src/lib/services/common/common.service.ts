@@ -7,6 +7,8 @@ import { RispostaGetGenerica } from '../../models/comunicazioni/richieste/get/ri
 import { Injectable, Inject } from '@angular/core';
 import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/richiestanotificagenerica';
 import { RispostaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/rispostanotificagenerica';
+import { RichiestaConnectGenerica } from '../../models/comunicazioni/richieste/connect/richiestaconnectgenerica';
+import { RispostaConnectGenerica } from '../../models/comunicazioni/richieste/connect/rispostaconnectgenerica';
 
 @Injectable()
 export class BVCommonService {
@@ -26,5 +28,9 @@ export class BVCommonService {
 
   public get(request: RichiestaGetGenerica): Observable<RispostaGetGenerica> {
     return this.httpService.post(this.env.getServiceName, request);
+  }
+
+  public connect(request: RichiestaConnectGenerica): Observable<RispostaConnectGenerica> {
+    return this.httpService.postConnect(this.env.connectServiceName, request);
   }
 }
