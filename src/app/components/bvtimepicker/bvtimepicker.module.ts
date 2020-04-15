@@ -9,10 +9,10 @@ import {
 } from 'igniteui-angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BvdatepickerComponent } from './bvdatepicker.component';
+import { BvtimepickerComponent } from './bvtimepicker.component';
 
 @NgModule({
-  declarations: [BvdatepickerComponent],
+  declarations: [BvtimepickerComponent],
   imports: [CommonModule,
     FormsModule,
     IgxDatePickerModule,
@@ -22,6 +22,6 @@ import { BvdatepickerComponent } from './bvdatepicker.component';
     IgxInputGroupModule,
     IgxSnackbarModule],
   providers: [],
-  exports: [BvdatepickerComponent]
+  exports: [BvtimepickerComponent]
 })
-export class BvDatePickerModule { }
+export class BvTimePickerModule { }

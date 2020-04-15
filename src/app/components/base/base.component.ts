@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppSessionService } from 'src/app/services/appSession.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environmentnokeys';
+import { PageManagerService } from 'src/app/services/pagemanager/pagemanager.service';
 
 @Component({
   selector: 'app-base',
@@ -15,14 +16,20 @@ export class BaseComponent implements OnInit {
 
   public utenti: Array<Utente>;
 
+  public pagename: string;
+
+  public utenteAutenticato: Utente;
+
   constructor(
     public sessionService: SessionService,
     public router: Router,
     public richiesteService: RichiesteService,
     public alertService: AlertService,
-    public appSessionService: AppSessionService) {
+    public appSessionService: AppSessionService,
+    public pageManagerService: PageManagerService) {
 
     this.utenti = new Array<Utente>();
+    this.utenteAutenticato = new Utente();
   }
 
   ngOnInit(): void {

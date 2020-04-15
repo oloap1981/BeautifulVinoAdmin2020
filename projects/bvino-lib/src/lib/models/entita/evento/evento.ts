@@ -12,6 +12,7 @@ import { Utente } from '../utente/utente';
 export class Evento {
   public idEvento: string;
   public dataEvento: number;
+  public dataPrenotazioneEvento: number;
   public dataEventoa: string;
   public cittaEvento: string;
   public titoloEvento: string;
@@ -37,6 +38,7 @@ export class Evento {
   public provinciaEvento: Provincia;
   public aziendaOspitanteEvento: Azienda;
   public iscrittiEvento: Array<Utente>;
+  public dettagliIscrittiEvento: Array<UtenteEvento>;
   public viniEvento: Array<Vino>;
   public badgeEventoInt: BadgeEvento;
   public provinciaEventoInt: ProvinciaEvento;
@@ -45,4 +47,8 @@ export class Evento {
   public iscrittiEventoInt: Array<UtenteEvento>;
   public viniEventoInt: Array<VinoEvento>;
   public aziendeViniEvento: Array<Azienda>;
+  public eventoRicorrente: boolean;
+  public dateRicorrenti: Array<number>;
+  public oldDate: number;
+  public oldIdAzienda: string;
 }

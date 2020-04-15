@@ -14,20 +14,13 @@ import { ThemeChangerService } from 'src/app/services/themeChanger/themechanger.
 
 declare var $;
 @Component({
-  selector: 'app-aziende',
-  templateUrl: './aziende.component.html',
-  styleUrls: ['./aziende.component.scss']
+  selector: 'app-azienda-gestione',
+  templateUrl: './azienda-gestione.component.html',
+  styleUrls: ['./azienda-gestione.component.scss']
 })
-export class AziendeComponent extends BaseComponent implements OnInit {
+export class AziendaGestioneComponent extends BaseComponent implements OnInit {
 
   private unsubscribe$ = new Subject<void>();
-
-  dataTable: any;
-  public tableData: Array<Azienda>;
-  public dtOptions: DataTables.Settings = {};
-  public dtTrigger = new Subject<void>();
-
-  private isTableInitialized = false;
 
   public aziendaSelezionata: Azienda;
 
@@ -35,7 +28,7 @@ export class AziendeComponent extends BaseComponent implements OnInit {
   public cardImageBase64: string;
   public imageError: string;
 
-  public nuovo = false;
+  public infoHtml = false;
 
   @ViewChild('dataTable', { static: true }) table;
 
@@ -82,78 +75,34 @@ export class AziendeComponent extends BaseComponent implements OnInit {
         this.alertService.presentAlert('utente loggato non ha il ruolo configurato.');
         this.goToPage('login');
       } else {
-        this.caricaAziende();
+        this.caricaAzienda();
       }
-
-      // this.themeChanger.loadStyle('1539014718497.css');
     }
   }
 
-  public nuovaAzienda(): void {
-    if (confirm('Creando un nuovo vino le informazioni non salvate di quello attuale saranno perse. Procedere?')) {
-      this.aziendaSelezionata = new Azienda();
-      this.nuovo = true;
-    }
-  }
-
-  private caricaAziende() {
-    const richiesta = this.richiesteService.getRichiestaGetAziende();
-    this.commonService.get(richiesta).subscribe(r => {
-      if (r.esito.codice === environment.ESITO_OK_CODICE) {
-        this.tableData = this.normalizeList(r.aziende);
-        if (!this.isTableInitialized) {
-          this.dtTrigger.next();
-          this.isTableInitialized = true;
+  private caricaAzienda() {
+    this.commonService.get(this.richiesteService.getRichiestaGetAzienda(
+      this.appSessionService.get(environment.KEY_AZIENDA_ID))).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.aziendaSelezionata = r.azienda;
+        } else {
+          this.manageError(r);
         }
-      } else {
-        this.manageError(r);
-      }
-    });
+      }, err => { }
+      );
   }
 
   public salvaAzienda(): void {
     this.commonService.put(this.richiesteService.getRichiestaPutAzienda(this.aziendaSelezionata)).subscribe(r => {
       if (r.idVino) {
         this.alertService.presentAlert('modifiche azienda salvate correttamente');
-        this.caricaAziende();
+        this.caricaAzienda();
       } else {
         this.manageErrorPut('Azienda');
       }
     }, err => {
       this.manageHttpError(err);
     });
-    this.nuovo = false;
-  }
-
-  public duplicaAzienda(): void {
-    if (confirm('Sicuri di voler duplicare questa azienda?')) {
-      this.aziendaSelezionata.idAzienda = '';
-      this.nuovo = true;
-    }
-  }
-
-  private normalizeList(lista: Array<Azienda>): Array<Azienda> {
-    const toReturn = new Array<Azienda>();
-
-    for (const azienda of lista) {
-      azienda.nomeAzienda = (azienda.nomeAzienda ? azienda.nomeAzienda : '');
-      azienda.cittaAzienda = (azienda.cittaAzienda ? azienda.cittaAzienda : '');
-      azienda.urlImmagineAzienda = (azienda.urlImmagineAzienda ? azienda.urlImmagineAzienda : '');
-      azienda.urlLogoAzienda = (azienda.urlLogoAzienda ? azienda.urlLogoAzienda : '');
-
-      toReturn.push(azienda);
-    }
-
-    return toReturn;
-  }
-
-  public isAziendaSelezionata(): boolean {
-    return !(this.aziendaSelezionata.idAzienda === undefined || this.aziendaSelezionata.idAzienda === '');
-  }
-
-  public selectAzienda(data: any): void {
-    console.log('Azienda cliccata: ' + data.nomeAzienda);
-    this.aziendaSelezionata = data;
   }
 
   public fileUploadedImmagine(event: any) {

@@ -5,11 +5,16 @@ import {
   RichiesteService,
   AlertService,
   Evento,
+  EventoUtente,
   Provincia,
   ProvinciaEvento,
   Vino,
   VinoEvento,
-  BVCommonService
+  BVCommonService,
+  Azienda,
+  ConstantsService,
+  Utente,
+  Badge
 } from 'bvino-lib';
 import { Router } from '@angular/router';
 
@@ -20,7 +25,8 @@ import { LogoutCommunicationService } from 'src/app/services/logoutCommunication
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { environment } from 'src/environments/environmentnokeys';
+import { environment } from 'src/environments/environmentkeys';
+import { PageManagerService } from 'src/app/services/pagemanager/pagemanager.service';
 
 declare var $;
 @Component({
@@ -33,8 +39,11 @@ export class EventiComponent extends BaseComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
 
   dataTable: any;
-  dtOptions: any;
-  public tableData = [];
+  public tableData: Array<Evento>;
+  public dtOptions: DataTables.Settings = {};
+  public dtTrigger = new Subject<void>();
+
+  private isTableInitialized = false;
 
   public eventoSelezionato: Evento;
 
@@ -50,10 +59,22 @@ export class EventiComponent extends BaseComponent implements OnInit {
   public listaVini: Array<Vino>;
   public vinoAdd: Vino;
 
+  public listaAziende: Array<Azienda>;
+
   public temaHtml = false;
   public testoHtml = false;
 
   public nuovo = false;
+
+  public dataRicorrenteTemporanea = Date.now();
+  public dataTemporanea = Date.now();
+
+  public currentDate = (new Date()).getTime();
+
+  public idAzienda: string;
+  public nomeAzienda: string;
+
+  public aziendaOspitanteFissa = true;
 
   @ViewChild('dataTable', { static: true }) table;
 
@@ -65,13 +86,19 @@ export class EventiComponent extends BaseComponent implements OnInit {
     public alertService: AlertService,
     public appSessionService: AppSessionService,
     public logoutComm: LogoutCommunicationService,
-    public ngZone: NgZone) {
+    public ngZone: NgZone,
+    public pageManagerService: PageManagerService,
+    public constantsService: ConstantsService) {
 
-    super(sessionService, router, richiesteService, alertService, appSessionService);
+    super(sessionService, router, richiesteService, alertService, appSessionService, pageManagerService);
+    this.pagename = environment.NAVIGATION_PAGENAME_EVENTI;
 
     // INIZIALIZZAZIONE DELL'EVENTO VUOTO
     this.eventoSelezionato = new Evento();
     this.eventoSelezionato.idEvento = '';
+
+    const badge = new Badge();
+    this.eventoSelezionato.badgeEvento = badge;
 
     const provinciaEvento = new ProvinciaEvento();
     provinciaEvento.idProvincia = '';
@@ -87,9 +114,16 @@ export class EventiComponent extends BaseComponent implements OnInit {
     this.imageError = '';
     this.provinciaSelezionata = new Provincia();
     this.provinciaAdd = new Provincia();
+
+    this.listaAziende = new Array<Azienda>();
+
   }
 
   ngOnInit() {
+    this.appSessionService.set(this.appSessionService.NAVIGATION_PAGE_KEY, environment.NAVIGATION_PAGENAME_EVENTI);
+
+    this.idAzienda = this.appSessionService.get(environment.KEY_AZIENDA_ID);
+    this.nomeAzienda = this.appSessionService.get(environment.KEY_AZIENDA_NOME);
 
     this.logoutComm.logoutObservable.pipe(
       takeUntil(this.unsubscribe$)
@@ -99,50 +133,39 @@ export class EventiComponent extends BaseComponent implements OnInit {
       this.ngZone.run(() => this.router.navigate(['login'])).then();
     });
 
-    this.checkAuthenticated();
-    this.commonService.get(this.richiesteService.getRichiestaGetEventiAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
-      .subscribe(r => {
-        // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
-        if (r.esito.codice === environment.ESITO_OK_CODICE) {
-          this.tableData = this.normalizeList(r.eventi);
-          this.dtOptions = {
-            data: this.tableData,
-            columns: [
-              { title: 'Nome', data: 'titoloEvento' },
-              // { title: 'Azienda', data: 'aziendaVinoInt.nomeAzienda' },
-              { title: 'Citta', data: 'cittaEvento' }
-            ],
-            pagingType: 'full_numbers',
-            pageLength: 15,
-            processing: true,
-            rowCallback: (row: Node, data: any[] | Object, index: number) => {
-              const self = this;
-              // Unbind first in order to avoid any duplicate handler
-              // (see https://github.com/l-lin/angular-datatables/issues/87)
-              $('td', row).unbind('click');
-              $('td', row).bind('click', () => {
-                self.selectEvento(data);
-              });
-              return row;
-            }
-          };
-        } else {
-          this.manageError(r);
-        }
-      }, err => {
-        this.presentErrorAlert(err.statusText);
-      }, () => {
-        this.dataTable = $(this.table.nativeElement);
-        this.dataTable.DataTable(this.dtOptions);
-      });
-    this.caricaProvince();
-    this.caricaVini();
+    if (this.idAzienda === this.constantsService.KEY_AZIENDA_ID_DEFAULT) {
+      this.aziendaOspitanteFissa = false;
+      this.caricaAziende();
+    } else {
+      const aziendaOspitante = new Azienda();
+      aziendaOspitante.idAzienda = this.idAzienda;
+      this.eventoSelezionato.aziendaOspitanteEvento = aziendaOspitante;
+    }
+
+    const utenteInSessione = this.appSessionService.get(environment.KEY_DB_USER);
+    if (utenteInSessione === undefined || utenteInSessione === '') {
+      console.log('utente non trovato in sessione, necessario nuovo login');
+      this.goToPage('login');
+    } else {
+      this.utenteAutenticato = JSON.parse(utenteInSessione) as Utente;
+      this.checkAuthenticated();
+      this.caricaEventi();
+      this.caricaProvince();
+      this.caricaVini();
+    }
   }
 
   public selectEvento(data: any): void {
     console.log('Evento cliccato: ' + data.titoloEvento);
     this.eventoSelezionato = data;
+    this.dataTemporanea = this.eventoSelezionato.dataEvento;
+    if (this.eventoSelezionato.dateRicorrenti === undefined) {
+      this.eventoSelezionato.dateRicorrenti = [];
+    }
     this.provinciaSelezionata = this.eventoSelezionato.provinciaEvento;
+    if(!this.eventoSelezionato.badgeEvento) {
+      this.eventoSelezionato.badgeEvento = new Badge();
+    }
   }
 
   private normalizeList(lista: Array<Evento>): Array<Evento> {
@@ -159,14 +182,108 @@ export class EventiComponent extends BaseComponent implements OnInit {
   }
 
   public aggiornaDataEvento(event: any): void {
-    this.eventoSelezionato.dataEvento = event;
-    console.log(JSON.stringify(this.eventoSelezionato));
+    const dataScelta = new Date(event as number);
+    const dataAttuale = new Date(this.dataTemporanea);
+    dataAttuale.setDate(dataScelta.getDate());
+    dataAttuale.setMonth(dataScelta.getMonth());
+    dataAttuale.setFullYear(dataScelta.getFullYear());
+    this.dataTemporanea = dataAttuale.getTime();
+  }
+
+  public aggiornaOraEvento(event: any): void {
+    const dataScelta = new Date(event as number);
+    const dataAttuale = new Date(this.dataTemporanea);
+    dataAttuale.setHours(dataScelta.getHours());
+    dataAttuale.setMinutes(dataScelta.getMinutes());
+    this.dataTemporanea = dataAttuale.getTime();
+  }
+
+  public aggiornaDataTemporaneaRicorrente(event) {
+    const dataScelta = new Date(event as number);
+    const dataTemporanea = new Date(this.dataRicorrenteTemporanea);
+    dataTemporanea.setDate(dataScelta.getDate());
+    dataTemporanea.setMonth(dataScelta.getMonth());
+    dataTemporanea.setFullYear(dataScelta.getFullYear());
+    this.dataRicorrenteTemporanea = dataTemporanea.getTime();
+  }
+
+  public aggiornaOraTemporaneaRicorrente(event: any): void {
+    const dataScelta = new Date(event as number);
+    const dataTemporanea = new Date(this.dataRicorrenteTemporanea);
+    dataTemporanea.setHours(dataScelta.getHours());
+    dataTemporanea.setMinutes(dataScelta.getMinutes());
+    this.dataRicorrenteTemporanea = dataTemporanea.getTime();
+  }
+
+  public aggiungiDataRicorrente() {
+    this.eventoSelezionato.dateRicorrenti.push(this.dataRicorrenteTemporanea);
+  }
+
+  public rimuovDataRicorrente(event: any) {
+    const index = this.eventoSelezionato.dateRicorrenti.indexOf(event);
+    if (index > -1) {
+      this.eventoSelezionato.dateRicorrenti.splice(index, 1);
+    }
+  }
+
+  private caricaEventi() {
+    this.checkAuthenticated();
+    if (this.utenteAutenticato.ruoloUtente === undefined || this.utenteAutenticato.ruoloUtente === '') {
+      this.alertService.presentAlert('utente loggato non ha il ruolo configurato.');
+      this.goToPage('login');
+    } else {
+      if (this.utenteAutenticato.ruoloUtente === this.constantsService.RUOLO_AZIENDA_ADMIN) {
+        this.caricaListaEventiAzienda();
+      } else if (this.utenteAutenticato.ruoloUtente === this.constantsService.RUOLO_SUPER_ADMIN) {
+        this.caricaListaEventi();
+      } else {
+        this.alertService.presentAlert('utente loggato non ha il ruolo autorizzato per questa pagina.');
+        this.goToPage('login');
+      }
+    }
+  }
+
+  public caricaListaEventiAzienda() {
+
+    this.commonService.get(this.richiesteService.getRichiestaGetEventiAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
+      .subscribe(r => {
+        // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.tableData = this.normalizeList(r.eventi);
+          if (!this.isTableInitialized) {
+            this.dtTrigger.next();
+            this.isTableInitialized = true;
+          }
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.presentErrorAlert(err.statusText);
+      });
+  }
+
+  public caricaListaEventi() {
+    const richiesta = this.richiesteService.getRichiestaGetEventi();
+    this.commonService.get(richiesta)
+      .subscribe(r => {
+        // this.eventiService.getEventi(this.richiesteService.getRichiestaGetEventi()).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.tableData = this.normalizeList(r.eventi);
+          if (!this.isTableInitialized) {
+            this.dtTrigger.next();
+            this.isTableInitialized = true;
+          }
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.presentErrorAlert(err.statusText);
+      });
   }
 
   public caricaProvince() {
 
     this.commonService.get(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
-      // this.eventiService.getProvincie(this.richiesteService.getRichiestaGetProvincie()).subscribe(r => {
       if (r.esito.codice === environment.ESITO_OK_CODICE) {
         this.listaProvincie = r.province;
       } else {
@@ -179,9 +296,20 @@ export class EventiComponent extends BaseComponent implements OnInit {
 
   public caricaVini() {
     this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
-      // this.vinoService.getViniAzienda(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
       if (r.esito.codice === environment.ESITO_OK_CODICE) {
         this.listaVini = r.vini;
+      } else {
+        this.manageError(r);
+      }
+    }, err => {
+      this.presentErrorAlert(err.statusText);
+    });
+  }
+
+  public caricaAziende() {
+    this.commonService.get(this.richiesteService.getRichiestaGetAziende()).subscribe(r => {
+      if (r.esito.codice === environment.ESITO_OK_CODICE) {
+        this.listaAziende = r.aziende;
       } else {
         this.manageError(r);
       }
@@ -270,6 +398,27 @@ export class EventiComponent extends BaseComponent implements OnInit {
     }
   }
 
+  public selezionaAzienda(val: any) {
+    if (val.selectedOptions[0].value === '0' || val.selectedOptions[0].value === '') {
+      this.alertService.presentAlert('Scegliere un valore dal menu a tendina delle aziende');
+    } else {
+      console.log('Azienda Selezionata: ' + val.selectedOptions[0].value);
+      const id = val.selectedOptions[0].value;
+      const azienda = this.getAziendaFromList(id);
+
+      this.eventoSelezionato.aziendaOspitanteEvento = azienda;
+    }
+  }
+
+  private getAziendaFromList(id: string): Azienda {
+    for (const azienda of this.listaAziende) {
+      if (azienda.idAzienda === id) {
+        return azienda;
+      }
+    }
+    return new Azienda();
+  }
+
   private getVinoFromList(id: string): Vino {
     for (const vino of this.listaVini) {
       if (vino.idVino === id) {
@@ -284,20 +433,51 @@ export class EventiComponent extends BaseComponent implements OnInit {
     this.eventoSelezionato.urlFotoEvento = event;
   }
 
+  public fileUploadedLogoBadge(event: any) {
+    console.log('azienda-gestione-component, file caricato: ' + event);
+    this.eventoSelezionato.badgeEvento.urlLogoBadge = event;
+  }
+
   public nuovoEvento(): void {
     if (confirm('Creando un nuovo evento le informazioni non salvate di quello attuale saranno perse. Procedere?')) {
       this.eventoSelezionato = new Evento();
+      const provincia = new Provincia();
+      provincia.idProvincia = 'X';
+      this.eventoSelezionato.provinciaEventoInt = provincia;
+      if (this.idAzienda === this.constantsService.KEY_AZIENDA_ID_DEFAULT) {
+        const aziendaOspitante = new Azienda();
+        aziendaOspitante.idAzienda = '0';
+        this.eventoSelezionato.aziendaOspitanteEvento = aziendaOspitante;
+        this.caricaAziende();
+      } else {
+        const aziendaOspitante = new Azienda();
+        aziendaOspitante.idAzienda = this.idAzienda;
+        this.eventoSelezionato.aziendaOspitanteEvento = aziendaOspitante;
+      }
     }
   }
 
   public salvaEvento(): void {
     this.nuovo = false;
+    console.log(JSON.stringify(this.eventoSelezionato));
+    this.eventoSelezionato.oldDate = this.eventoSelezionato.dataEvento;
+    this.eventoSelezionato.dataEvento = this.dataTemporanea;
+    this.commonService.put(this.richiesteService.getRichiestaPutEvento(this.eventoSelezionato)).subscribe(r => {
+      if (r.esito.codice === environment.ESITO_OK_CODICE) {
+        this.alertService.presentAlert('Salvataggio corretto');
+        this.caricaEventi();
+      } else {
+        this.manageErrorPut(r.esito.message);
+      }
+    }, err => {
+      this.presentErrorAlert(err.statusText);
+    });
   }
 
   public duplicaEvento(): void {
     if (confirm('Sicuri di voler duplicare questo evento?')) {
       this.eventoSelezionato.idEvento = '';
-      this.nuovo = false;
+      this.nuovo = true;
     }
   }
 
@@ -306,5 +486,16 @@ export class EventiComponent extends BaseComponent implements OnInit {
       this.nuovo = false;
     }
   }
+
+  // public getPostiDisponibiliPerData(data: number): string {
+  //   if (this.eventoSelezionato === undefined || this.eventoSelezionato.dateRicorrenti.indexOf(data) === -1) {
+  //     // data non presente
+  //     return '-';
+  //   } else {
+  //     for (let eventoUtente: EventoUtente of someArray) {
+  //       console.log(entry); // 1, "string", false
+  //     }
+  //   }
+  // }
 
 }

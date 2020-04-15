@@ -8,6 +8,7 @@ import { EditorModule } from 'primeng/editor';
 
 import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
 import { ViniRoutingModule } from './vini-routing.module';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ViniRoutingModule } from './vini-routing.module';
     PipesModule,
     EditorModule,
     FileuploadModule,
-    ViniRoutingModule
+    ViniRoutingModule,
+    DataTablesModule
   ],
   declarations: [
     ViniComponent

@@ -12,6 +12,7 @@ export class RichiestaConnectGenerica {
   public idEvento: string;
   public idVino: string;
   public dataEvento: number;
+  public dataPrenotazioneEvento: number;
   public statoEvento: string;
   public statoVino: string;
   public statoUtente: string;

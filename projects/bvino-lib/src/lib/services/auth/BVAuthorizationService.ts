@@ -1,7 +1,8 @@
 import { OnInit, Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession } from 'amazon-cognito-identity-js';
+import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession, CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import { Observable } from 'rxjs';
 import { SessionService } from '../common/session.service';
+import { CodeDeliveryDetailsType } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
 const poolData = {
   UserPoolId: 'eu-central-1_KzlMv3BwL',
@@ -23,6 +24,46 @@ export class BVAuthorizationService implements OnInit {
 
   }
 
+  public signup(username: string, password: string, name: string): Observable<CodeDeliveryDetailsType> {
+
+    const attributeList = [];
+
+    const dataEmail = {
+      Name: 'email',
+      Value: username
+    };
+
+    const dataPersonalName = {
+      Name: 'name',
+      Value: name
+    };
+
+    const dataPersonalNickname = {
+      Name: 'nickname',
+      Value: name
+    };
+
+    const emailAttribute = new CognitoUserAttribute(dataEmail);
+    const nameAttribute = new CognitoUserAttribute(dataPersonalName);
+    const nicknameAttribute = new CognitoUserAttribute(dataPersonalNickname);
+
+    attributeList.push(emailAttribute);
+    attributeList.push(nameAttribute);
+    attributeList.push(nicknameAttribute);
+
+    return Observable.create(observer => {
+      return userPool.signUp(username, password, attributeList, null, function (err, result) {
+        if (err) {
+          observer.error(err);
+          console.log(err);
+        } else {
+          observer.next(result);
+          observer.complete();
+        }
+      });
+    });
+  }
+
   public signin(username: string, password: string): Observable<CognitoUserSession> {
     const authenticationData = {
       Username: username,
@@ -38,6 +79,37 @@ export class BVAuthorizationService implements OnInit {
 
     return Observable.create(observer => {
       cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: function (result) {
+          observer.next(result);
+          observer.complete();
+        },
+        onFailure: function (err) {
+          console.log(err);
+          observer.error(err);
+        }
+      });
+    });
+  }
+
+  public signOut(username: string): void {
+    const userData = {
+      Username: username,
+      Pool: userPool
+    };
+    const cognitoUser = new CognitoUser(userData);
+    cognitoUser.signOut();
+  }
+
+  public forgotPassword(username: string): Observable<CodeDeliveryDetailsType> {
+
+    const userData = {
+      Username: username,
+      Pool: userPool
+    };
+    const cognitoUser = new CognitoUser(userData);
+
+    return Observable.create(observer => {
+      cognitoUser.forgotPassword({
         onSuccess: function (result) {
           observer.next(result);
           observer.complete();

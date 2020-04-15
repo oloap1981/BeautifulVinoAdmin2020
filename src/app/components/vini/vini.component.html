@@ -11,7 +11,19 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Anno</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vino of tableData" (click)="selectVino(vino)">
+                  <td>{{ vino.nomeVino }}</td>
+                  <td>{{ vino.annoVino }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

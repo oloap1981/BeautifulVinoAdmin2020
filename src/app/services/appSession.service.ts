@@ -9,6 +9,10 @@ import { CookieService } from 'ngx-cookie-service';
 @Injectable()
 export class AppSessionService {
 
+  public NAVIGATION_PAGE_KEY = 'page';
+
+
+
   constructor(
     private sessionService: SessionService,
     private cookieService: CookieService) { }
@@ -30,14 +34,14 @@ export class AppSessionService {
         return window.atob(objectInCookiesEncoded);
       }
     } else {
-      this.cookieService.set(key, window.btoa(objectInSession));
+      this.cookieService.set(key, window.btoa(unescape(encodeURIComponent(objectInSession))));
       return objectInSession;
     }
   }
 
   public set(key: string, value: string): void {
     this.sessionService.set(key, value);
-    const encodedValue = window.btoa(value);
+    const encodedValue = window.btoa(unescape(encodeURIComponent(value)));
     this.cookieService.set(key, encodedValue, null, '/');
   }
 

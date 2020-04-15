@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppSessionService } from 'src/app/services/appSession.service';
+import { environment } from 'src/environments/environmentnokeys';
 
 @Component({
   selector: 'app-badge',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BadgeComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appSessionService: AppSessionService) { }
 
   ngOnInit() {
+    this.appSessionService.set(this.appSessionService.NAVIGATION_PAGE_KEY, environment.NAVIGATION_PAGENAME_BADGE);
   }
 
 }

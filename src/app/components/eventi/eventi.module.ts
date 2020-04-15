@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { EditorModule } from 'primeng/editor';
@@ -8,6 +8,8 @@ import { EventiComponent } from './eventi.component';
 import { BvDatePickerModule } from '../bvdatepicker/bvdatepicker.module';
 import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
 import { EventiRoutingModule } from './eventi-routing.module';
+import { BvTimePickerModule } from '../bvtimepicker/bvtimepicker.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -17,8 +19,11 @@ import { EventiRoutingModule } from './eventi-routing.module';
     PipesModule,
     EditorModule,
     BvDatePickerModule,
+    BvTimePickerModule,
     FileuploadModule,
-    EventiRoutingModule
+    EventiRoutingModule,
+    ReactiveFormsModule,
+    DataTablesModule
   ],
   declarations: [
     EventiComponent

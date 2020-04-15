@@ -1,51 +1,29 @@
 <div class="container-fluid">
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h4 class="h3 mb-0 text-gray-800">Gestione aziende</h4>
-    <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="nuovaAzienda()"><i
-        class="fas fa-plus fa-sm text-white-50"></i> Nuova azienda</button>
+    <h4 class="h3 mb-0 text-gray-800">Gestione azienda</h4>
   </div>
   <div class="row">
     <div class="col-xl-6 col-md-6 mb-6">
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Lista aziende</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Dettaglio Azienda</h6>
         </div>
         <div class="card-body">
-          <div class="table-responsive">
-            <!-- <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
-            </table> -->
-            <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Citta Azienda</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let azienda of tableData" (click)="selectAzienda(azienda)">
-                  <td>{{ azienda.nomeAzienda }}</td>
-                  <td>{{ azienda.cittaAzienda }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          {{aziendaSelezionata.nomeAzienda}}
         </div>
       </div>
     </div>
     <div class="col-xl-6 col-md-6 mb-6">
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica azienda</h6>
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
-              class="fas fa-trash fa-sm text-white-50"></i> Elimina</a>
+          <h6 class="m-0 font-weight-bold text-primary">Modifica azienda</h6>
         </div>
         <div class="card-body">
           <form class="">
             <div class="form-group">
               <label>Id azienda</label>
               <input type="text" class="form-control form-control-user" placeholder="id"
-                [(ngModel)]="aziendaSelezionata.idAzienda" name="idAzienda">
+                [(ngModel)]="aziendaSelezionata.idAzienda" name="idAzienda" disabled>
             </div>
             <div class="form-group">
               <label>Nome azienda</label>
@@ -63,12 +41,16 @@
                 [(ngModel)]="aziendaSelezionata.indirizzoAzienda" name="indirizzoAzienda">
             </div>
             <div class="form-group">
-              <label>Informazioni</label>
-              <textarea class="form-control form-control-user"></textarea>
-              <div class="custom-control custom-checkbox small">
-                <input type="checkbox" class="custom-control-input" id="customCheck"
-                  [(ngModel)]="aziendaSelezionata.infoAzienda" name="infoAzienda">
-                <label class="custom-control-label" for="customCheck">html</label>
+              <label>Info Azienda</label>
+              <textarea class="form-control form-control-user" placeholder="descrizione Vino"
+                [(ngModel)]="aziendaSelezionata.infoAzienda" name="temaEvento" *ngIf="!infoHtml"></textarea>
+              <p-editor [(ngModel)]="aziendaSelezionata.infoAzienda" [style]="{'height':'250px'}" *ngIf="infoHtml"
+                name="descrizioneVinoH">
+              </p-editor>
+              <div class="custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="infoHtml"
+                  name="descrizioneHtml">
+                <label class="custom-control-label" for="pluto">html</label>
               </div>
             </div>
             <div class="form-group">
@@ -150,11 +132,9 @@
             <button (click)="salvaAzienda()" class="btn btn-primary btn-user">
               Salva
             </button>
-            <button (click)="duplicaAzienda()" class="btn btn-danger btn-user float-right">
-              Duplica
-            </button>
           </form>
           <hr>
+
         </div>
       </div>
     </div>

@@ -7,42 +7,48 @@
       </div>
       <div class="sidebar-brand-text mx-3">Beautiful Vino</div>-->
     </a>
+    <p>ver 0.1.2 - 16/04/2020</p>
     <!--<hr class="sidebar-divider my-0">-->
 
-    <li class="nav-item" routerLink="/utenti" routerLinkActive="active">
+    <li class="nav-item" (click)="goToPage('utenti')" *ngIf="showUtenti()">
       <a class="nav-link">
         <i class="fas fa-fw fa-user"></i>
         <span>Gestione Utenti</span></a>
     </li>
-    <!-- <li class="nav-item">
-            <a class="nav-link" href="aziende">
-                <i class="fas fa-fw fa-building"></i>
-                <span>Gestione Aziende</span></a>
-        </li> -->
-    <li class="nav-item" routerLink="/vini" routerLinkActive="active">
+    <li class="nav-item" (click)="goToPage('aziende')" *ngIf="showAziende()">
+      <a class="nav-link">
+        <i class="fas fa-fw fa-building"></i>
+        <span>Gestione Aziende</span></a>
+    </li>
+    <li class="nav-item" (click)="goToPage('azienda-gestione')" *ngIf="showAziendaGestione()">
+      <a class="nav-link">
+        <i class="fas fa-fw fa-building"></i>
+        <span>Gestione Azienda</span></a>
+    </li>
+    <li class="nav-item" (click)="goToPage('vini')" routerLinkActive="active" *ngIf="showVini()">
       <a class="nav-link">
         <i class="fas fa-fw fa-wine-glass"></i>
         <span>Gestione Vini</span></a>
     </li>
-    <li class="nav-item" routerLink="/eventi" routerLinkActive="active">
+    <li class="nav-item" (click)="goToPage('eventi')" routerLinkActive="active" *ngIf="showEventi()">
       <a class="nav-link">
         <i class="fas fa-fw fa-calendar"></i>
         <span>Gestione Eventi</span></a>
     </li>
-    <li class="nav-item" routerLink="/feed" routerLinkActive="active">
+    <li class="nav-item" (click)="goToPage('feed')" routerLinkActive="active" *ngIf="showFeed()">
       <a class="nav-link">
         <i class="fas fa-fw fa-rss"></i>
         <span>Gestione Feed</span></a>
     </li>
-    <!-- <li class="nav-item">
-            <a class="nav-link" href="badge">
-                <i class="fas fa-fw fa-id-badge"></i>
-                <span>Gestione Badge</span></a>
-        </li> -->
-    <li class="nav-item" routerLink="/notifiche" routerLinkActive="active">
+    <li class="nav-item" (click)="goToPage('badge')" routerLinkActive="active" *ngIf="showBadge()">
+      <a class="nav-link">
+        <i class="fas fa-fw fa-id-badge"></i>
+        <span>Gestione Badge (non funzionante)</span></a>
+    </li>
+    <li class="nav-item" (click)="goToPage('notifiche')" routerLinkActive="active" *ngIf="showNotifiche()">
       <a class=" nav-link">
         <i class="fas fa-fw fa-info-circle"></i>
-        <span>Notifiche</span></a>
+        <span>Notifiche (non funzionante)</span></a>
     </li>
   </ul>
   <div id="content-wrapper" class="d-flex flex-column">
@@ -55,8 +61,8 @@
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-              <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{getUtente().usernameUtente}}</span>
+              <img class="img-profile rounded-circle" [src]="getUtenteImageUrl()">
               <span class="mr-2 d-none d-lg-inline text-gray-600 small" style="padding-left: 20px;"><button
                   class="d-none d-sm-inline-block btn btn-sm btn-outline-primary shadow-sm"
                   (click)="logout()">Logout</button></span>

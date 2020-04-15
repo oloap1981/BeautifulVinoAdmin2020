@@ -8,6 +8,7 @@ import { AlertService } from './services/common/alert.service';
 import { BVHttpService } from './services/common/bvhttp.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RichiesteService } from './services/common/richieste.service';
+import { ConstantsService } from './services/common/constants.service';
 
 @NgModule({
   declarations: [],
@@ -21,7 +22,8 @@ import { RichiesteService } from './services/common/richieste.service';
     SessionService,
     AlertService,
     BVHttpService,
-    RichiesteService
+    RichiesteService,
+    ConstantsService
   ],
   exports: []
 })

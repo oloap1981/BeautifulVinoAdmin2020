@@ -7,6 +7,7 @@ import { UtentiComponent } from './utenti.component';
 import { UtentiRoutingModule } from './utenti-routing.module';
 import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
 import { EditorModule } from 'primeng/editor';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { EditorModule } from 'primeng/editor';
     PipesModule,
     EditorModule,
     FileuploadModule,
-    UtentiRoutingModule
+    UtentiRoutingModule,
+    DataTablesModule
   ],
   declarations: [UtentiComponent]
 })

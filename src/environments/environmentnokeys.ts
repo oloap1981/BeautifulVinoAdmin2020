@@ -16,6 +16,7 @@ export const environment = {
   notificationServiceName: 'BeautifulVinoNotification',
   KEY_AUTH_TOKEN: 'beautifulvino_authtoken',
   KEY_USER: 'beautifulvino_user',
+  KEY_DB_USER: 'beautifulvino_db_user',
   KEY_AZIENDA_ID: 'beautifulvino_azienda_id',
   KEY_AZIENDA_NOME: 'beautifulvino_azienda_nome',
   KEY_AZIENDA_LOGO: 'beautifulvino_azienda_logo',
@@ -26,6 +27,7 @@ export const environment = {
   getProfiloAziendaFunctionName: 'getProfiloAziendaGen',
   getBadgeFunctionName: 'getBadgeGen',
   getBadgesFunctionName: 'getBadgesGen',
+  getEventiFunctionName: 'getEventiGen',
   getEventiAziendaFunctionName: 'getEventiAziendaGen',
   getEventiUtenteFunctionName: 'getEventiUtenteGen',
   getEventoFunctionName: 'getEventoGen',
@@ -62,7 +64,16 @@ export const environment = {
   AWS_UPLOADBUCKET_ACCESS_KEY: '',
   AWS_UPLOADBUCKET_SECRETACCESS_KEY: '',
   AWS_UPLOADBUCKET_REGION: '',
-  AWS_UPLOADBUCKET_BUCKETNAME: ''
+  AWS_UPLOADBUCKET_BUCKETNAME: '',
+  NAVIGATION_PAGENAME_LOGIN: 'login',
+  NAVIGATION_PAGENAME_AZIENDE: 'aziende',
+  NAVIGATION_PAGENAME_GESTIONE_AZIENDA: 'azienda-gestione',
+  NAVIGATION_PAGENAME_BADGE: 'badge',
+  NAVIGATION_PAGENAME_EVENTI: 'eventi',
+  NAVIGATION_PAGENAME_FEED: 'feed',
+  NAVIGATION_PAGENAME_NOTIFICHE: 'notifiche',
+  NAVIGATION_PAGENAME_UTENTI: 'utenti',
+  NAVIGATION_PAGENAME_VINI: 'vini'
 };
 
 /*

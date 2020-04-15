@@ -7,11 +7,27 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Lista eventi</h6>
-          <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="nuovoEvento()"><i class="fas fa-plus fa-sm text-white-50"></i> Nuovo</button>
+          <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="nuovoEvento()"><i
+              class="fas fa-plus fa-sm text-white-50"></i> Nuovo</button>
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            <!-- <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table> -->
+            <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Citta</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let evento of tableData" (click)="selectEvento(evento)">
+                  <td>{{ evento.titoloEvento }}</td>
+                  <td>{{ evento.cittaEvento }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -25,11 +41,11 @@
               class="fas fa-trash fa-sm text-white-50"></i> Elimina</button>
         </div>
         <div class="card-body">
-          <form class="">
+          <form>
             <div class="form-group">
               <label>Id evento</label>
               <input type="text" class="form-control form-control-user" placeholder="id evento"
-                [(ngModel)]="eventoSelezionato.idEvento" name="idEvento">
+                [(ngModel)]="eventoSelezionato.idEvento" name="idEvento" disabled>
             </div>
             <div class="form-group">
               <label>Titolo evento</label>
@@ -79,7 +95,7 @@
                 <label class="custom-control-label" for="pluto">html</label>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="listaProvincie.length > 0">
               <label>Provincia</label>
               <select class="form-control form-control-user custom-select" (change)="selezionaProvincia($event.target)">
                 <option *ngFor="let prov of listaProvincie" [ngValue]="prov.idProvincia" value="{{prov.idProvincia}}"
@@ -128,24 +144,73 @@
               <input type="email" class="form-control form-control-user" placeholder="email evento"
                 [(ngModel)]="eventoSelezionato.emailEvento" name="emailEvento">
             </div>
-            <label>Data evento</label>
+            <label>Evento ricorrente</label>
             <div class="input-group">
-              <app-bvdatepicker (inputDate)="eventoSelezionato.dataEvento" (sendDate)="aggiornaDataEvento($event)">
+              <!-- <mat-slide-toggle [(ngModel)]="eventoSelezionato.eventoRicorrente">Slide me!</mat-slide-toggle> -->
+              <label><input type='checkbox' [(ngModel)]="eventoSelezionato.eventoRicorrente" name="eventoRicorrente" />
+                Evento
+                Ricorrente</label>
+            </div>
+            <label *ngIf="!eventoSelezionato.eventoRicorrente">Data evento</label>
+            <div class="input-group" *ngIf="!eventoSelezionato.eventoRicorrente">
+              <label>{{dataTemporanea | BVDateFormat_gg_mm_aaaa_hh_mm}}</label>
+              <app-bvdatepicker (inputDate)="dataTemporanea" (sendDate)="aggiornaDataEvento($event)">
               </app-bvdatepicker>
-              <!-- <input type="date" class="form-control form-control-user" placeholder="data evento"> -->
+              <app-bvtimepicker (inputDate)="dataTemporanea" (sendTime)="aggiornaOraEvento($event)">
+              </app-bvtimepicker>
+            </div>
+            <label *ngIf="eventoSelezionato.eventoRicorrente">Date evento</label>
+            <div class="input-group" *ngIf="eventoSelezionato.eventoRicorrente">
+              <app-bvdatepicker (inputDate)="currentDate" (sendDate)="aggiornaDataTemporaneaRicorrente($event)">
+              </app-bvdatepicker>
+              <app-bvtimepicker (inputDate)="currentDate" (sendTime)="aggiornaOraTemporaneaRicorrente($event)">
+              </app-bvtimepicker>
+            </div>
+            <div class="input-group" *ngIf="eventoSelezionato.eventoRicorrente">
+              <p>Data da aggiungere: {{dataRicorrenteTemporanea | BVDateFormat_gg_mm_aaaa_hh_mm}}</p><br />
+            </div>
+            <div class="input-group" *ngIf="eventoSelezionato.eventoRicorrente">
+              <button (click)="aggiungiDataRicorrente()"
+                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Aggiungi</button>
+            </div>
+            <div class="input-group" *ngIf="eventoSelezionato.eventoRicorrente">
+              <label>Elenco date</label>
+              <ul>
+                <li *ngFor="let dataRicorrente of eventoSelezionato.dateRicorrenti">
+                  <div class="row">
+                    <div class="col">{{dataRicorrente | BVDateFormat_gg_mm_aaaa_hh_mm}}</div>
+                    <div class="col"><button (click)="rimuovDataRicorrente(dataRicorrente)">X</button></div>
+                  </div>
+                </li>
+              </ul>
             </div>
 
 
-            <!-- RENDERE FISSO VISTO CHE SI RAGIONA PER AZIENDA-->
-            <div class="form-group">
-              <label>Azienda ospitante</label>
-              <select class="form-control form-control-user custom-select">
-                <option default>azienda ospitante</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
+            <!-- <div class="form-group">
+              <label>Selezione vino</label>
+              <select class="form-control form-control-user custom-select" (change)="selezionaVino($event.target)">
+                <option *ngFor="let vino of listaVini" [ngValue]="vino.idVino" value="{{vino.idVino}}"
+                  [attr.selected]="vino.idVino+'' === vinoAdd.idVino+'' ? 'selected' : null">
+                  {{vino.nomeVino + '-' + vino.aziendaVinoInt.nomeAzienda + '-' + vino.annoVino}}
+                </option>
               </select>
+            </div> -->
+
+            <!-- RENDERE FISSO VISTO CHE SI RAGIONA PER AZIENDA-->
+            <div class="form-group" *ngIf="!aziendaOspitanteFissa">
+              <label>Azienda ospitante</label>
+              <select class="form-control form-control-user custom-select" (change)="selezionaAzienda($event.target)">
+                <option *ngFor="let azienda of listaAziende" [ngValue]="azienda.idAzienda" value="{{azienda.idAzienda}}"
+                  [attr.selected]="azienda.idAzienda+'' === eventoSelezionato.aziendaOspitanteEvento.idAzienda+'' ? 'selected' : null">
+                  {{azienda.nomeAzienda}}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group" *ngIf="aziendaOspitanteFissa">
+              <label>Azienda ospitante</label>
+              <input type="text" class="form-control form-control-user" [(ngModel)]="nomeAzienda"
+                name="nomeAziendaOspitante" disabled>
             </div>
 
 
@@ -212,7 +277,37 @@
                 [(ngModel)]="eventoSelezionato.puntiEsperienza" name="puntiEsperienza">
             </div>
             <hr>
-
+            <!-- BADGE -->
+            <div *ngIf="eventoSelezionato.badgeEvento &&  false">
+              <div class="form-group">
+                <label>Nome Badge</label>
+                <input type="text" class="form-control form-control-user" placeholder="nome badge"
+                  [(ngModel)]="eventoSelezionato.badgeEvento.nomeBadge" name="nomeBadge">
+              </div>
+              <div class="form-group">
+                <label>Info Badge</label>
+                <input type="text" class="form-control form-control-user" placeholder="info badge"
+                  [(ngModel)]="eventoSelezionato.badgeEvento.infoBadge" name="infoBadge">
+              </div>
+              <div class="form-group">
+                <label>Id Badge</label>
+                <input type="text" class="form-control form-control-user" placeholder="id badge" disabled
+                  [(ngModel)]="eventoSelezionato.badgeEvento.idBadge" name="idBadge">
+              </div>
+              <div class="form-group">
+                <label>Link esterno immagine badge</label>
+                <input type="text" class="form-control form-control-user" placeholder="url logo badge"
+                  [(ngModel)]="eventoSelezionato.badgeEvento.urlLogoBadge" name="urlLogoBadge" disabled>
+              </div>
+              <div class="form-group" *ngIf="eventoSelezionato.badgeEvento.urlLogoBadge && eventoSelezionato.badgeEvento.urlLogoBadge !== ''">
+                <label>Logo badge</label>
+                <img [src]="eventoSelezionato.badgeEvento.urlLogoBadge">
+              </div>
+              <app-fileupload labelText="Carica Immagine Logo Badge" (uploaded)="fileUploadedLogoBadge($event)" maxFileSize="600"
+                folder="immagineevento">
+              </app-fileupload>
+            </div>
+            <hr>
             <div class="form-group">
               <label>Selezione vino</label>
               <select class="form-control form-control-user custom-select" (change)="selezionaVino($event.target)">
@@ -233,9 +328,8 @@
                 [(ngModel)]="vinoAdd.annoVino" name="anno">
             </div>
             <div class="input-group">
-              <button (click)="aggiungiVinoALista()"
-                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                  class="fas fa-plus fa-sm text-white-50"></i>aggiungi vino</button>
+              <button (click)="aggiungiVinoALista()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                aggiungi vino</button>
             </div>
             <div class="table-responsive">
 

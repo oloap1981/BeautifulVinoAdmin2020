@@ -8,6 +8,7 @@ import { Vino } from '../../models/entita/vino/vino';
 import { Provincia } from '../../models/entita/provincia/provincia';
 import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/richiestanotificagenerica';
 import { RichiestaConnectGenerica } from '../../models/comunicazioni/richieste/connect/richiestaconnectgenerica';
+import { Azienda } from '../../models/entita/azienda/azienda';
 
 @Injectable()
 export class RichiesteService {
@@ -207,6 +208,20 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaPutAzienda(azienda: Azienda) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.env.putAziendaFunctionName;
+    richiesta.azienda = azienda;
+    return richiesta;
+  }
+
+  public getRichiestaPutuserProfileWithImage(utente: Utente) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.env.putUserProfileImageWithUserFunctionName;
+    richiesta.utente = utente;
+    return richiesta;
+  }
+
   // -------- NOTIFICATION --------
   public getRichiestaNotifica(messaggio: string) {
     const richiesta = new RichiestaNotificaGenerica();
@@ -231,12 +246,13 @@ export class RichiesteService {
   }
 
   public getRichiestaAcquistaEvento(
-    idUtente: string, idEvento: string, dataEvento: number, statoPreferitoEvento: number, statoAcquistatoEvento: number) {
+    idUtente: string, idEvento: string, dataEvento: number, dataPrenotazioneEvento: number, statoPreferitoEvento: number, statoAcquistatoEvento: number) {
     const richiesta = new RichiestaConnectGenerica();
 
     richiesta.idUtente = idUtente;
     richiesta.idEvento = idEvento;
     richiesta.dataEvento = dataEvento;
+    richiesta.dataPrenotazioneEvento = dataPrenotazioneEvento;;
     richiesta.statoEvento = 'A';
     richiesta.statoPreferitoEvento = statoPreferitoEvento;
     richiesta.statoAcquistatoEvento = statoAcquistatoEvento;

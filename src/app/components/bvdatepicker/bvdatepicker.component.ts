@@ -19,7 +19,12 @@ export class BvdatepickerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.dateInt.setDate(this.dateInt.getDate());
+    if (this.inputDate > 0) {
+      this.dateInt = new Date(this.inputDate);
+    } else {
+      this.dateInt = new Date(Date.now());
+    }
+    // this.dateInt.setDate(this.dateInt.getDate());
   }
 
   private getFormattedMonth(date: Date): string {
@@ -33,7 +38,6 @@ export class BvdatepickerComponent implements OnInit {
   }
 
   public close(event) {
-    // this.date1 = new Date();
     this.sendDate.emit(this.dateInt.getTime());
   }
 

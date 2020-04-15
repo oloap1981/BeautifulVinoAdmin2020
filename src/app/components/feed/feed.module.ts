@@ -7,6 +7,7 @@ import { EditorModule } from 'primeng/editor';
 import { FeedComponent } from './feed.component';
 import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
 import { FeedRoutingModule } from './feed-routing.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FeedRoutingModule } from './feed-routing.module';
     PipesModule,
     EditorModule,
     FileuploadModule,
-    FeedRoutingModule
+    FeedRoutingModule,
+    DataTablesModule
   ],
   declarations: [FeedComponent]
 })

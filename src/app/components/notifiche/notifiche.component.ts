@@ -6,6 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
 import { BaseComponent } from '../base/base.component';
+import { PageManagerService } from 'src/app/services/pagemanager/pagemanager.service';
+import { environment } from 'src/environments/environmentnokeys';
 
 @Component({
   selector: 'app-notifiche',
@@ -25,11 +27,14 @@ export class NotificheComponent extends BaseComponent implements OnInit {
     public alertService: AlertService,
     public appSessionService: AppSessionService,
     public logoutComm: LogoutCommunicationService,
-    public ngZone: NgZone) {
-    super(sessionService, router, richiesteService, alertService, appSessionService);
+    public ngZone: NgZone,
+    public pageManagerService: PageManagerService) {
+    super(sessionService, router, richiesteService, alertService, appSessionService, pageManagerService);
+    this.pagename = environment.NAVIGATION_PAGENAME_NOTIFICHE;
   }
 
   ngOnInit() {
+    this.appSessionService.set(this.appSessionService.NAVIGATION_PAGE_KEY, environment.NAVIGATION_PAGENAME_NOTIFICHE);
     this.logoutComm.logoutObservable.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(r => {

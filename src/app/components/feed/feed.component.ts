@@ -5,7 +5,9 @@ import {
   RichiesteService,
   AlertService,
   Feed,
-  BVCommonService
+  BVCommonService,
+  ConstantsService,
+  Utente
 } from 'bvino-lib';
 import { Router } from '@angular/router';
 
@@ -14,7 +16,8 @@ import { AppSessionService } from 'src/app/services/appSession.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { LogoutCommunicationService } from 'src/app/services/logoutCommunication/logoutcommunication.service';
-import { environment } from 'src/environments/environmentnokeys';
+import { environment } from 'src/environments/environmentkeys';
+import { PageManagerService } from 'src/app/services/pagemanager/pagemanager.service';
 
 declare var $;
 @Component({
@@ -27,8 +30,11 @@ export class FeedComponent extends BaseComponent implements OnInit {
   private unsubscribe$ = new Subject<void>();
 
   dataTable: any;
-  dtOptions: any;
-  public tableData = [];
+  public tableData: Array<Feed>;
+  public dtOptions: DataTables.Settings = {};
+  public dtTrigger = new Subject<void>();
+
+  private isTableInitialized = false;
 
   public feedSelezionato: Feed;
 
@@ -46,14 +52,24 @@ export class FeedComponent extends BaseComponent implements OnInit {
     public alertService: AlertService,
     public appSessionService: AppSessionService,
     public logoutComm: LogoutCommunicationService,
-    public ngZone: NgZone) {
+    public ngZone: NgZone,
+    public pageManagerService: PageManagerService,
+    public constantsService: ConstantsService) {
 
-    super(sessionService, router, richiesteService, alertService, appSessionService);
+    super(sessionService, router, richiesteService, alertService, appSessionService, pageManagerService);
+    this.pagename = environment.NAVIGATION_PAGENAME_FEED;
     this.feedSelezionato = new Feed();
     this.feedSelezionato.idFeed = '';
   }
 
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 15,
+      order: [[1, 'asc']]
+    };
+
+    this.appSessionService.set(this.appSessionService.NAVIGATION_PAGE_KEY, environment.NAVIGATION_PAGENAME_FEED);
     this.logoutComm.logoutObservable.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(r => {
@@ -62,50 +78,72 @@ export class FeedComponent extends BaseComponent implements OnInit {
       this.ngZone.run(() => this.router.navigate(['login'])).then();
     });
 
+    const utenteInSessione = this.appSessionService.get(environment.KEY_DB_USER);
+    if (utenteInSessione === undefined || utenteInSessione === '') {
+      console.log('utente non trovato in sessione, necessario nuovo login');
+      this.goToPage('login');
+    } else {
+      this.utenteAutenticato = JSON.parse(utenteInSessione) as Utente;
+      this.caricaFeed();
+
+      // this.themeChanger.loadStyle('1539014718497.css');
+    }
+  }
+
+  private caricaFeed() {
     this.checkAuthenticated();
-    const self = this;
-    this.commonService.get(this.richiesteService.getRichiestaGetFeedAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
+    if (this.utenteAutenticato.ruoloUtente === undefined || this.utenteAutenticato.ruoloUtente === '') {
+      this.alertService.presentAlert('utente loggato non ha il ruolo configurato.');
+      this.goToPage('login');
+    } else {
+      if (this.utenteAutenticato.ruoloUtente === this.constantsService.RUOLO_AZIENDA_ADMIN) {
+        this.caricaListaFeedAzienda();
+      } else if (this.utenteAutenticato.ruoloUtente === this.constantsService.RUOLO_SUPER_ADMIN) {
+        this.caricaListaFeed();
+      } else {
+        this.alertService.presentAlert('utente loggato non ha il ruolo autorizzato per questa pagina.');
+        this.goToPage('login');
+      }
+    }
+  }
+
+  private caricaListaFeed() {
+    this.commonService.get(this.richiesteService.getRichiestaGetFeed())
       .subscribe(r => {
         // this.feedService.getFeeds(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
         if (r.esito.codice === environment.ESITO_OK_CODICE) {
           this.tableData = this.normalizeList(r.feed);
-          this.dtOptions = {
-            data: this.tableData,
-            columns: [
-              {
-                title: 'Data', data: 'idFeed', render: function (data: any, type: any, full: any) {
-                  return self.getStringDate(data);
-                }
-              },
-              // { title: 'Azienda', data: 'aziendaVinoInt.nomeAzienda' },
-              { title: 'Titolo', data: 'titoloFeed' }
-            ],
-            pagingType: 'full_numbers',
-            pageLength: 15,
-            processing: true,
-            rowCallback: (row: Node, data: any[] | Object, index: number) => {
-              const self = this;
-              // Unbind first in order to avoid any duplicate handler
-              // (see https://github.com/l-lin/angular-datatables/issues/87)
-              $('td', row).unbind('click');
-              $('td', row).bind('click', () => {
-                self.selectFeed(data);
-              });
-              return row;
-            }
-          };
+          if (!this.isTableInitialized) {
+            this.dtTrigger.next();
+            this.isTableInitialized = true;
+          }
         } else {
           this.manageError(r);
         }
       }, err => {
         this.presentErrorAlert(err.statusText);
-      }, () => {
-        this.dataTable = $(this.table.nativeElement);
-        this.dataTable.DataTable(this.dtOptions);
       });
   }
 
-  private selectFeed(data: any): void {
+  private caricaListaFeedAzienda() {
+    this.commonService.get(this.richiesteService.getRichiestaGetFeedAzienda(this.appSessionService.get(environment.KEY_AZIENDA_ID)))
+      .subscribe(r => {
+        // this.feedService.getFeeds(this.richiesteService.getRichiestaGetFeed()).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.tableData = this.normalizeList(r.feed);
+          if (!this.isTableInitialized) {
+            this.dtTrigger.next();
+            this.isTableInitialized = true;
+          }
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.presentErrorAlert(err.statusText);
+      });
+  }
+
+  public selectFeed(data: any): void {
     console.log('Feed cliccato: ' + data.titoloFeed);
     this.feedSelezionato = data;
   }
@@ -149,6 +187,16 @@ export class FeedComponent extends BaseComponent implements OnInit {
   }
 
   public salvaFeed(): void {
+    this.commonService.put(this.richiesteService.getRichiestaPutFeed(this.feedSelezionato)).subscribe(r => {
+      if (r.idFeed) {
+        this.alertService.presentAlert('salvato correttamente feed con id: ' + r.idFeed);
+        this.caricaFeed();
+      } else {
+        this.manageErrorPut('Feed');
+      }
+    }, err => {
+
+    });
     this.nuovo = false;
   }
 

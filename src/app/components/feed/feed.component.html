@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h4 class="h3 mb-0 text-gray-800">Gestione feed</h4>
-    
+
   </div>
   <div class="row">
     <div class="col-xl-6 col-md-6 mb-6">
@@ -12,7 +12,22 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            <!-- <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table> -->
+            <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Titolo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let feed of tableData" (click)="selectFeed(feed)">
+                  <td>{{ feed.dataFeed | BVDateFormat_gg_mm_aaaa}}</td>
+                  <td>{{ feed.titoloFeed }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

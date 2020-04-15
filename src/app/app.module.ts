@@ -10,7 +10,8 @@ import {
   AlertService,
   BVHttpService,
   RichiesteService,
-  BVCommonService
+  BVCommonService,
+  ConstantsService
 } from 'bvino-lib';
 
 import { FormsModule } from '@angular/forms';
@@ -36,7 +37,12 @@ import { BaseComponent } from './components/base/base.component';
 import { LogoutCommunicationService } from './services/logoutCommunication/logoutcommunication.service';
 import { ThemeChangerService } from './services/themeChanger/themechanger.service';
 
+
 import { environment } from 'src/environments/environmentnokeys';
+import { PageManagerService } from './services/pagemanager/pagemanager.service';
+import { AziendeModule } from './components/aziende/aziende.module';
+import { AziendaGestioneModule } from './components/azienda-gestione/azienda-gestione.module';
+import { BvtimepickerComponent } from './components/bvtimepicker/bvtimepicker.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +57,8 @@ import { environment } from 'src/environments/environmentnokeys';
     EventiModule,
     FeedModule,
     ViniModule,
+    AziendeModule,
+    AziendaGestioneModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
@@ -62,6 +70,7 @@ import { environment } from 'src/environments/environmentnokeys';
     IgxDatePickerModule, IgxIconModule, IgxSuffixModule, IgxInputGroupModule, IgxSnackbarModule
   ],
   providers: [
+    ConstantsService,
     SessionService,
     BVAuthorizationService,
     CookieService,
@@ -71,6 +80,7 @@ import { environment } from 'src/environments/environmentnokeys';
     RichiesteService,
     BVCommonService,
     LogoutCommunicationService,
+    PageManagerService,
     ThemeChangerService,
     {
       provide: HTTP_INTERCEPTORS,

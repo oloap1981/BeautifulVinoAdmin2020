@@ -6,10 +6,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 import { EditorModule } from 'primeng/editor';
 
 import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
-import { AziendeComponent } from './aziende.component';
+import { AziendaGestioneComponent } from './azienda-gestione.component';
 import { BvDatePickerModule } from '../bvdatepicker/bvdatepicker.module';
-import { AziendeRoutingModule } from './aziende-routing.module';
-import { DataTablesModule } from 'angular-datatables';
+import { AziendeRoutingModule } from './azienda-gestione-routing.module';
 
 @NgModule({
   imports: [
@@ -20,11 +19,10 @@ import { DataTablesModule } from 'angular-datatables';
     BvDatePickerModule,
     FileuploadModule,
     AziendeRoutingModule,
-    ReactiveFormsModule,
-    DataTablesModule
+    ReactiveFormsModule
   ],
   declarations: [
-    AziendeComponent
+    AziendaGestioneComponent
   ]
 })
-export class AziendeModule { }
+export class AziendaGestioneModule { }

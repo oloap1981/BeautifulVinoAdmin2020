@@ -10,7 +10,24 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            <!-- <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table> -->
+            <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions"
+              [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Citta</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let utente of tableData" (click)="selectUtente(utente)">
+                  <td>{{ utente.nomeUtente }}</td>
+                  <td>{{ utente.emailUtente }}</td>
+                  <td>{{ utente.cittaUtente }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -48,6 +65,11 @@
                 [(ngModel)]="utenteSelezionato.emailUtente" name="email">
             </div>
             <div class="form-group">
+              <label>Citta</label>
+              <input type="text" class="form-control form-control-user" placeholder="citta"
+                [(ngModel)]="utenteSelezionato.cittaUtente" name="citta">
+            </div>
+            <div class="form-group">
               <label>Crediti</label>
               <input type="number" class="form-control form-control-user" placeholder="crediti"
                 [(ngModel)]="utenteSelezionato.creditiUtente" name="crediti">
@@ -83,16 +105,13 @@
               <label>Immagine utente</label>
               <img [src]="utenteSelezionato.urlFotoUtente">
             </div>
-            <app-fileupload labelText="Carica Immagine utente Vino" (uploaded)="fileUploadedImmagine($event)"
+            <app-fileupload labelText="Carica Immagine Utente" (uploaded)="fileUploadedImmagine($event)"
               maxFileSize="400" folder="immagineutente">
             </app-fileupload>
             <hr>
             <button (click)="salvaUtente()" class="btn btn-primary btn-user">
               Salva
             </button>
-            <!-- <button href="index.html" class="btn btn-danger btn-user float-right">
-              Duplica
-            </button> -->
           </form>
           <hr>
           <div class="table-responsive">
