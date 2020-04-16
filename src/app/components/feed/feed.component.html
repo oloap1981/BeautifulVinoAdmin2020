@@ -1,48 +1,46 @@
 <div class="container-fluid">
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h4 class="h3 mb-0 text-gray-800">Gestione feed</h4>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h4 class="h3 mb-0 text-gray-800">Gestione feed</h4>
 
-  </div>
-  <div class="row">
-    <div class="col-xl-6 col-md-6 mb-6">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Lista feed</h6>
-          <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="nuovoFeed()"><i class="fas fa-plus fa-sm text-white-50"></i> Nuovo</button>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <!-- <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
-            </table> -->
-            <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger">
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Titolo</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let feed of tableData" (click)="selectFeed(feed)">
-                  <td>{{ feed.dataFeed | BVDateFormat_gg_mm_aaaa}}</td>
-                  <td>{{ feed.titoloFeed }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="col-xl-6 col-md-6 mb-6">
-      <div class="card shadow mb-4" *ngIf="feedSelezionato.idFeed !== '' || nuovo">
-        <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica feed</h6>
-          <button (click)="eliminaFeed()" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
-              class="fas fa-trash fa-sm text-white-50"></i> Elimina</button>
+    <div class="row">
+        <div class="col-xl-6 col-md-6 mb-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Lista feed</h6>
+                    <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="nuovoFeed()"><i class="fas fa-plus fa-sm text-white-50"></i> Nuovo</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <!-- <table #dataTable class="table table-bordered" width="100%" cellspacing="0">
+            </table> -->
+                        <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Titolo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let feed of tableData" (click)="selectFeed(feed)">
+                                    <td>{{ feed.dataFeed | BVDateFormat_gg_mm_aaaa}}</td>
+                                    <td>{{ feed.titoloFeed }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <form class="">
-            <!-- <div class="input-group">
+        <div class="col-xl-6 col-md-6 mb-6">
+            <div class="card shadow mb-4" *ngIf="feedSelezionato.idFeed !== '' || nuovo">
+                <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica feed</h6>
+                    <button (click)="eliminaFeed()" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Elimina</button>
+                </div>
+                <div class="card-body">
+                    <form class="">
+                        <!-- <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text">
                   tipo feed
@@ -72,61 +70,54 @@
 
               </div>
             </div> -->
-            <div class="form-group">
-              <label>Id feed</label>
-              <input type="text" class="form-control form-control-user" placeholder="id feed"
-                [(ngModel)]="feedSelezionato.idFeed" name="idFeed">
-            </div>
-            <div class="form-group">
-              <div class="custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="customCheck"
-                  [(ngModel)]="feedSelezionato.pubblicato" name="pubblicato">
-                <label class="custom-control-label" for="customCheck">pubblicato</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Tipo entit&agrave; header</label>
-              <select class="form-control form-control-user custom-select">
-                <option default>tipo entita header</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-                <option>nome azienda</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Titolo</label>
-              <input type="text" class="form-control form-control-user" placeholder="titolo"
-                [(ngModel)]="feedSelezionato.titoloFeed" name="titolo">
-            </div>
+                        <div class="form-group">
+                            <label>Id feed</label>
+                            <input type="text" class="form-control form-control-user" placeholder="id feed" [(ngModel)]="feedSelezionato.idFeed" name="idFeed" disabled>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input" id="customCheck" [(ngModel)]="feedSelezionato.pubblicato" name="pubblicato">
+                                <label class="custom-control-label" for="customCheck">pubblicato</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo entit&agrave; header</label>
+                            <select class="form-control form-control-user custom-select">
+                                <option default>tipo entita header</option>
+                                <option>nome azienda</option>
+                                <option>nome azienda</option>
+                                <option>nome azienda</option>
+                                <option>nome azienda</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Titolo</label>
+                            <input type="text" class="form-control form-control-user" placeholder="titolo" [(ngModel)]="feedSelezionato.titoloFeed" name="titolo">
+                        </div>
 
-            <div class="form-group">
-              <label>Testo</label>
-              <textarea class="form-control form-control-user" placeholder="testo"
-                [(ngModel)]="feedSelezionato.testoFeed" name="testo" *ngIf="!testoHtml"></textarea>
-              <p-editor [(ngModel)]="feedSelezionato.testoFeed" [style]="{'height':'250px'}" *ngIf="testoHtml"
-                name="testoFeedH">
-              </p-editor>
-              <div class="custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="testoHtml" name="testoHtml">
-                <label class="custom-control-label" for="pluto">html</label>
-              </div>
-            </div>
+                        <div class="form-group">
+                            <label>Testo</label>
+                            <textarea class="form-control form-control-user" placeholder="testo" [(ngModel)]="feedSelezionato.testoFeed" name="testo" *ngIf="!testoHtml"></textarea>
+                            <p-editor [(ngModel)]="feedSelezionato.testoFeed" [style]="{'height':'250px'}" *ngIf="testoHtml" name="testoFeedH">
+                            </p-editor>
+                            <div class="custom-control custom-checkbox ">
+                                <input type="checkbox" class="custom-control-input" id="pluto" [(ngModel)]="testoHtml" name="testoHtml">
+                                <label class="custom-control-label" for="pluto">html</label>
+                            </div>
+                        </div>
 
-            <div class="form-group">
-              <label>Punti esperienza</label>
-              <input type="text" class="form-control form-control-user" placeholder="punti esperienza"
-                [(ngModel)]="feedSelezionato.puntiEsperienza" name="puntiEsperienza">
-            </div>
-            <hr>
+                        <div class="form-group">
+                            <label>Punti esperienza</label>
+                            <input type="text" class="form-control form-control-user" placeholder="punti esperienza" [(ngModel)]="feedSelezionato.puntiEsperienza" name="puntiEsperienza">
+                        </div>
+                        <hr>
 
-            <!-- feed 1 - -->
-            <div class="form-group">
-              <label>Data entit&agrave; header</label>
-              <input type="text" class="form-control form-control-user" placeholder="data entita header"
-                [(ngModel)]="feedSelezionato.dataEntitaHeaderFeed" name="puntiEsperienza">
-            </div>
-            <!-- <div class="form-group">
+                        <!-- feed 1 - -->
+                        <div class="form-group">
+                            <label>Data entit&agrave; header</label>
+                            <input type="text" class="form-control form-control-user" placeholder="data entita header" [(ngModel)]="feedSelezionato.dataEntitaHeaderFeed" name="puntiEsperienza">
+                        </div>
+                        <!-- <div class="form-group">
               <select class="form-control form-control-user custom-select">
                 <option default>scegli o cerca un vino nella lista</option>
                 <option>nome azienda</option>
@@ -135,36 +126,33 @@
                 <option>nome azienda</option>
               </select>
             </div> -->
-            <div class="form-group">
-              <label>Link esterno immagine feed</label>
-              <input type="text" class="form-control form-control-user" placeholder="url immagine"
-                [(ngModel)]="feedSelezionato.urlImmagineFeed" name="urlImmagineFeed" disabled>
-            </div>
-            <div class="form-group" *ngIf="feedSelezionato.urlImmagineFeed && feedSelezionato.urlImmagineFeed !== ''">
-              <label>Immagine feed</label>
-              <img [src]="feedSelezionato.urlImmagineFeed">
-            </div>
-            <app-fileupload labelText="Carica Immagine Feed" (uploaded)="fileUploadedImmagineFeed($event)"
-              maxFileSize="600" folder="immaginefeed">
-            </app-fileupload>
+                        <div class="form-group">
+                            <label>Link esterno immagine feed</label>
+                            <input type="text" class="form-control form-control-user" placeholder="url immagine" [(ngModel)]="feedSelezionato.urlImmagineFeed" name="urlImmagineFeed" disabled>
+                        </div>
+                        <div class="form-group" *ngIf="feedSelezionato.urlImmagineFeed && feedSelezionato.urlImmagineFeed !== ''">
+                            <label>Immagine feed</label>
+                            <img [src]="feedSelezionato.urlImmagineFeed">
+                        </div>
+                        <app-fileupload labelText="Carica Immagine Feed" (uploaded)="fileUploadedImmagineFeed($event)" maxFileSize="600" folder="immaginefeed">
+                        </app-fileupload>
 
 
-            <div class="form-group">
-              <label>Link video</label>
-              <input type="text" class="form-control form-control-user" placeholder="url video"
-                [(ngModel)]="feedSelezionato.urlVideoFeed" name="urlVideoFeed">
-            </div>
+                        <div class="form-group">
+                            <label>Link video</label>
+                            <input type="text" class="form-control form-control-user" placeholder="url video" [(ngModel)]="feedSelezionato.urlVideoFeed" name="urlVideoFeed">
+                        </div>
 
-            <hr>
-            <button (click)="salvaFeed()" class="btn btn-primary btn-user">
-              Salva
-            </button>
-            <button (click)="duplicaFeed()" class="btn btn-danger btn-user float-right">
-              Duplica
-            </button>
-          </form>
+                        <hr>
+                        <button (click)="salvaFeed()" class="btn btn-primary btn-user">
+                            Salva
+                        </button>
+                        <button (click)="duplicaFeed()" class="btn btn-danger btn-user float-right">
+                            Duplica
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
