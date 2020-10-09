@@ -9,6 +9,7 @@ import { Provincia } from '../../models/entita/provincia/provincia';
 import { RichiestaNotificaGenerica } from '../../models/comunicazioni/richieste/notifica/richiestanotificagenerica';
 import { RichiestaConnectGenerica } from '../../models/comunicazioni/richieste/connect/richiestaconnectgenerica';
 import { Azienda } from '../../models/entita/azienda/azienda';
+import { Badge } from '../../models/entita/badge/badge';
 
 @Injectable()
 export class RichiesteService {
@@ -37,6 +38,14 @@ export class RichiesteService {
     const richiesta = new RichiestaGetGenerica();
     richiesta.functionName = this.env.getUtenteFunctionName;
     richiesta.idUtente = idUtente;
+
+    return richiesta;
+  }
+
+  public getRichiestaGetUtenteEmail(emailUtente: string) {
+    const richiesta = new RichiestaGetGenerica();
+    richiesta.functionName = this.env.getUtenteEmailFunctionName;
+    richiesta.emailUtente = emailUtente;
 
     return richiesta;
   }
@@ -222,6 +231,13 @@ export class RichiesteService {
     return richiesta;
   }
 
+  public getRichiestaPutBadge(badge: Badge) {
+    const richiesta = new RichiestaPutGenerica();
+    richiesta.functionName = this.env.putBadgeFunctionName;
+    richiesta.badge = badge;
+    return richiesta;
+  }
+
   // -------- NOTIFICATION --------
   public getRichiestaNotifica(messaggio: string) {
     const richiesta = new RichiestaNotificaGenerica();
@@ -246,17 +262,24 @@ export class RichiesteService {
   }
 
   public getRichiestaAcquistaEvento(
-    idUtente: string, idEvento: string, dataEvento: number, dataPrenotazioneEvento: number, statoPreferitoEvento: number, statoAcquistatoEvento: number) {
+    idUtente: string,
+    idEvento: string,
+    dataEvento: number,
+    dataPrenotazioneEvento: number,
+    statoPreferitoEvento: number,
+    statoAcquistatoEvento: number,
+    numeroPartecipanti: number) {
     const richiesta = new RichiestaConnectGenerica();
 
     richiesta.idUtente = idUtente;
     richiesta.idEvento = idEvento;
     richiesta.dataEvento = dataEvento;
-    richiesta.dataPrenotazioneEvento = dataPrenotazioneEvento;;
+    richiesta.dataPrenotazioneEvento = dataPrenotazioneEvento;
     richiesta.statoEvento = 'A';
     richiesta.statoPreferitoEvento = statoPreferitoEvento;
     richiesta.statoAcquistatoEvento = statoAcquistatoEvento;
     richiesta.functionName = this.env.connectEventoAUtenteFunctionName;
+    richiesta.numeroPartecipanti = numeroPartecipanti;
 
     return richiesta;
   }

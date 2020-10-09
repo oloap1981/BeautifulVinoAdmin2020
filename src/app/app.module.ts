@@ -44,11 +44,16 @@ import { AziendeModule } from './components/aziende/aziende.module';
 import { AziendaGestioneModule } from './components/azienda-gestione/azienda-gestione.module';
 import { BvtimepickerComponent } from './components/bvtimepicker/bvtimepicker.component';
 
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { BadgeModule } from './components/badge/badge.module';
+import { CambioPasswordComponent } from './components/cambio-password/cambio-password.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     BaseComponent,
-    JwPaginationComponent
+    JwPaginationComponent,
+    CambioPasswordComponent
   ],
   imports: [
     LoginModule,
@@ -57,6 +62,7 @@ import { BvtimepickerComponent } from './components/bvtimepicker/bvtimepicker.co
     EventiModule,
     FeedModule,
     ViniModule,
+    BadgeModule,
     AziendeModule,
     AziendaGestioneModule,
     HttpClientModule,
@@ -67,6 +73,7 @@ import { BvtimepickerComponent } from './components/bvtimepicker/bvtimepicker.co
     PipesModule,
     DataTablesModule,
     BrowserAnimationsModule,
+    AutocompleteLibModule,
     IgxDatePickerModule, IgxIconModule, IgxSuffixModule, IgxInputGroupModule, IgxSnackbarModule
   ],
   providers: [

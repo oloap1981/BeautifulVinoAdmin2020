@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'eventi', loadChildren: () => import('./components/eventi/eventi.module').then(m => m.EventiModule) },
   { path: 'feed', loadChildren: () => import('./components/feed/feed.module').then(m => m.FeedModule) },
   { path: 'notifiche', loadChildren: () => import('./components/notifiche/notifiche.module').then(m => m.NotificheModule) },
+  { path: 'badge', loadChildren: () => import('./components/badge/badge.module').then(m => m.BadgeModule) }
 
 ];
 

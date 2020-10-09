@@ -47,13 +47,16 @@ export const environment = {
   putUserProfileImageFunctionName: 'putUserProfileImageGen',
   putUserProfileImageWithUserFunctionName: 'putUserProfileImageWithUserGen',
   putPuntiEsperienzaFunctionName: 'putPuntiEsperienza',
+  putBadgeFunctionName: 'putBadgeGen',
   ESITO_OK_CODICE: 100,
   ESITO_WARN_CODICE: 101,
   ESITO_KO_CODICE_ERRORE_SALVATAGGIO: 200,
   ESITO_KO_CODICE_ERRORE_CANCELLAZIONE: 201,
   ESITO_KO_CODICE_ERRORE_PROCEDURA_LAMBDA: 300,
   ESITO_KO_CODICE_ERRORE_INPUT_NULL: 400,
-  ESITO_KO_CODICE_ERRORE_GET: 500
+  ESITO_KO_CODICE_ERRORE_GET: 500,
+  UserPoolId: '',
+  ClientId: ''
 };
 
 /*

@@ -113,7 +113,7 @@ export class AziendeComponent extends BaseComponent implements OnInit {
 
   public salvaAzienda(): void {
     this.commonService.put(this.richiesteService.getRichiestaPutAzienda(this.aziendaSelezionata)).subscribe(r => {
-      if (r.idVino) {
+      if (r.idAzienda) {
         this.alertService.presentAlert('modifiche azienda salvate correttamente');
         this.caricaAziende();
       } else {

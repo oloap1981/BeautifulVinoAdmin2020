@@ -7,6 +7,8 @@ import { EditorModule } from 'primeng/editor';
 
 import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
 import { BadgeComponent } from './badge.component';
+import { DataTablesModule } from 'angular-datatables';
+import { BadgeRoutingModule } from './badge-routing.module';
 
 @NgModule({
   imports: [
@@ -14,7 +16,9 @@ import { BadgeComponent } from './badge.component';
     FormsModule,
     PipesModule,
     EditorModule,
-    FileuploadModule
+    FileuploadModule,
+    BadgeRoutingModule,
+    DataTablesModule
   ],
   declarations: [
     BadgeComponent

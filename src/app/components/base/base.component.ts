@@ -14,6 +14,9 @@ import { PageManagerService } from 'src/app/services/pagemanager/pagemanager.ser
 })
 export class BaseComponent implements OnInit {
 
+  public RUOLO_SUPER_ADMIN = 'SA';
+  public RUOLO_ADMIN_AZIENDA = 'AA';
+
   public utenti: Array<Utente>;
 
   public pagename: string;
@@ -73,6 +76,25 @@ export class BaseComponent implements OnInit {
     } else {
       this.alertService.presentErrorAlert('Si è verificato un errore nella richiesta: ' + error.statusText);
     }
+  }
+
+  public getUtente(): Utente {
+    const utenteString = this.appSessionService.get(environment.KEY_DB_USER);
+    if (utenteString === undefined || utenteString === '') {
+      return new Utente();
+    }
+    const utente = JSON.parse(utenteString) as Utente;
+    return utente;
+  }
+
+  public getRuoloUtente() {
+
+    const utente = this.getUtente();
+    const ruoloUtente = utente.ruoloUtente;
+    if (ruoloUtente === undefined || ruoloUtente === '') {
+      return '';
+    }
+    return ruoloUtente;
   }
 
 }

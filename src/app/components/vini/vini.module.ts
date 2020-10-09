@@ -9,6 +9,7 @@ import { EditorModule } from 'primeng/editor';
 import { FileuploadModule } from '../bvfileupload/fileupload/fileupload.module';
 import { ViniRoutingModule } from './vini-routing.module';
 import { DataTablesModule } from 'angular-datatables';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { DataTablesModule } from 'angular-datatables';
     EditorModule,
     FileuploadModule,
     ViniRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    AutocompleteLibModule
   ],
   declarations: [
     ViniComponent

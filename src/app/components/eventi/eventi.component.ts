@@ -163,7 +163,7 @@ export class EventiComponent extends BaseComponent implements OnInit {
       this.eventoSelezionato.dateRicorrenti = [];
     }
     this.provinciaSelezionata = this.eventoSelezionato.provinciaEvento;
-    if(!this.eventoSelezionato.badgeEvento) {
+    if (!this.eventoSelezionato.badgeEvento) {
       this.eventoSelezionato.badgeEvento = new Badge();
     }
   }
@@ -295,15 +295,29 @@ export class EventiComponent extends BaseComponent implements OnInit {
   }
 
   public caricaVini() {
-    this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda('1539014718497')).subscribe(r => {
-      if (r.esito.codice === environment.ESITO_OK_CODICE) {
-        this.listaVini = r.vini;
-      } else {
-        this.manageError(r);
-      }
-    }, err => {
-      this.presentErrorAlert(err.statusText);
-    });
+    const ruoloUtente = this.getRuoloUtente();
+    if (ruoloUtente === this.RUOLO_ADMIN_AZIENDA) {
+      const idAzienda = this.appSessionService.get(environment.KEY_AZIENDA_ID);
+      this.commonService.get(this.richiesteService.getRichiestaGetViniAzienda(idAzienda)).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.listaVini = r.vini;
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.presentErrorAlert(err.statusText);
+      });
+    } else {
+      this.commonService.get(this.richiesteService.getRichiestaGetVini()).subscribe(r => {
+        if (r.esito.codice === environment.ESITO_OK_CODICE) {
+          this.listaVini = r.vini;
+        } else {
+          this.manageError(r);
+        }
+      }, err => {
+        this.presentErrorAlert(err.statusText);
+      });
+    }
   }
 
   public caricaAziende() {

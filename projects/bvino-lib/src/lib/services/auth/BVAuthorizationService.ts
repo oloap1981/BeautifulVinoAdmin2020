@@ -1,26 +1,34 @@
-import { OnInit, Injectable } from '@angular/core';
-import { AuthenticationDetails, CognitoUser, CognitoUserPool, CognitoUserSession, CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import { OnInit, Injectable, Inject } from '@angular/core';
+import { AuthenticationDetails,
+  CognitoUser,
+  CognitoUserPool,
+  CognitoUserSession,
+  CognitoUserAttribute} from 'amazon-cognito-identity-js';
 import { Observable } from 'rxjs';
 import { SessionService } from '../common/session.service';
 import { CodeDeliveryDetailsType } from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import * as CognitoIdentityServiceProvider from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
-const poolData = {
-  UserPoolId: 'eu-central-1_KzlMv3BwL',
-  ClientId: '25i6sfibl4qqqk2g8vgsmtsth7'
-};
 
-const userPool = new CognitoUserPool(poolData);
 
 @Injectable()
 export class BVAuthorizationService implements OnInit {
 
   cognitoUser: any;
 
+  private poolData = {
+    UserPoolId: this.env.UserPoolId,
+    ClientId: this.env.ClientId
+  };
+
+  private userPool = new CognitoUserPool(this.poolData);
+
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
 
-  constructor(sessionService: SessionService) {
+  constructor(sessionService: SessionService,
+    @Inject('env') private env: any) {
 
   }
 
@@ -52,7 +60,7 @@ export class BVAuthorizationService implements OnInit {
     attributeList.push(nicknameAttribute);
 
     return Observable.create(observer => {
-      return userPool.signUp(username, password, attributeList, null, function (err, result) {
+      return this.userPool.signUp(username, password, attributeList, null, function (err, result) {
         if (err) {
           observer.error(err);
           console.log(err);
@@ -64,7 +72,7 @@ export class BVAuthorizationService implements OnInit {
     });
   }
 
-  public signin(username: string, password: string): Observable<CognitoUserSession> {
+  public signin(username: string, password: string): Observable<any> {
     const authenticationData = {
       Username: username,
       Password: password
@@ -73,9 +81,11 @@ export class BVAuthorizationService implements OnInit {
 
     const userData = {
       Username: username,
-      Pool: userPool
+      Pool: this.userPool
     };
     const cognitoUser = new CognitoUser(userData);
+
+    cognitoUser.setAuthenticationFlowType('USER_PASSWORD_AUTH');
 
     return Observable.create(observer => {
       cognitoUser.authenticateUser(authenticationDetails, {
@@ -86,6 +96,11 @@ export class BVAuthorizationService implements OnInit {
         onFailure: function (err) {
           console.log(err);
           observer.error(err);
+        },
+        newPasswordRequired: function(resp) {
+          resp.challenge = 'NEW_PASSWORD_REQUIRED';
+          observer.next(resp);
+          observer.complete();
         }
       });
     });
@@ -94,7 +109,7 @@ export class BVAuthorizationService implements OnInit {
   public signOut(username: string): void {
     const userData = {
       Username: username,
-      Pool: userPool
+      Pool: this.userPool
     };
     const cognitoUser = new CognitoUser(userData);
     cognitoUser.signOut();
@@ -104,7 +119,7 @@ export class BVAuthorizationService implements OnInit {
 
     const userData = {
       Username: username,
-      Pool: userPool
+      Pool: this.userPool
     };
     const cognitoUser = new CognitoUser(userData);
 
@@ -122,12 +137,43 @@ export class BVAuthorizationService implements OnInit {
     });
   }
 
+  public changePassword(username: string, oldpassword: string, password: string): Observable<CodeDeliveryDetailsType> {
+
+    const userData = {
+      Username: username,
+      Pool: this.userPool
+    };
+    // const currentUser = this.userPool.getCurrentUser();
+    const cognitoUser = new CognitoUser(userData);
+
+    cognitoUser.getSession(result => {
+      const session = result;
+      console.log('session: ' + JSON.stringify(session));
+    });
+
+    const serviceProvider = new CognitoIdentityServiceProvider({ region: 'eu-central-1' });
+
+    return Observable.create(observer => {
+      cognitoUser.changePassword(oldpassword, password, (error, result) => {
+        if (result) {
+          console.log('result change password: ' + JSON.stringify(result));
+          observer.next(result);
+          observer.complete();
+        }
+        if (error) {
+          console.log('error change password: ' + JSON.stringify(error));
+          observer.error(error);
+        }
+      });
+    });
+  }
+
   public isLoggedIn() {
-    return userPool.getCurrentUser() !== null;
+    return this.userPool.getCurrentUser() !== null;
   }
 
   public getAuthenticatedUser() {
-    return userPool.getCurrentUser();
+    return this.userPool.getCurrentUser();
   }
 
 }

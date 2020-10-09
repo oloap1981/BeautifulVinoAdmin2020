@@ -53,6 +53,7 @@ export const environment = {
   putUserProfileImageFunctionName: 'putUserProfileImageGen',
   putUserProfileImageWithUserFunctionName: 'putUserProfileImageWithUserGen',
   putPuntiEsperienzaFunctionName: 'putPuntiEsperienza',
+  putBadgeFunctionName: 'putBadgeGen',
   connectEventoAUtenteFunctionName: 'connectEventoAUtenteGen1',
   ESITO_OK_CODICE: 100,
   ESITO_WARN_CODICE: 101,
@@ -73,7 +74,9 @@ export const environment = {
   NAVIGATION_PAGENAME_FEED: 'feed',
   NAVIGATION_PAGENAME_NOTIFICHE: 'notifiche',
   NAVIGATION_PAGENAME_UTENTI: 'utenti',
-  NAVIGATION_PAGENAME_VINI: 'vini'
+  NAVIGATION_PAGENAME_VINI: 'vini',
+  UserPoolId: 'eu-central-1_KzlMv3BwL',
+  ClientId: '25i6sfibl4qqqk2g8vgsmtsth7'
 };
 
 /*

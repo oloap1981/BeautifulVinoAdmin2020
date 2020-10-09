@@ -5,100 +5,72 @@
     </div>
     <div class="row">
         <div class="col-xl-6 col-md-6 mb-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Lista badge</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Nome badge</th>
-                                    <th>data</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Nome badge</th>
-                                    <th>data</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>01/01/2020</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">Lista badges</h6>
+              <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" (click)="nuovoBadge()"><i
+                  class="fas fa-plus fa-sm text-white-50"></i> Nuovo</button>
             </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table datatable class="table table-bordered" width="100%" cellspacing="0" [dtOptions]="dtOptions"
+                  [dtTrigger]="dtTrigger">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Dataata</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let badge of tableData" (click)="selectBadge(badge)">
+                      <td>{{ badge.nomeBadge }}</td>
+                      <td>{{ badge.dataBadge | BVDateFormat_gg_mm_aaaa}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-xl-6 col-md-6 mb-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Aggiungi/modifica badge</h6>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i class="fas fa-trash fa-sm text-white-50"></i> Elimina</a>
                 </div>
                 <div class="card-body">
                     <form class="">
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="id">
+                            <input type="text" class="form-control form-control-user" placeholder="id badge"
+                              [(ngModel)]="badgeSelezionato.idBadge" name="idBadge" disabled>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="nome badge">
+                            <input type="text" class="form-control form-control-user" placeholder="nome badge"
+                              [(ngModel)]="badgeSelezionato.nomeBadge" name="nomeBadge">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="info badge">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="url immagine">
+                            <input type="text" class="form-control form-control-user" placeholder="info badge"
+                              [(ngModel)]="badgeSelezionato.infoBadge" name="infoBadge">
                         </div>
 
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <label class="custom-file-label" for="inputGroupFile04">carica immagine badge</label>
-                                <input type="file" class="custom-file-input" id="inputGroupFile04">
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">carica</button>
-                            </div>
+                        <div class="form-group" *ngIf="badgeSelezionato.urlLogoBadge && badgeSelezionato.urlLogoBadge !== ''">
+                          <label>Immagine badge</label>
+                          <img [src]="badgeSelezionato.urlLogoBadge">
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-user" placeholder="id evento">
+                        <app-fileupload labelText="Carica Immagine Badge" (uploaded)="fileUploadedImmagine($event)" maxFileSize="200" folder="immaginiBadge">
+                        </app-fileupload>
+
+                        <div class="form-group" *ngIf="badgeSelezionato.eventoBadge">
+                          <input type="text" class="form-control form-control-user" placeholder="id evento"
+                            [(ngModel)]="badgeSelezionato.eventoBadge.idEvento" name="idEvento" disabled>
                         </div>
                         <hr>
-                        <a href="index.html" class="btn btn-primary btn-user">
+                        <button (click)="salvaBadge()" class="btn btn-primary btn-user">
                             Salva
-                        </a>
-                        <a href="index.html" class="btn btn-danger btn-user float-right">
+                        </button>
+                        <!-- <button class="btn btn-danger btn-user float-right" (click)="vaiAEvento()">
                             vai all'evento
-                        </a>
+                        </button> -->
                     </form>
-                    <hr>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Id Evento</th>
-                                    <th>evento</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Id Evento</th>
-                                    <th>evento</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

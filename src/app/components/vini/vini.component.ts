@@ -51,6 +51,12 @@ export class ViniComponent extends BaseComponent implements OnDestroy, OnInit {
 
   public nuovo = false;
 
+  public nomeAziendaVinoScelto = '';
+
+  public listaAziende = new Array<Azienda>();
+  public keyword = 'nomeAzienda';
+  public aziendaSelezionata = new Azienda();
+
   constructor(
     public commonService: BVCommonService,
     public sessionService: SessionService,
@@ -65,6 +71,7 @@ export class ViniComponent extends BaseComponent implements OnDestroy, OnInit {
     public constantsService: ConstantsService) {
 
     super(sessionService, router, richiesteService, alertService, appSessionService, pageManagerService);
+
     this.pagename = environment.NAVIGATION_PAGENAME_VINI;
     this.vinoSelezionato = new Vino();
     this.vinoSelezionato.idVino = '';
@@ -122,6 +129,7 @@ export class ViniComponent extends BaseComponent implements OnDestroy, OnInit {
         this.alertService.presentAlert('utente loggato non ha il ruolo autorizzato per questa pagina.');
         this.goToPage('login');
       }
+      this.caricaAziende();
     }
   }
 
@@ -162,6 +170,22 @@ export class ViniComponent extends BaseComponent implements OnDestroy, OnInit {
       });
   }
 
+  private caricaAziende() {
+    const richiesta = this.richiesteService.getRichiestaGetAziende();
+    this.commonService.get(richiesta).subscribe(r => {
+      if (r.esito.codice === environment.ESITO_OK_CODICE) {
+        this.listaAziende = this.normalizeListAziende(r.aziende);
+      } else {
+        this.manageError(r);
+      }
+    });
+  }
+
+  public selectAzienda(item) {
+    const azienda = item as Azienda;
+    this.aziendaSelezionata.idAzienda = azienda.idAzienda;
+  }
+
   /**, () => {
 
         if(!this.isTableInitialized)  {
@@ -176,7 +200,14 @@ export class ViniComponent extends BaseComponent implements OnDestroy, OnInit {
 
   public selectVino(data: any): void {
     console.log('Vino cliccato: ' + data.nomeVino);
+
     this.vinoSelezionato = data;
+    this.nomeAziendaVinoScelto = this.vinoSelezionato.aziendaVinoInt.nomeAzienda;
+
+    if (this.utenteAutenticato.ruoloUtente === this.constantsService.RUOLO_SUPER_ADMIN) {
+      this.aziendaSelezionata.idAzienda = this.vinoSelezionato.aziendaVinoInt.idAzienda;
+      this.aziendaSelezionata.nomeAzienda = this.vinoSelezionato.aziendaVinoInt.nomeAzienda;
+    }
   }
 
   private normalizeList(lista: Array<Vino>): Array<Vino> {
@@ -187,6 +218,17 @@ export class ViniComponent extends BaseComponent implements OnDestroy, OnInit {
       vino.annoVino = (vino.annoVino ? vino.annoVino : 0);
 
       toReturn.push(vino);
+    }
+
+    return toReturn;
+  }
+
+  private normalizeListAziende(lista: Array<Azienda>): Array<Azienda> {
+    const toReturn = new Array<Azienda>();
+
+    for (const azienda of lista) {
+      azienda.nomeAzienda = (azienda.nomeAzienda ? azienda.nomeAzienda : '');
+      toReturn.push(azienda);
     }
 
     return toReturn;
@@ -210,6 +252,11 @@ export class ViniComponent extends BaseComponent implements OnDestroy, OnInit {
   }
 
   public salvaVino(): void {
+    if (this.utenteAutenticato.ruoloUtente === this.constantsService.RUOLO_AZIENDA_ADMIN) {
+      this.vinoSelezionato.aziendaVino = this.azienda;
+    } else {
+      this.vinoSelezionato.aziendaVino = this.aziendaSelezionata;
+    }
     this.vinoSelezionato.aziendaVino = this.azienda;
     this.commonService.put(this.richiesteService.getRichiestaPutVino(this.vinoSelezionato)).subscribe(r => {
       if (r.idVino) {
